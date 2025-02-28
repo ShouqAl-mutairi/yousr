@@ -1,0 +1,96 @@
+/* Root and Reset Styles */
+
+:root{
+    
+    --txt-color:#ffffff;
+    --link-color:#acacac;
+    --background-gradient: linear-gradient(180deg, #000000 15%, #050528 60%, #94aeb6 199%);
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Set height to 100% for html and body */
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* Center items vertically */
+    align-items: center;       /* Center items horizontally */
+}
+
+/* Body Background */
+body {
+    background: var(--background-gradient);  /* Beige background */
+    color:var(--txt-color);                /* White text */
+    font-family: 'Roboto', sans-serif; /* Google Font */
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 10px 0;              /* Reduced margin for less gap */
+    color: #ffffff;
+    text-shadow: 2px 2px 10px #592d6c90;
+}
+
+/* Table Styling */
+.main-content {
+    display: flex;
+    justify-content: center;    
+    width: 1000%;              
+    padding: 0 10%;           
+}
+
+.table {
+    width: 800px;
+    height: 22%;               /* Fixed width of the table */              /* Fixed height of the table */
+    border-collapse: collapse;
+    box-shadow: 0px 0px 10px rgba(255, 254, 254, 0.671); /* Shadow for the table */
+    border-radius: 2px; /* Added border-radius */
+}
+
+.table th, .table td {
+    text-align: center;
+    padding: 15px;
+    font-size: 1.2rem;
+    color: var(--txt-color);
+    border: 1px solid #f5f5dc19;
+
+}
+
+.table th {
+    background-color: transparent; /* No background color */
+}
+
+.table td {
+    background-color: transparent; /* No background color */
+}
+
+/* Animation on hover */
+.table td a {
+    text-decoration: none;
+    color:var(--txt-color);       
+    transition: color 0.3s ease;
+}
+
+.table td a:hover {
+    color:var(--link-color);
+    text-decoration: underline;
+}
+
+/* Hover effect for table rows */
+.table tr:hover {
+    background-color: rgba(184, 177, 177, 0.119);  /* Light hover effect */
+}
