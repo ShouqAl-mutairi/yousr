@@ -1,0 +1,103 @@
+body {
+    background-color: #05132a;  
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+header {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    padding: 20px;
+    background-color: #0a1a33;
+}
+
+.logo {
+    height: 90px;
+    width: 90px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-container input {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+}
+
+nav {
+    margin: 20px ;
+}
+
+nav button {
+    background-color: transparent;
+    border: 2px solid #800080;
+    color: #800080;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+nav button:hover {
+    background-color: #800080;
+    color: white;
+}
+
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    padding: 20px;
+}
+
+.service-card {
+    background-color: #e8ebf1;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #800080;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(181, 72, 159, 0.625); 
+    transition: transform 0.3s ease-in-out;
+}
+.service-card:hover {
+    transform: scale(1.02); 
+    background-color: #b5b6b9;
+
+}
+.service-card img {
+    width: 100%; 
+    height: 250px; 
+    object-fit: cover;
+    border-radius: 10px; 
+}
+
+.service-card p {
+    margin-top: 15px;
+    font-size: 1rem;
+    line-height: 2;
+    color: black;
+}
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.actions button {
+    background-color: #800080;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.actions button:hover {
+    background-color:  #3b023b;
+    color: #decede;
+}

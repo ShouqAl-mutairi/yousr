@@ -3,74 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Yousr</title>
+    <title> Yousr- خدماتنا </title>
+    <link href="style.css" rel="stylesheet">
+
 </head>
 <body>
 
-   
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
-       
-        <div>
-            <span>بحث</span>
+    <header>
+        <img src="image/yousrLogo.png" class="logo" alt=" شعارنا">
+    </header>
+    
+    <nav>
+        <div class="search-container">
             <input type="text" placeholder="ابحث...">
+            <button>بحث</button>
         </div>
         
-       
-        <img src="yousrLogo.png" width="85" height="110" alt="logo" style="height: 50px;">
-    </div>
-
-    
-    <div>
         <button>جرافيك</button>
         <button>تصميم</button>
         <button>واجهة المستخدم / تجربة المستخدم</button>
         <button>تطوير الويب</button>
-    </div>
-
-   
-    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 20px;">
-        
-        
-        <div style="border: 1px solid #ccc; padding: 15px;">
-            <img src="" alt="صورة 1" style="width: 100%;">
-            <p>وصف</p>
-            <div style="display: flex; justify-content: space-between;">
+    </nav>
+    
+    <main class="services-container">
+        <div class="service-card">
+            <img src="image/graphic.jpg" alt="خدمة الجرافيك">
+            <p>تصميم الجرافيك الاحترافي للشركات والمشاريع الصغيرة، يشمل تصميم الشعارات، البروشورات، الإعلانات الرقمية والمطبوعة، مع مراعاة هوية العلامة التجارية.</p>
+            <div class="actions">
                 <button>تواصل</button>
                 <button>معلومات أكثر</button>
             </div>
         </div>
-
-        
-        <div style="border: 1px solid #ccc; padding: 15px;">
-            <img src="" alt="صورة 2" style="width: 100%;">
-            <p>وصف</p>
-            <div style="display: flex; justify-content: space-between;">
+        <div class="service-card">
+            <img src="image/webDesgin.avif" alt="خدمة التصميم">
+            <p>تصميم الشعارات والهويات البصرية بطريقة مبتكرة وجذابة، تشمل بطاقات العمل، كتيبات العلامة التجارية، وقوالب وسائل التواصل الاجتماعي.</p>
+            <div class="actions">
                 <button>تواصل</button>
                 <button>معلومات أكثر</button>
             </div>
         </div>
-
-        
-        <div style="border: 1px solid #ccc; padding: 15px;">
-            <img src="" alt="صورة 3" style="width: 100%;">
-            <p>وصف </p>
-            <div style="display: flex; justify-content: space-between;">
+        <div class="service-card">
+            <img src="image/UI.avif" alt="تصميم واجهات المستخدم">
+            <p>تصميم تجربة المستخدم وواجهات التطبيقات لتوفير استخدام سلس وممتع، بما في ذلك الاختبارات القابلة للاستخدام ونماذج أولية تفاعلية.</p>
+            <div class="actions">
                 <button>تواصل</button>
                 <button>معلومات أكثر</button>
             </div>
         </div>
-
-       
-        <div style="border: 1px solid #ccc; padding: 15px;">
-            <img src="" alt="صورة 4" style="width: 100%;">
-            <p>وصف</p>
-            <div style="display: flex; justify-content: space-between;">
+        <div class="service-card">
+            <img src="image/webDev.jpg" alt="تطوير الويب">
+            <p>تطوير مواقع إلكترونية احترافية باستخدام أحدث التقنيات، مع تحسين الأداء، الأمان، وتجربة المستخدم لضمان أفضل النتائج.</p>
+            <div class="actions">
                 <button>تواصل</button>
                 <button>معلومات أكثر</button>
             </div>
         </div>
-
-    </div>
-
+        <div class="service-card">
+            <img src="image/ContentWriting.avif" alt="كتابة المحتوى">
+            <p>كتابة محتوى إبداعي وتسويقي متوافق مع معايير محركات البحث ، يشمل المقالات، وصف المنتجات، والمدونات لتسويق العلامات التجارية.</p>
+            <div class="actions">
+                <button>تواصل</button>
+                <button>معلومات أكثر</button>
+            </div>
+        </div>
+        <div class="service-card">
+            <img src="image/DigitalMarketing.avif" alt="التسويق الرقمي">
+            <p>تحسين الحملات الإعلانية وإدارة وسائل التواصل الاجتماعي، مع تحليل الأداء، وإعداد استراتيجيات تسويقية فعالة للوصول إلى الجمهور المستهدف.</p>
+            <div class="actions">
+                <button>تواصل</button>
+                <button>معلومات أكثر</button>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
