@@ -1,0 +1,51 @@
+/* style for about.html */
+
+/* Table Styling */
+.main-content {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 10%;
+}
+
+.table {
+  width: 800px;
+  height: 22%; /* Fixed width of the table */ /* Fixed height of the table */
+  border-collapse: collapse;
+  box-shadow: 0px 0px 10px rgba(255, 254, 254, 0.671); /* Shadow for the table */
+  border-radius: 2px; /* Added border-radius */
+}
+
+.table th,
+.table td {
+  text-align: center;
+  padding: 15px;
+  font-size: 1.2rem;
+  color: var(--txt-color);
+  border: 1px solid #f5f5dc19;
+}
+
+.table th {
+  background-color: transparent; /* No background color */
+}
+
+.table td {
+  background-color: transparent; /* No background color */
+}
+
+/* Animation on hover */
+.table td a {
+  text-decoration: none;
+  color: var(--txt-color);
+  transition: color 0.3s ease;
+}
+
+.table td a:hover {
+  color: var(--link-color);
+  text-decoration: underline;
+}
+
+/* Hover effect for table rows */
+.table tr:hover {
+  background-color: rgba(184, 177, 177, 0.119); /* Light hover effect */
+}
