@@ -5,12 +5,30 @@
 }
 
 .search-container input {
-  padding: 8px;
-  border-radius: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid  #6641c5;
+  width: 250px;
+  font-size: 1rem;
+  outline: none;
+}
+.search-container button {
+  background-color: #6641c5;
+  color: white;
+  padding: 10px 15px;
   border: none;
+  border-radius: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-nav button {
+.search-icon {
+  width: 15px;  
+  height: 15px;
+}
+
+.filter button {
   background-color: transparent;
   border: 2px solid #800080;
   color: #800080;
@@ -20,64 +38,78 @@ nav button {
   transition: 0.3s;
 }
 
-nav button:hover {
+.filter button:hover {
   background-color: #800080;
   color: white;
 }
 
 .services-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
   padding: 20px;
+  justify-content: center;
 }
 
 .service-card {
-  background-color: #e8ebf1;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #800080;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #6641c5;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(181, 72, 159, 0.625);
-  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(106, 23, 179, 0.625);
+  transition: transform 0.3s ease-in-out ,box-shadow 0.3s;
 }
 
 .service-card:hover {
   transform: scale(1.02);
-  background-color: #b5b6b9;
+  background-color: #e0e0e0;
+  box-shadow: 0 6px 15px rgba(95, 53, 168, 0.5);
+}
+
+.service-card h3 {
+color: #412781;
 }
 
 .service-card img {
   width: 100%;
   height: 250px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 .service-card p {
   margin-top: 15px;
   font-size: 1rem;
-  line-height: 2;
+  line-height: 1.8;
   color: black;
 }
 
 .actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .actions button {
-  background-color: #800080;
-  border: none;
+  background-color: #6641c5;
+    border: none;
   color: white;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 12px;
+  border-radius: 8px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .actions button:hover {
-  background-color: #3b023b;
+  background-color:  #371d79;
   color: #decede;
+}
+
+.sar-icon {
+  max-width: 15px;  
+  max-height: 15px; 
+  margin-left: 5px;  
+  /* vertical-align: middle;   */
+  /* object-fit: contain;   */
 }
