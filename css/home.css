@@ -1,1 +1,145 @@
 /* style for index.html */
+.typing-container {
+  display: flex;
+  justify-content: center;
+}
+
+.typing-effect {
+  overflow: hidden;
+  white-space: nowrap;
+  border-left: 2px solid #fff;
+  font-size: 2.5rem;
+  font-weight: bold;
+  animation: typing 3s steps(11), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+    border-left: 2px solid transparent;
+  }
+  to {
+    width: 20%;
+    border-left: 2px solid #fff;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #fff;
+  }
+}
+
+.intro {
+  padding: 150px 20px;
+  background: linear-gradient(
+      to right,
+      rgba(11, 10, 70, 0.8),
+      rgba(0, 0, 0, 0.6)
+    );
+}
+
+.intro h3 {
+  font-size: 2rem;
+  margin-top: 20px;
+  color: #7e70f7;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+}
+
+.intro p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+.intro a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 15px 100px;
+  background-color: #7e70f7;
+  color: #fff;
+  border-radius: 7px;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.intro a:hover {
+  background-color: #5b50c0;
+  transform: scale(1.05);
+}
+
+.vision {
+  padding: 90px 20px;
+  margin: 20px 0;
+}
+
+.vision h2 {
+  font-size: 1.8rem;
+  color: #7e70f7;
+  margin-bottom: 10px;
+}
+
+.goals {
+  padding: 90px 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.goals h2 {
+  font-size: 1.8rem;
+  color: #7e70f7;
+  margin-bottom: 10px;
+}
+
+.goals ul {
+  list-style: none;
+  padding: 0;
+}
+
+.goals li {
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.services {
+  padding: 90px 20px;
+  margin: 20px 0;
+}
+
+.services h2 {
+  font-size: 1.8rem;
+  color: #7e70f7;
+  margin-bottom: 10px;
+}
+
+.services ul {
+  list-style: none;
+  padding: 0;
+}
+
+.services li {
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.testimonials {
+  padding: 90px 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.testimonials h2 {
+  font-size: 1.8rem;
+  color: #7e70f7;
+  margin-bottom: 10px;
+}
+
+.testimonials p {
+  margin: 10px 0;
+  font-style: italic;
+}
+
