@@ -2,23 +2,26 @@
 .search-container {
   display: flex;
   align-items: center;
+  padding: 20px;
 }
 
 .search-container input {
   padding: 10px;
+  margin: 8px;
   border-radius: 10px;
   border: 2px solid  #6641c5;
   width: 250px;
   font-size: 1rem;
-  outline: none;
+
 }
 .search-container button {
   background-color: #6641c5;
   color: white;
+  font-weight:bold;
   padding: 10px 15px;
   border: none;
   border-radius: 10px;
-  margin-left: 10px;
+  margin-left: 20px;
   cursor: pointer;
   transition: 0.3s;
 }
@@ -29,17 +32,18 @@
 }
 
 .filter button {
-  background-color: transparent;
-  border: 2px solid #800080;
-  color: #800080;
-  padding: 10px 20px;
+  background-color:#46348065;
+  border: 2px solid #b3aeb644; 
+  font-weight:bold;
+  color: #ede8f0;
+  padding: 15px 30px;
   margin: 5px;
   border-radius: 10px;
   transition: 0.3s;
 }
 
 .filter button:hover {
-  background-color: #800080;
+  background-color: #5810c3;
   color: white;
 }
 
