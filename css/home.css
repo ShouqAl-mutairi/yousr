@@ -13,6 +13,11 @@
   animation: typing 2.5s steps(20), blink-caret 0.75s step-end infinite;
 }
 
+.typing-effect img{
+  width: 50px;
+  height: 50px;
+}
+
 @keyframes typing {
   from {
     width: 0;
@@ -36,6 +41,7 @@
 
 .intro {
   padding: 150px 20px;
+  text-align: right;
 }
 
 .intro h3 {
@@ -45,7 +51,24 @@
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
 }
 
-.intro p {
+.intro-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0 80px;
+}
+
+.text-content {
+  max-width: 50%;
+}
+
+.intro-image {
+  max-width: 45%;
+  height: auto;
+  margin-left: 20px;
+}
+
+.description {
   font-size: 1.1rem;
   line-height: 1.6;
   margin: 10px 0;
@@ -68,8 +91,13 @@
   transform: scale(1.05);
 }
 
-.intro i{
-margin-right: 10px;
+.intro i {
+  margin-right: 10px;
+  transition: margin 0.3s;
+}
+
+.intro a:hover i {
+  margin-right: 13px;
 }
 
 .vision {
@@ -88,6 +116,7 @@ margin-right: 10px;
 
 .vision p {
   font-size: 20px;
+  margin: 10px 120px;
 }
 
 .goals {
@@ -130,8 +159,8 @@ margin-right: 10px;
   display: block;
   margin-bottom: 20px;
   font-size: 50px;
+  color: #7e70f7;
 }
-
 
 .services {
   padding: 90px 20px;
@@ -159,6 +188,8 @@ margin-right: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   text-align: center;
+  width: 250px;
+  height: 220px;
 }
 
 .service-box:hover {
