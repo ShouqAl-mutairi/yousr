@@ -10,6 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <link href="../css/style.css" rel="stylesheet" />
     <link href="../css/home.css" rel="stylesheet" />
     <link
@@ -23,10 +27,16 @@
     <header>
       <img src="../assets/images/logo-white.png" alt="yousr logo" />
       <nav>
-        <a href="index.html">الرئيسية</a>
-        <a href="freelancers.html">خدماتنا</a>
-        <a href="about.html">من نحن</a>
-        <a href="contact.html">تواصل معنا</a>
+        <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+        <a href="freelancers.html"><i class="fas fa-cogs"></i> خدماتنا</a>
+        <a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> تواصل معنا</a>
+      </div>
+        <div class="auth-buttons">
+          <a href="#" class="btn primary"><i class="fas fa-user"></i> سجل</a>
+          <a href="#" class="btn secondary"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a>
+        </div>
       </nav>
     </header>
 
@@ -53,11 +63,13 @@
           التعاون مع محترفين متميزين، زادت احتمالات نجاحك. دعنا نكون داعمين لك
           في رحلتك نحو التميز.
         </p>
-        <a href="freelancers.html">انضموا إلينا</a>
+        <a href="freelancers.html"
+          ><i class="fas fa-user-plus"></i> انضموا إلينا</a
+        >
       </section>
 
       <section class="vision">
-        <h2>رؤيتنا</h2>
+        <h2><i class="fas fa-eye"></i> رؤيتنا</h2>
         <p>
           رؤيتنا هي أن نكون المنصة المفضلة التي تربط بين الشركات والمواهب
           المستقلة، مما يسهل عملية التعاون والإبداع في مختلف المجالات.
@@ -66,80 +78,90 @@
 
       <section class="goals">
         <h2>أهدافنا</h2>
-        <ul>
-          <li>توفير فرص عمل متميزة للمستقلين.</li>
-          <li>تسهيل الوصول إلى أفضل المواهب في السوق.</li>
-          <li>دعم المشاريع الإبداعية من خلال توفير منصة موثوقة.</li>
-          <li>تعزيز التعاون بين الشركات والمستقلين لتحقيق النجاح المشترك.</li>
+        <ul class="goals-grid">
+          <li class="goal-box">
+            <i class="fas fa-briefcase"></i> توفير فرص عمل متميزة للمستقلين.
+          </li>
+          <li class="goal-box">
+            <i class="fas fa-star"></i> تسهيل الوصول إلى أفضل المواهب في السوق.
+          </li>
+          <li class="goal-box">
+            <i class="fas fa-laptop-code"></i> دعم المشاريع الإبداعية من خلال
+            توفير منصة موثوقة.
+          </li>
+          <li class="goal-box">
+            <i class="fas fa-users"></i> تعزيز التعاون بين الشركات والمستقلين
+            لتحقيق النجاح المشترك.
+          </li>
         </ul>
       </section>
 
       <section class="services">
-        <h2>خدماتنا</h2>
+        <h2><i class="fas fa-tools"></i> خدماتنا</h2>
         <p>نقدم مجموعة متنوعة من الخدمات تشمل:</p>
         <ul>
-          <li>التصميم الجرافيكي</li>
-          <li>تطوير المواقع والتطبيقات</li>
-          <li>التسويق الرقمي</li>
-          <li>كتابة المحتوى</li>
-          <li>استشارات الأعمال</li>
+          <li><i class="fas fa-paint-brush"></i> التصميم الجرافيكي</li>
+          <li><i class="fas fa-code"></i> تطوير المواقع والتطبيقات</li>
+          <li><i class="fas fa-bullhorn"></i> التسويق الرقمي</li>
+          <li><i class="fas fa-file-alt"></i> كتابة المحتوى</li>
+          <li><i class="fas fa-comments"></i> استشارات الأعمال</li>
         </ul>
       </section>
 
       <section class="testimonials-section">
-        <h2>اراء عملائنا!</h2>
+        <h2><i class="fas fa-comments"></i> اراء عملائنا!</h2>
         <div class="testimonials">
-        <div class="testimonial">
-          <div class="testimonial-text">
-            <p>
-              “يسر لم يساعدني فقط في العثور على محترفين متميزين لمشروعي، بل أتاح
-              لي أيضًا فرصة التعاون مع أفضل العقول في المجال. تجربة رائعة بكل
-               المقاييس , وبالتأكيد سأكرر هذه التجربة في  مشاريعي القادمة!”
-            </p>
-          </div>
-          <div class="testimonial-detail">
-            <img
-              src="../assets/images/avatar-man.jpg"
-              alt="عبدالله سعيد"
-              class="testimonial-image"
-            />
-            <div class="testimonial-info">
-              <p class="name">عبدالله سعيد</p>
-              <p class="country">السعودية</p>
-              <p class="role">عميل</p>
-              <div class="stars">★★★★★</div>
+          <div class="testimonial">
+            <div class="testimonial-text">
+              <p>
+                “يسر لم يساعدني فقط في العثور على محترفين متميزين لمشروعي، بل
+                أتاح لي أيضًا فرصة التعاون مع أفضل العقول في المجال. تجربة رائعة
+                بكل المقاييس , وبالتأكيد سأكرر هذه التجربة في مشاريعي القادمة!”
+              </p>
+            </div>
+            <div class="testimonial-detail">
+              <img
+                src="../assets/images/avatar-man.jpg"
+                alt="عبدالله سعيد"
+                class="testimonial-image"
+              />
+              <div class="testimonial-info">
+                <p class="name">عبدالله سعيد</p>
+                <p class="country">السعودية</p>
+                <p class="role">عميل</p>
+                <div class="stars">★★★★★</div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="testimonial">
-          <div class="testimonial-text">
-            <p>
-              “كانت تجربتي كفريلانسر مع يُســر مذهلة. المنصة سهلة الاستخدام
-              وتوفر فرصًا رائعة للتواصل مع عملاء موهوبين. أوصي بها بشدة لكل من
-              يسعى للتميز في مجاله!”
-            </p>
-          </div>
-          <div class="testimonial-detail">
-            <img
-              src="../assets/images/avatar-woman.jpg"
-              alt="ساره محمد"
-              class="testimonial-image"
-            />
-            <div class="testimonial-info">
-              <p class="name">ساره محمد</p>
-              <p class="country">مصر</p>
-              <p class="role">فريلانسر</p>
-              <div class="stars">★★★★★</div>
+          <div class="testimonial">
+            <div class="testimonial-text">
+              <p>
+                “كانت تجربتي كفريلانسر مع يُســر مذهلة. المنصة سهلة الاستخدام
+                وتوفر فرصًا رائعة للتواصل مع عملاء موهوبين. أوصي بها بشدة لكل من
+                يسعى للتميز في مجاله!”
+              </p>
+            </div>
+            <div class="testimonial-detail">
+              <img
+                src="../assets/images/avatar-woman.jpg"
+                alt="ساره محمد"
+                class="testimonial-image"
+              />
+              <div class="testimonial-info">
+                <p class="name">ساره محمد</p>
+                <p class="country">مصر</p>
+                <p class="role">فريلانسر</p>
+                <div class="stars">★★★★★</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </section>
     </main>
 
     <footer>
-      <p>© 2025 يُســر. جميع الحقوق محفوظة.</p>
+      <p><i class="fas fa-copyright"></i> 2025 يُســر. جميع الحقوق محفوظة.</p>
     </footer>
   </body>
 </html>
