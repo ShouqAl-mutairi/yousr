@@ -1,1 +1,202 @@
-/* style for contact.html */
+/* Main Container */
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 40px 25%;
+    background-color: transparent;
+}
+
+.contact-box {
+    background: transparent;
+    padding: 45px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px  rgba(153, 136, 183, 0.715);
+    width: 100%;
+    max-width: 800px;
+
+}
+
+/* Center h2 inside box */
+.contact-header {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #f5f5f5;
+    text-shadow: 0 6px 15px rgba(95, 53, 168, 0.5);
+}
+
+.contact-content {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Left Side: Form */
+.contact-form {
+    flex: 1;
+    width: 100%;
+}
+
+
+/* Form Elements */
+.contact-form label {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 8px;
+    color: #f5f5f5;
+    text-align: right;
+}
+
+.contact-form {
+    text-align: right;
+}
+
+/* Gender Section Styling */
+.gender-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.gender-options {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.gender-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 1rem;
+    color: #f5f5f5;
+}
+
+.gender-options input[type="radio"] {
+    margin: 0;
+    accent-color: #2c4759;
+}
+
+.gender-container .gender-options {
+    margin-top: 2px;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    width: 100%;
+    max-width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    background: transparent;
+    color: #f5f5f5;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.contact-form input:hover,
+.contact-form select:hover,
+.contact-form textarea:hover {
+    border-color: #abababea;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #f5f5f5;
+    transition: 0.3s ease-in-out;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    border-color: #abababea;
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(55, 86, 119, 0.5);
+}
+
+/* Select */
+
+.contact-form select {
+    color: #f5f5f5;
+    background: transparent;
+    border: 1px solid #ccc;
+}
+
+.contact-form select:hover,
+.contact-form select:focus {
+    color: #f5f5f5;
+    border-color: #abababea;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.contact-form select option {
+    color: #f5f5f5;
+    background-color: #171437;
+}
+
+
+.contact-form select:focus option {
+    color: #f5f5f5;
+}
+
+/* TextArea */
+.contact-form textarea {
+    resize: none;
+}
+
+/* Submit Button */
+.text-center {
+    margin-top: 20px;
+}
+
+/* Submit Button */
+.btn-submit {
+    background-color:#6641c5;
+    color:  white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.btn-submit:hover {
+    background-color:#371d79;
+    color: #decede;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 1024px) {
+    .contact-content {
+        flex-direction: column;
+    }
+
+    .contact-image {
+        max-width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .contact-form {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-box {
+        padding: 20px;
+    }
+
+    .contact-image {
+        max-width: 100%;
+    }
+
+    .contact-form {
+        width: 100%;
+    }
+}

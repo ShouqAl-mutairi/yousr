@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تواصـل معنا</title>
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/contact.css" rel="stylesheet">
+    <link href="../assets/images/logo-without-text.png" rel="icon" type="image/png">
 
-    <!-- Bootstrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet">
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap"
-      rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;760;800&display=swap" rel="stylesheet"/>
+
   </head>
 
   <body>
@@ -30,94 +25,68 @@
       </nav>
     </header>
 
-    <main>
-      <section class="container mt-5">
-        <h2 class="text-center">تواصل معنا</h2>
-
-        <form action="#" method="POST">
-          <!-- Name -->
-          <div class="mb-3">
-            <label for="name" class="form-label">الاسم الثلاثي:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="name"
-              name="name"
-              required>
+    <main class="contact-container">
+      <!-- Container for H2 + Form & Image -->
+      <div class="contact-box">
+        <h2 class="contact-header">تواصل معنا</h2>
+  
+        <!-- Container for Form & Image -->
+        <div class="contact-content">
+          <!-- Left Side: Form -->
+          <div class="contact-form">
+            <form action="#" method="POST">
+              <div class="mb-3">
+                <label for="name" class="form-label">الاسم الثلاثي:</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+  
+              <div class="mb-3 gender-container">
+                <label class="form-label">الجنس:</label>
+                <div class="gender-options">
+                  <label for="male">ذكر</label>
+                  <input type="radio" id="male" name="gender" value="Male" required>
+                  
+                  <label for="female">أنثى</label>
+                  <input type="radio" id="female" name="gender" value="Female">
+                </div>
+              </div>
+  
+              <div class="mb-3">
+                <label for="mobile" class="form-label">رقم الهاتف:</label>
+                <input type="tel" id="mobile" name="mobile" required>
+              </div>
+  
+              <div class="mb-3">
+                <label for="dob" class="form-label">تاريخ الميلاد :</label>
+                <input type="text" id="dob" name="dob" required placeholder="yyyy/mm/dd">
+              </div>
+  
+              <div class="mb-3">
+                <label for="email" class="form-label">البريد الإلكتروني:</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+  
+              <div class="mb-3">
+                <label class="form-label">اللغة</label>
+                <select name="language" required>
+                  <option value="Arabic">العربية</option>
+                  <option value="English">English</option>
+                  <option value="French">Français</option>
+                </select>
+              </div>
+  
+              <div class="mb-3">
+                <label for="message" class="form-label">الرسالة:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+              </div>
+  
+              <div class="text-center">
+                <button type="submit" class="btn-submit">إرسال</button>
+              </div>
+            </form>
           </div>
-
-          <!-- Gender -->
-          <div class="mb-3">
-            <label class="form-label">الجنس:</label><br />
-            <input type="radio" id="male" name="gender" value="Male" required />
-            <label for="male">ذكر</label>
-            <input type="radio" id="female" name="gender" value="Female" />
-            <label for="female">انثى</label>
-          </div>
-
-          <!-- Mobile -->
-          <div class="mb-3">
-            <label for="mobile" class="form-label">رقم الهاتف:</label>
-            <input
-              type="tel"
-              class="form-control"
-              id="mobile"
-              name="mobile"
-              required>
-          </div>
-
-          <!-- Date of Birth -->
-          <div class="mb-3">
-            <label for="dob" class="form-label">تاريخ الميلاد :</label>
-            <input
-              type="text"
-              class="form-control text-end"
-              id="dob"
-              name="dob"
-              required
-              dir="rtl"
-              placeholder="yyyy/mm/dd">
-          </div>
-
-          <!-- Email Address -->
-          <div class="mb-3">
-            <label for="email" class="form-label">البريد الاكتروني:</label>
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              name="email"
-              required>
-          </div>
-
-          <!-- Language of Communication -->
-          <div class="mb-3">
-            <label class="form-label">اللغة </label>
-            <select class="form-select" name="language" required>
-              <option value="Arabic">العربية</option>
-              <option value="English">English</option>
-              <option value="French">Français</option>
-            </select>
-          </div>
-
-          <!-- Message Box -->
-          <div class="mb-3">
-            <label for="message" class="form-label">الرسالة:</label>
-            <textarea
-              class="form-control"
-              id="message"
-              name="message"
-              rows="4"
-              required>
-            </textarea>
-          </div>
-
-          <!-- Submit Button -->
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary">إرسال</button>
-          </div>
-        </form>
-      </section>
+        </div>
+      </div>
     </main>
 
     <footer>

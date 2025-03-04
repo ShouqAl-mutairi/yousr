@@ -3,17 +3,26 @@
 /* Table Styling */
 .main-content {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  width: 100%;
-  padding: 0 10%;
+  width: 99%;
+  padding: 10px 20px;
+  min-height: 80vh;
+  margin-top: -40px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .table {
   width: 800px;
-  height: 22%; /* Fixed width of the table */ /* Fixed height of the table */
+  height: 22%;
   border-collapse: collapse;
-  box-shadow: 0px 0px 10px rgba(255, 254, 254, 0.671); /* Shadow for the table */
-  border-radius: 2px; /* Added border-radius */
+  box-shadow: 0px 0px 10px rgba(255, 254, 254, 0.671);
+  border-radius: 2px;
 }
 
 .table th,
@@ -26,11 +35,11 @@
 }
 
 .table th {
-  background-color: transparent; /* No background color */
+  background-color: transparent;
 }
 
 .table td {
-  background-color: transparent; /* No background color */
+  background-color: transparent;
 }
 
 /* Animation on hover */
@@ -47,5 +56,59 @@
 
 /* Hover effect for table rows */
 .table tr:hover {
-  background-color: rgba(184, 177, 177, 0.119); /* Light hover effect */
+  background-color: rgba(184, 177, 177, 0.119);
 }
+
+
+/* Responsive Design */
+
+/* Tablets (medium screens) */
+@media (max-width: 1024px) {
+  .table {
+    width: 90%;
+  }
+}
+
+/* Mobile Devices  */
+@media (max-width: 768px) {
+  .main-content {
+    min-height: 70vh;
+    padding: 20px;
+  }
+
+  .header {
+    font-size: 1.8rem;
+  }
+
+  .table {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px;
+  }
+}
+
+/* Small  */
+@media (max-width: 480px) {
+  .main-content {
+    min-height: 60vh;
+  }
+
+  .header {
+    font-size: 1.5rem;
+  }
+
+  .table {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+  }
+}
+
