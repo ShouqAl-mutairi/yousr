@@ -2,7 +2,6 @@
 .typing-container {
   display: inline-block;
   justify-content: center;
-
 }
 
 .typing-effect {
@@ -38,10 +37,10 @@
 .intro {
   padding: 150px 20px;
   background: linear-gradient(
-      to right,
-      rgba(11, 10, 70, 0.8),
-      rgba(0, 0, 0, 0.6)
-    );
+    to right,
+    rgba(11, 10, 70, 0.8),
+    rgba(0, 0, 0, 0.6)
+  );
 }
 
 .intro h3 {
@@ -127,20 +126,73 @@
   padding: 10px;
 }
 
+.testimonials-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  margin: 100px;
+}
+
 .testimonials {
-  padding: 90px 20px;
-  background-color: rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
+  display: flex; 
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  gap: 20px; 
 }
 
-.testimonials h2 {
-  font-size: 1.8rem;
-  color: #7e70f7;
-  margin-bottom: 10px;
+.testimonial {
+  border: 1px solid #9b9b9b;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f3f2f2;
+  color: rgb(14, 14, 14);
 }
 
-.testimonials p {
-  margin: 10px 0;
-  font-style: italic;
+.testimonial-text {
+  font-size: 1.2em;
+  margin-bottom: 15px;
 }
 
+.testimonial-detail {
+  display: flex;
+  align-items: center;
+}
+
+.testimonial-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 15px;
+  border: 2px solid #7e70f7;
+}
+
+.testimonial-info {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+  align-items: flex-start; 
+  text-align: right; 
+}
+
+.name {
+  font-weight: bold;
+  margin:  0;
+}
+
+.role, .country {
+  font-size: 0.9em;
+  color: #777;
+  margin: 2px 0;
+}
+
+.stars {
+  color: #ffc400;
+  font-size: 1.2em;
+  margin: 0;
+}
