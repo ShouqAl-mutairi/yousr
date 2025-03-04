@@ -1,7 +1,8 @@
 /* style for index.html */
 .typing-container {
-  display: flex;
+  display: inline-block;
   justify-content: center;
+
 }
 
 .typing-effect {
@@ -10,7 +11,7 @@
   border-left: 2px solid #fff;
   font-size: 2.5rem;
   font-weight: bold;
-  animation: typing 3s steps(11), blink-caret 0.75s step-end infinite;
+  animation: typing 2.5s steps(20), blink-caret 0.75s step-end infinite;
 }
 
 @keyframes typing {
@@ -19,7 +20,7 @@
     border-left: 2px solid transparent;
   }
   to {
-    width: 20%;
+    width: 100%;
     border-left: 2px solid #fff;
   }
 }
