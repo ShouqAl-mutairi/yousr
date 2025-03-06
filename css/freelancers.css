@@ -1,3 +1,5 @@
+/* style for freelancers.html */
+
 .filter-container {
   display: flex;
   align-items: center;
@@ -74,21 +76,21 @@
 }
 
 .avatar-container {
-  position: absolute; /* Position relative to the service-card */
-  top: 200px; /* Move the avatar above the card */
+  position: absolute;
+  top: 200px; 
   left: 340px;
-  transform: translateX(-50%); /* Center the avatar */
-  width: 60px; /* Width of the avatar */
-  height: 60px; /* Height of the avatar */
+  transform: translateX(-50%);
+  width: 60px; 
+  height: 60px; 
   z-index: 1;
 }
 
 .avatar {
-  width: 90px; /* Fill the container */
-  height: 90px; /* Fill the container */
-  border-radius: 50%; /* Make it circular */
-  object-fit: cover; /* Maintain aspect ratio */
-  border: 3px solid #7e70f7; /* Optional: border around avatar */
+  width: 90px;
+  height: 90px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+  border: 3px solid #7e70f7;
 }
 
 .service-card:hover {

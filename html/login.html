@@ -53,23 +53,29 @@
 
         <div class="form-group">
           <label for="username">اسم المستخدم :</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            class="form-input"
-            required
-          />
+          <div class="input-wrapper">
+            <i class="fas fa-user"></i>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-input"
+              required
+            />
+          </div>
         </div>
         <div class="form-group">
           <label for="password">كلمة المرور:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="form-input"
-            required
-          />
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-input"
+              required
+            />
+          </div>
         </div>
         <button type="submit">تسجيل الدخول</button>
         <p>ليس لديك حساب؟ <a href="sign-up.html">إنشاء حساب جديد</a></p>

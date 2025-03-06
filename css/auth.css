@@ -36,12 +36,14 @@ label {
 }
 
 .form-input {
-  width: 90%;
+  width: 86%;
   padding: 10px;
+  padding-right: 35px;
   border: 1px solid #000000;
   border-radius: 5px;
   font-size: 1em;
   background: rgba(255, 255, 255, 0.2);
+  text-align: right;
 }
 
 .form-input:focus {
@@ -62,6 +64,19 @@ input[type="checkbox"]:checked {
 
 .radio-group label {
     margin: 0 6px;
+}
+
+.input-wrapper {
+  position: relative;
+  margin-bottom: 15px; 
+}
+
+.input-wrapper i {
+  position: absolute;
+  right: 35px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9a9a9a;
 }
 
 button {
