@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  background-color: #151423;
+  background: linear-gradient(to bottom,#0b0a12, #151423, #0b0a12);
   font-family: "Almarai", sans-serif;
   text-align: center;
   color: #f5f5f5;
