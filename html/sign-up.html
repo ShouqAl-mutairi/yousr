@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>منصة يُســر | تسجيل حساب</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link href="../css/style.css" rel="stylesheet" />
+    <link href="../css/auth.css" rel="stylesheet" />
+    <link
+      href="../assets/images/logo-without-text.png"
+      rel="icon"
+      type="image/png"
+    />
+  </head>
+
+  <body>
+    <header>
+      <img src="../assets/images/logo-white.png" alt="yousr logo" />
+      <nav>
+        <div class="nav-links">
+          <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+          <a href="freelancers.html"><i class="fas fa-cogs"></i> خدماتنا</a>
+          <a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a>
+          <a href="contact.html"><i class="fas fa-envelope"></i> تواصل معنا</a>
+        </div>
+        <div class="auth-buttons">
+          <a href="sign-up.html" class="btn primary"
+            ><i class="fas fa-user"></i> سجل</a
+          >
+          <a href="login.html" class="btn secondary"
+            ><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a
+          >
+        </div>
+      </nav>
+    </header>
+
+    <main class="form-container">
+      <form action="#" method="post">
+        <fieldset>
+          <h2>تسجيل حساب جديد</h2>
+          <div class="form-group">
+            <p>هل أنت:</p>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="user-role"
+                  value="freelancer"
+                  required
+                />
+                مستـقل
+              </label>
+              <label>
+                <input type="radio" name="user-role" value="client" required />
+                عميل
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="username">اسم المستخدم:</label>
+            <input type="text" id="username" name="username" required />
+          </div>
+          <div class="form-group">
+            <label for="email">البريد الإلكتروني:</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="password">كلمة المرور:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">رقم الهاتف:</label>
+            <input type="tel" id="phone" name="phone" required />
+          </div>
+          <div class="form-group">
+            <label for="dob">تاريخ الميلاد:</label>
+            <input type="date" id="dob" name="dob" required />
+          </div>
+          <div class="form-group">
+            <p>الجنس:</p>
+            <div>
+              <label>
+                <input type="radio" name="gender" value="male" required />
+                ذكر
+              </label>
+              <label>
+                <input type="radio" name="gender" value="female" required />
+                أنثى
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" name="terms" required />
+              أوافق على الشروط والأحكام
+            </label>
+          </div>
+        </fieldset>
+        <button type="submit">إنشاء حساب</button>
+        <p>لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a></p>
+      </form>
+    </main>
+
+    <footer>
+      <div class="footer-top">
+        <div class="footer-right">
+          <img
+            src="../assets/images/logo-without-text.png"
+            alt="Logo"
+            class="footer-logo"
+          />
+          <div class="contact-info">
+            <p>
+              <i class="fas fa-envelope"></i> البريد الإلكتروني :
+              <a href="mailto:info@yousr.com">info@yousr.com</a>
+            </p>
+            <p>
+              <i class="fas fa-phone"></i> الهاتف :
+              <a href="tel:+123456789">+966 549655977</a>
+            </p>
+          </div>
+        </div>
+        <div class="footer-left">
+          <div class="quick-links">
+            <a href="#">الشروط والأحكام</a>
+            <a href="#">سياسة الخصوصية</a>
+            <a href="#">الأسئلة الشائعة</a>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-divider" />
+      <div class="footer-bottom">
+        <p class="copyright">
+          <i class="fas fa-copyright"></i> 2025 يُســر. جميع الحقوق محفوظة.
+        </p>
+        <div class="social-media">
+          <a href="https://facebook.com" target="_blank"
+            ><i class="fab fa-facebook"></i
+          ></a>
+          <a href="https://twitter.com" target="_blank"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a href="https://linkedin.com" target="_blank"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+          <a href="https://instagram.com" target="_blank"
+            ><i class="fab fa-instagram"></i
+          ></a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
