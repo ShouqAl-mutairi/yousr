@@ -1,6 +1,7 @@
 /* Shared style for all pages */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -11,6 +12,8 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 header {
@@ -70,7 +73,7 @@ nav i {
   display: flex;
   gap: 10px;
   margin-right: auto;
-  padding-right: 450px;
+  padding-right: 420px;
 }
 
 .btn {
@@ -104,14 +107,14 @@ nav i {
   margin-left: 0;
 }
 
-.hamburger{
+.hamburger {
   order: 1;
   margin-right: auto;
   display: none;
   cursor: pointer;
 }
 
-.bar{
+.bar {
   display: block;
   width: 25px;
   height: 3px;
@@ -225,25 +228,25 @@ footer p {
   margin: 0;
 }
 
-/* For devices with a width of 576px or less */
+
 @media (max-width: 576px) {
-  .hamburger{
+  .hamburger {
     display: block;
   }
 
-  .hamburger.active .bar:nth-child(2){
+  .hamburger.active .bar:nth-child(2) {
     opacity: 0;
   }
 
-  .hamburger.active .bar:nth-child(1){
+  .hamburger.active .bar:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
   }
 
-  .hamburger.active .bar:nth-child(3){
+  .hamburger.active .bar:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
   }
 
-  .nav-menu{
+  .nav-menu {
     position: fixed;
     left: -100%;
     top: 70px;
@@ -259,7 +262,7 @@ footer p {
     margin: 16px 0;
   }
 
-  .nav-menu.active{
+  .nav-menu.active {
     left: 0;
   }
 
@@ -291,80 +294,81 @@ footer p {
 }
 
 @media (max-width: 768px) {
-    .nav-menu {
-        position: fixed;
-        left: -100%; /* Change right to left */
-        right: auto; /* Add this to ensure left positioning */
-        top: 70px;
-        gap: 0;
-        flex-direction: column;
-        background-color: #1a1a1acb;
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        padding: 20px 0;
-        z-index: 1000;
-    }
+  .nav-menu {
+    position: fixed;
+    left: -100%; 
+    right: auto; 
+    top: 70px;
+    gap: 0;
+    flex-direction: column;
+    background-color: #1a1a1acb;
+    width: 100%;
+    overflow-x: hidden;
+    text-align: center;
+    transition: 0.3s;
+    padding: 20px 0;
+    z-index: 1000;
+  }
 
-    .nav-menu.active {
-        left: 0; /* Change right to left */
-    }
+  .nav-menu.active {
+    left: 0; 
+  }
 
-    .auth-buttons {
-        margin: 20px 0;
-        flex-direction: column;
-        width: 100%;
-    }
+  .auth-buttons {
+    margin: 20px 0;
+    flex-direction: column;
+    width: 100%;
+  }
 
-    .auth-buttons .btn {
-        margin: 5px auto;
-        width: 200px;
-    }
+  .auth-buttons .btn {
+    margin: 5px auto;
+    width: 200px;
+  }
 
-    .hamburger {
-        display: block;
-        cursor: pointer;
-    }
+  .hamburger {
+    display: block;
+    cursor: pointer;
+    padding-left: 35px;
+  }
 
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-    }
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
 
-    .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
 
-    .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
 
-    .bar {
-        display: block;
-        width: 25px;
-        height: 3px;
-        margin: 5px auto;
-        transition: all 0.3s ease-in-out;
-        background-color: white;
-    }
+  .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    transition: all 0.3s ease-in-out;
+    background-color: white;
+  }
 
-    .auth-buttons {
-      padding: 0;
-    }
+  .auth-buttons {
+    padding: 0;
+  }
 
-    .navbar {
-      padding: 15px;
-    }
+  .navbar {
+    padding: 15px;
+  }
 
-    .footer-top {
-      margin: 0 50px;
-    }
+  .footer-top {
+    margin: 0 50px;
+  }
 
-    .footer-bottom {
-      margin: 0 50px;
-    }
+  .footer-bottom {
+    margin: 0 50px;
+  }
 }
 
-/* Large devices (small laptops, 992px and down) */
 @media (max-width: 992px) {
   .navbar {
     padding: 15px;
