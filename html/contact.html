@@ -25,20 +25,33 @@
 
   <body>
     <header>
-      <img src="../assets/images/logo-white.png" alt="yousr logo" />
-      <nav>
-        <div class="nav-links">
-          <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
-          <a href="freelancers.html"><i class="fas fa-cogs"></i> خدماتنا</a>
-          <a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a>
-          <a href="contact.html"><i class="fas fa-envelope"></i> تواصل معنا</a>
+      <nav class="navbar">
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
         </div>
-        <div class="auth-buttons">
-          <a href="sign-up.html" class="btn primary"><i class="fas fa-user"></i> سجل</a>
-          <a href="login.html" class="btn secondary"
-            ><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a
-          >
-        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+          </li>
+          <li class="nav-item">
+            <a href="freelancers.html" class="nav-link"><i class="fas fa-cogs"></i> خدماتنا</a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> من نحن</a>
+          </li>
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> تواصل معنا</a>
+          </li>
+          <div class="auth-buttons">
+            <a href="sign-up.html" class="btn primary"><i class="fas fa-user"></i> سجل</a>
+            <a href="login.html" class="btn secondary"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a>
+          </div>
+        </ul>
+        <a href="#" class="logo">
+          <img src="../assets/images/logo-white.png" alt="yousr logo" />
+        </a>
       </nav>
     </header>
 
@@ -151,5 +164,6 @@
         </div>
       </div>
     </footer>
+    <script src="../js/app.js"></script>
   </body>
 </html>
