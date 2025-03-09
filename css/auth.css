@@ -170,3 +170,42 @@ p a:hover {
 .btn-social:hover {
   transform: scale(1.1);
 }
+
+/* Media Queries */
+@media (max-width: 576px) {
+  .input-wrapper{
+    padding-right: 12px;
+
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-form {
+    max-width: 100px;
+    padding: 30px;
+  }
+
+  .form-container {
+    max-width: 100%;
+    margin: 80px 90px;
+    padding: 30px;
+  }
+
+  .form-input {
+    width: 82%;
+  }
+
+  button {
+    width: 90%;
+  }
+}
+
+@media (max-width: 992px) {
+  .auth-form {
+    max-width: 450px;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+  }
+}
