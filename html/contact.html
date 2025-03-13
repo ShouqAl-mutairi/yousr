@@ -3,25 +3,21 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> منصة يُســر | تواصـل معنا</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>منصة يُســر | تواصـل معنا</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
       href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet">
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <link href="../css/style.css" rel="stylesheet" />
-    <link href="../css/contact.css" rel="stylesheet" />
-    <link
-      href="../assets/images/logo-without-text.png"
-      rel="icon"
-      type="image/png"
-    />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/contact.css" rel="stylesheet">
+    <link href="../assets/images/logo-without-text.png" rel="icon" type="image/png">
+    <script src="../js/app.js" defer></script>
   </head>
+
 
   <body>
     <header>
@@ -44,13 +40,15 @@
           <li class="nav-item">
             <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> تواصل معنا</a>
           </li>
-          <div class="auth-buttons">
-            <a href="sign-up.html" class="btn primary"><i class="fas fa-user"></i> سجل</a>
-            <a href="login.html" class="btn secondary"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a>
-          </div>
+          <li>
+            <div class="auth-buttons">
+             <a href="sign-up.html" class="btn primary"><i class="fas fa-user"></i> سجل</a>
+             <a href="login.html" class="btn secondary"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a>
+            </div>
+          </li>
         </ul>
         <a href="#" class="logo">
-          <img src="../assets/images/logo-white.png" alt="yousr logo" />
+          <img src="../assets/images/logo-white.png" alt="yousr logo">
         </a>
       </nav>
     </header>
@@ -59,7 +57,7 @@
       <!-- Container for H2 + Form & Image -->
       <div class="contact-box">
         <h2 class="contact-header">تواصل معنا</h2>
-  
+
         <!-- Container for Form & Image -->
         <div class="contact-content">
           <!-- Left Side: Form -->
@@ -67,35 +65,52 @@
             <form action="#" method="POST">
               <div class="mb-3">
                 <label for="name" class="form-label">الاسم الثلاثي:</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" required />
               </div>
-  
+
               <div class="mb-3 gender-container">
                 <label class="form-label">الجنس:</label>
                 <div class="gender-options">
                   <label for="male">ذكر</label>
-                  <input type="radio" id="male" name="gender" value="Male" required>
-                  
+                  <input
+                    type="radio"
+                    id="male"
+                    name="gender"
+                    value="Male"
+                    required
+                  />
+
                   <label for="female">أنثى</label>
-                  <input type="radio" id="female" name="gender" value="Female">
+                  <input
+                    type="radio"
+                    id="female"
+                    name="gender"
+                    value="Female"
+                  />
                 </div>
               </div>
-  
+
               <div class="mb-3">
                 <label for="mobile" class="form-label">رقم الهاتف:</label>
-                <input type="tel" id="mobile" name="mobile" required>
+                <input type="tel" id="mobile" name="mobile" required />
               </div>
-  
+
               <div class="mb-3">
                 <label for="dob" class="form-label">تاريخ الميلاد :</label>
-                <input type="text" id="dob" name="dob" required placeholder="yyyy/mm/dd">
+                <input
+                  type="text"
+                  id="dob"
+                  name="dob"
+                  required
+                  placeholder="yyyy/mm/dd"
+                />
               </div>
-  
+
               <div class="mb-3">
                 <label for="email" class="form-label">البريد الإلكتروني:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" required />
               </div>
-  
+
               <div class="mb-3">
                 <label class="form-label">اللغة</label>
                 <select name="language" required>
@@ -104,12 +119,17 @@
                   <option value="French">Français</option>
                 </select>
               </div>
-  
+
               <div class="mb-3">
                 <label for="message" class="form-label">الرسالة:</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  required
+                ></textarea>
               </div>
-  
+
               <div class="text-center">
                 <button type="submit" class="btn-submit">إرسال</button>
               </div>
@@ -124,15 +144,17 @@
         <div class="footer-right">
           <img
             src="../assets/images/logo-without-text.png"
-            alt="Logo"
-            class="footer-logo"
-          />
+            alt="yousr logo"
+            class="footer-logo">
           <div class="contact-info">
             <p>
-              <i class="fas fa-envelope"></i>  البريد الإلكتروني : 
+              <i class="fas fa-envelope"></i> البريد الإلكتروني :
               <a href="mailto:info@yousr.com">info@yousr.com</a>
             </p>
-            <p> <i class="fas fa-phone"></i>  الهاتف :  <a href="tel:+123456789">+966 549655977</a></p>
+            <p>
+              <i class="fas fa-phone"></i> الهاتف :
+              <a href="tel:+123456789">+966 549655977</a>
+            </p>
           </div>
         </div>
         <div class="footer-left">
@@ -143,27 +165,18 @@
           </div>
         </div>
       </div>
-      <hr class="footer-divider" />
+      <hr class="footer-divider">
       <div class="footer-bottom">
         <p class="copyright">
           <i class="fas fa-copyright"></i> 2025 يُســر. جميع الحقوق محفوظة.
         </p>
         <div class="social-media">
-          <a href="https://facebook.com" target="_blank"
-            ><i class="fab fa-facebook"></i
-          ></a>
-          <a href="https://twitter.com" target="_blank"
-            ><i class="fab fa-twitter"></i
-          ></a>
-          <a href="https://linkedin.com" target="_blank"
-            ><i class="fab fa-linkedin"></i
-          ></a>
-          <a href="https://instagram.com" target="_blank"
-            ><i class="fab fa-instagram"></i
-          ></a>
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+          <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
     </footer>
-    <script src="../js/app.js"></script>
   </body>
 </html>
