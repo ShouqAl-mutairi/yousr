@@ -71,6 +71,9 @@
               id="username"
               name="username"
               class="form-input"
+              minlength="3"
+              maxlength="20"
+              pattern="[a-zA-Z][a-zA-Z0-9._-]{2,19}"
               required>
           </div>
         </div>
@@ -83,6 +86,9 @@
               id="password"
               name="password"
               class="form-input"
+              minlength="8"
+              maxlength="35"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%*?&])[A-Za-z\d@$!%*?&]{8,35}" 
               required>
           </div>
         </div>
