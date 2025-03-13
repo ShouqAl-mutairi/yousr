@@ -7,21 +7,27 @@
   align-items: center;
   justify-content: center;
   width: 99%;
-  padding: 10px 20px;
+  padding: 60px 20px;
   min-height: 80vh;
   margin-top: -40px;
 }
 
 .header {
   text-align: center;
-  margin-bottom: 30px;
+  font-size: 35px;
+  margin-bottom: 2px;
+}
+
+p {
+  font-size: 20px;
+  margin-bottom: 50px;
 }
 
 .table {
   width: 800px;
   height: 22%;
   border-collapse: collapse;
-  box-shadow: 0px 0px 10px rgba(255, 254, 254, 0.671);
+  box-shadow: 0px 0px 15px #7e70fa36;
   border-radius: 2px;
 }
 
@@ -30,85 +36,84 @@
   text-align: center;
   padding: 15px;
   font-size: 1.2rem;
-  color: var(--txt-color);
   border: 1px solid #f5f5dc19;
 }
 
 .table th {
-  background-color: transparent;
+  background-color: #7e70fabb;
 }
 
 .table td {
   background-color: transparent;
 }
 
-/* Animation on hover */
+table i {
+  padding: 0 4px;
+}
+
 .table td a {
   text-decoration: none;
-  color: var(--txt-color);
+  color: white;
+  font-size: 22px ;
   transition: color 0.3s ease;
 }
 
 .table td a:hover {
-  color: var(--link-color);
-  text-decoration: underline;
+  color: #7e70fa;
 }
 
-/* Hover effect for table rows */
 .table tr:hover {
   background-color: rgba(184, 177, 177, 0.119);
 }
 
 
-/* Responsive Design */
 
-/* Tablets (medium screens) */
-@media (max-width: 1024px) {
+@media (max-width: 992px) {
   .table {
     width: 90%;
   }
+  .header {
+    font-size: 30px;
+  }
+  p {
+    font-size: 18px; 
+    padding: 0 40px;
+  }
 }
 
-/* Mobile Devices  */
 @media (max-width: 768px) {
   .main-content {
-    min-height: 70vh;
-    padding: 20px;
+    padding: 40px 10px; 
   }
-
   .header {
-    font-size: 1.8rem;
+    font-size: 26px; 
   }
-
+  p {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
   .table {
-    width: 100%;
-    font-size: 1rem;
+    width: 85%;
   }
-
   .table th,
   .table td {
-    padding: 10px;
+    font-size: 1rem;
+    padding: 10px; 
   }
 }
 
-/* Small  */
-@media (max-width: 480px) {
+@media (max-width: 576px) {
   .main-content {
-    min-height: 60vh;
+    padding: 20px 5px;
   }
-
-  .header {
-    font-size: 1.5rem;
+  p {
+    margin-bottom: 20px;
   }
-
-  .table {
-    width: 100%;
-    font-size: 0.9rem;
-  }
-
   .table th,
   .table td {
     padding: 8px;
   }
+  .table td a {
+    font-size: 18px;
+  }
 }
-
