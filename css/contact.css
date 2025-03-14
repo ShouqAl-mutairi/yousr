@@ -89,8 +89,6 @@ button:hover {
     background-color: #3d377b;
 }
 
-
-
 .label-header {
     display: block;
     margin-bottom: 5px;
@@ -98,8 +96,6 @@ button:hover {
     color: #000000;
     text-align: start;
     margin: 4px 20px;
-    ;
-
 }
 
 .radio-group {
@@ -107,7 +103,6 @@ button:hover {
     justify-content: right;
     gap: 15px;
 }
-
 
 .radio-group label {
     display: flex;
@@ -118,7 +113,6 @@ button:hover {
     transition: color 0.3s ease-in-out;
 }
 
-
 .radio-group input[type="radio"] {
     accent-color: #7e70fa;
     cursor: pointer;
@@ -126,7 +120,6 @@ button:hover {
     width: 18px;
     height: 18px;
 }
-
 
 .radio-group input[type="radio"]:hover,
 .radio-group input[type="radio"]:focus {
@@ -146,9 +139,32 @@ button:hover {
     margin-top: 20px;
 }
 
+.names-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 94%;
+    margin: 0 auto;
+}
+
+.names-group .input-wrapper {
+    flex: 1;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.names-group .form-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.names-group .input-wrapper i {
+    right: 18px;
+    top: 70%;
+    
+}
+
 /* Media Queries for Responsiveness */
-
-
 @media (max-width: 576px) {
     .contact-container {
         padding: 20px;
@@ -173,6 +189,23 @@ button:hover {
     }
 
     .input-wrapper i {
+        right: 15px;
+    }
+
+    .names-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .names-group .input-wrapper {
+        width: 100%;
+    }
+    
+    .names-group .form-input {
+        width: 100%;
+    }
+    
+    .names-group .input-wrapper i {
         right: 15px;
     }
 }
@@ -200,6 +233,10 @@ button:hover {
     .input-wrapper i {
         right: 20px;
     }
+
+    .names-group .input-wrapper i {
+        right: 20px;
+    }
 }
 
 
@@ -225,8 +262,11 @@ button:hover {
     .input-wrapper i {
         right: 25px;
     }
-}
 
+    .names-group .input-wrapper i {
+        right: 25px;
+    }
+}
 
 @media (min-width: 992px) {
     .contact-container {
