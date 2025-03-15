@@ -3,8 +3,9 @@
 .filter-container {
   display: flex;
   align-items: center;
-  margin: 0 80px;
+  margin: 0 78px;
   padding-top: 20px;
+  margin-bottom: 20px;
 }
 
 .search-container {
@@ -20,22 +21,35 @@
   border-radius: 10px;
   width: 300px;
   font-size: 1rem;
-  border: none;
+  border: 1px solid #000000;
+  font-family: "Almarai", sans-serif;
+}
+
+.search-container input:focus {
+  border-color: #7e70fa;
+  background-color: #ededed;
+  outline: none;
 }
 
 .search-container button {
   background-color: #7e70f7;
   padding: 10px 15px;
-  border: none;
+  border: #7e70f7 1px solid;
   border-radius: 10px;
   margin-left: 20px;
   cursor: pointer;
   transition: 0.3s;
+  color: rgb(24, 24, 24);
 }
 
-.search-icon {
-  width: 20px;
-  height: 20px;
+.search-container i {
+  font-size: 18px;
+}
+
+.search-container button:hover {
+  color: #7e70f7;
+  background-color: transparent;
+  border: #7e70f7 1px solid;
 }
 
 .filter button {
@@ -181,11 +195,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-direction: column;
-    margin: 0 20px;
-    gap: 15px; 
-    width: 100%;
-    margin-bottom: 20px;
+    flex-direction: row;
+    gap: 10px;
+    margin: 20px 40px;
+    margin-left: 57px;
   }
 
   .search-container {
@@ -193,48 +206,36 @@
     align-items: center;
     justify-content: right;
     flex-direction: row; 
-    gap: 10px;
     width: 100%;
-    padding: 0 15px;
   }
 
   .search-container input {
-    flex: 1; 
-    width: 80%;  
-    max-width: 250px; 
+   width: 100%; 
    }
 
-  .search-container button {
-    margin-top: 0;
-    padding: 6px 8px;
-    margin-left: 5px;
-
-  }
-
-  .services-container {
-    margin: 0 40px;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    
-  }
   .filter {
     display: flex;
     justify-content: center; 
     flex-wrap: nowrap; 
-    gap: 10px;
+    gap: 7px;
     width: 100%;
   }
 
   .filter button {
     padding: 12px;
-    font-size: 1rem;
+    font-size: 12px;
     text-align: center;
     white-space: nowrap;
   }
 
+  .services-container {
+    margin: 0 40px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
   .avatar-container {
-    top: 180px;
-    left: 50%;
-    transform: translateX(-20%);
+    top: 193px;
+    left: 80%;
   }
   .service-card h3 {
     font-size: 1.3rem;
@@ -247,11 +248,8 @@
 @media (max-width: 768px) {
   .filter-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
-    margin: 0 20px;
-    gap: 15px; 
-    width: 100%;
     margin-bottom: 20px;
   }
 
@@ -260,25 +258,19 @@
     align-items: center;
     justify-content: right;
     flex-direction: row; 
-    gap: 10px;
-    margin-left: auto;
   }
 
   .search-container input {
     flex: 1; 
-    width: 70%;  
-    max-width: 200px;  
+    width: 100%;  
+    margin: 0 20px;
+    margin-left: 15px;
   }
 
   .search-container button {
-    margin-top: 0;
-    padding: 10px;
-    margin-left: 10px;
-  }
-
-  .services-container {
-    margin: 0 40px;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    margin: 0;
+    padding: 10px 25px;
+    font-size: 0.9rem;
   }
 
   .filter {
@@ -287,18 +279,25 @@
     flex-wrap: nowrap; 
     gap: 10px;
     width: 100%;
+    margin-top: 8px;
+    margin-right: 20px;
   }
 
   .filter button {
-    padding: 12px;
-    font-size: 1rem;
+    padding: 12px 26px;
+    font-size: 0.8rem;
     text-align: center;
     white-space: nowrap;
   }
 
+  .services-container {
+    margin: 0 40px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
   .avatar-container {
-    top: 180px;
-    left: 50%;
+    top: 190px;
+    left: 75%;
     transform: translateX(-20%);
   }
 
@@ -312,51 +311,34 @@
 }
 
 @media (max-width: 576px) {
-  .filter-container {
-    margin: 0 10px;
-    flex-direction: column;
-    gap: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
+  .filter-container{
+    margin: 10px 15px;
+    padding: 0;
+    margin-top: 40px;
   }
 
-  .search-container {
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    flex-direction: row;
-    gap: 5px;
-    padding: 10px;
-    
+  .search-container{
+    width: 94%;
   }
 
   .search-container input {
-    flex: 1;
-    width: 60%;  
-    max-width: 180px;  
-    padding: 6px; 
-    font-size: 0.9rem; 
+    margin: 0;
   }
 
   .search-container button {
-    margin-top: 0;
-    padding: 6px 8px;
-    font-size: 0.9rem;
+    padding: 10px;
+    margin-right: 10px;
   }
-  .filter {
-    display: flex;
-    justify-content: center; 
-    flex-wrap: wrap;
-    gap: 5px;
-    width: 100%;
+
+  .filter{
+    gap: 3px;
+    margin-left: 20px;
+    margin-top: 0;
   }
 
   .filter button {
-    padding: 12px;
-    font-size: 1rem;
-    text-align: center;
-    white-space: nowrap;
+    font-size: 0.8rem;
+    padding: 11px;
   }
 
   .services-container {
@@ -373,14 +355,15 @@
   }
 
   .avatar-container {
-    top: 140px;
+    top: 120px;
+    right: 15px;
     width: 40px;
     height: 40px;
   }
 
   .avatar {
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
   }
 
   .primary-btn, .secondary-btn {

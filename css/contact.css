@@ -168,7 +168,7 @@ button:hover {
 /* Media Queries for Responsiveness */
 @media (max-width: 576px) {
     .contact-container {
-        max-width: 50%;
+        max-width: 52%;
     }
 
     .contact-form input,
@@ -207,12 +207,13 @@ button:hover {
     .names-group .input-wrapper i {
         right: 15px;
     }
+
 }
 
 
-@media (min-width: 576px) and (max-width: 768px) {
+@media (min-width: 577px) and (max-width: 768px) {
     .contact-container {
-        max-width: 50%;
+        max-width: 63%;
 
     }
 
@@ -238,9 +239,9 @@ button:hover {
 }
 
 
-@media (min-width: 768px) and (max-width: 992px) {
+@media (min-width: 769px) and (max-width: 992px) {
     .contact-container {
-        max-width: 450px;
+        max-width: 600px;
     }
 
     .contact-form input,
