@@ -249,5 +249,77 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitButton.textContent = originalButtonText;
             }
         });
+
     }
+    
+const contactForm = document.querySelector(form[action="/contact"]); 
+if (contactForm && window.location.pathname.includes('/contact')) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); 
+        
+        const formData = new FormData(contactForm);
+        
+        const contactData = {
+            first_name: formData.get('first-name'), 
+            last_name: formData.get('last-name'),   
+            gender: formData.get('gender'),         
+            phone: formData.get('phone'),          
+            dob: formData.get('dob'),              
+            email: formData.get('email'),          
+            language: formData.get('language'),   
+            message: formData.get('message')       
+        };
+        
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = 'جاري إرسال الرسالة...';
+        
+        try {
+            const response = await fetch('/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(contactData), 
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+                // عرض إشعار بالنجاح
+                showNotification(
+                    'success',
+                    'تم إرسال الرسالة بنجاح!', 
+                    result.details || 'شكراً لتواصلك معنا');
+                
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                
+                // مسح النموذج بعد الإرسال
+                contactForm.reset();
+            } else {
+                showNotification(
+                    'error',
+                     'فشل في إرسال الرسالة',
+                      result.error || 'حدث خطأ أثناء إرسال الرسالة');
+                
+                // Reset submit button
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification(
+                'error',
+                 'خطأ في النظام',
+                 'حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.');
+            
+            // إعادة تفعيل زر الإرسال
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+        }
+    });
+}
 });

@@ -1,5 +1,6 @@
 const express = require("express");
 const { body, validationResult } = require("express-validator");
+//const nodemailer = require("nodemailer");
 const path = require("path");
 const app = express();
 const port = 3000;
@@ -184,6 +185,33 @@ const contactValidation = [
 
   
 ];
+app.post("/contact", contactValidation, (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      message: "فشل في إرسال الرسالة",
+      errors: errors.array()
+    });
+  }
+
+  const { 'first-name': firstName, 'last-name': lastName, email, phone, message } = req.body;
+
+  console.log('Data received:', { firstName, lastName, email, phone, message });
+
+  res.status(200).json({
+    success: true,
+    message: 'تم إرسال رسالتك بنجاح. سنقوم بالتواصل معك قريبًا.',
+    data: {
+      firstName,
+      lastName,
+      email,
+      phone,
+      message
+    }
+  });
+});
+
 
 // Login endpoint
 app.post("/login", loginValidation, (req, res) => {
