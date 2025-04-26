@@ -1,4 +1,3 @@
-// Yousr - Backend Server
 const express = require("express");
 const { body, validationResult } = require("express-validator");
 const path = require("path");
@@ -13,7 +12,7 @@ const pool = mysql.createPool({
   user: "root",
   password: "root",
   database: "yousr",
-  port: 3306, // Default MAMP MySQL port
+  port: 3306,
 });
 
 // Middleware
@@ -48,23 +47,74 @@ app.get("/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "Website", "html", "sign-up.html"));
 });
 
-// Form validation rules
+
 // Login validation
 const loginValidation = [
-  body("username").isLength({ min: 3 }).withMessage("Username must be at least 3 characters"),
-  body("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters")
+  body("username")
+    .notEmpty().withMessage("اسم المستخدم مطلوب")
+    .isLength({ min: 3, max: 20 }).withMessage("اسم المستخدم يجب أن يكون بين 3 و 20 حرفًا")
+    .matches(/^[a-zA-Z][a-zA-Z0-9._-]{2,19}$/).withMessage("اسم المستخدم يجب أن يبدأ بحرف ويحتوي على أحرف وأرقام فقط")
+    .isString().withMessage("اسم المستخدم يجب أن يكون نصًا")
+    .trim()
+    .escape(),
+  body("password")
+    .notEmpty().withMessage("كلمة المرور مطلوبة")
+    .isLength({ min: 8, max: 35 }).withMessage("كلمة المرور يجب أن تكون بين 8 و 35 حرفًا")
+    .matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%*?&])[A-Za-z\d@$!%*?&]{8,35}/).withMessage("كلمة المرور يجب أن تحتوي على حرف كبير، حرف صغير، رقم، ورمز خاص")
+    .isString().withMessage("كلمة المرور يجب أن تكون نصًا")
 ];
 
 // Sign-up validation
 const signupValidation = [
-  body("username").isLength({ min: 3 }).withMessage("Username must be at least 3 characters"),
-  body("email").isEmail().withMessage("Please enter a valid email"),
-  body("password").isLength({ min: 8 }).withMessage("Password must be at least 8 characters"),
-  body("phone").isLength({ min: 10 }).withMessage("Phone number must be at least 10 digits"),
-  body("user-role").isIn(["freelancer", "client"]).withMessage("User role must be freelancer or client"),
-  body("gender").isIn(["male", "female"]).withMessage("Gender must be male or female"),
-  // Simplified date validation
-  body("date_of_birth").notEmpty().withMessage("Date of birth is required")
+  body("username")
+    .notEmpty().withMessage("اسم المستخدم مطلوب")
+    .isLength({ min: 3, max: 20 }).withMessage("اسم المستخدم يجب أن يكون بين 3 و 20 حرفًا")
+    .matches(/^[a-zA-Z][a-zA-Z0-9._-]{2,19}$/).withMessage("اسم المستخدم يجب أن يبدأ بحرف ويحتوي على أحرف وأرقام فقط")
+    .isString().withMessage("اسم المستخدم يجب أن يكون نصًا")
+    .trim()
+    .escape(),
+  body("email")
+    .notEmpty().withMessage("البريد الإلكتروني مطلوب")
+    .isEmail().withMessage("الرجاء إدخال بريد إلكتروني صحيح")
+    .isLength({ min: 5, max: 80 }).withMessage("البريد الإلكتروني يجب أن يكون بين 5 و 80 حرفًا")
+    .matches(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/).withMessage("البريد الإلكتروني يجب أن يكون بصيغة صحيحة")
+    .normalizeEmail()
+    .trim()
+    .escape(),
+  body("password")
+    .notEmpty().withMessage("كلمة المرور مطلوبة")
+    .isLength({ min: 8, max: 35 }).withMessage("كلمة المرور يجب أن تكون بين 8 و 35 حرفًا")
+    .matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%*?&])[A-Za-z\d@$!%*?&]{8,35}/).withMessage("كلمة المرور يجب أن تحتوي على حرف كبير، حرف صغير، رقم، ورمز خاص")
+    .isString().withMessage("كلمة المرور يجب أن تكون نصًا"),
+  body("phone")
+    .notEmpty().withMessage("رقم الهاتف مطلوب")
+    .isLength({ min: 10, max: 15 }).withMessage("رقم الهاتف يجب أن يكون بين 10 و 15 رقمًا")
+    .matches(/[0-9]{10,}/).withMessage("رقم الهاتف يجب أن يتكون من أرقام فقط")
+    .trim(),
+  body("user-role")
+    .notEmpty().withMessage("نوع المستخدم مطلوب")
+    .custom((value) => {
+      const whitelist = ["freelancer", "client"];
+      if (whitelist.includes(value)) return true;
+      return false;
+    })
+    .withMessage("نوع المستخدم يجب أن يكون فريلانسر أو عميل")
+    .trim()
+    .escape(),
+  body("gender")
+    .notEmpty().withMessage("الجنس مطلوب")
+    .custom((value) => {
+      const whitelist = ["male", "female"];
+      if (whitelist.includes(value)) return true;
+      return false;
+    })
+    .withMessage("الجنس يجب أن يكون ذكر أو أنثى")
+    .trim()
+    .escape(),
+  body("date_of_birth")
+    .notEmpty().withMessage("تاريخ الميلاد مطلوب")
+    .isDate().withMessage("تاريخ الميلاد يجب أن يكون بصيغة صحيحة")
+    .trim()
 ];
 
 // Login endpoint
@@ -92,12 +142,11 @@ app.post("/login", loginValidation, (req, res) => {
       
       const user = results[0];
       
-      // In a real app, you'd use bcrypt to compare hashed passwords
       if (password !== user.password) {
         return res.status(401).json({ error: "Invalid password" });
       }
       
-      // Success - in a real app, you would create a session/JWT here
+      // Success
       res.json({ success: true, message: "Login successful", user: { id: user.id, username: user.username } });
     }
   );
@@ -112,24 +161,17 @@ app.post("/signup", signupValidation, (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   
-  // Log the request body to see what we're receiving
   console.log("Signup request body:", req.body);
   
   const { username, email, password, phone, gender } = req.body;
   
-  // Get user_role from user-role (handling the different field name)
   const user_role = req.body["user-role"];
   
-  // Handle date_of_birth - ensure it's in the correct format
   let date_of_birth = req.body.date_of_birth;
   console.log("Original date_of_birth received:", date_of_birth);
   
-  // Direct approach without complex parsing to avoid potential errors
   if (date_of_birth) {
     try {
-      // For MySQL date fields, YYYY-MM-DD format is required
-      // HTML date inputs typically return this format already
-      // Just ensure it's a string and remove any whitespace
       date_of_birth = date_of_birth.toString().trim();
       
       console.log("Formatted date_of_birth for database:", date_of_birth);
@@ -141,61 +183,67 @@ app.post("/signup", signupValidation, (req, res) => {
     }
   }
   
-  // Check if email already exists
+  // First check if username already exists
   pool.query(
-    "SELECT * FROM users WHERE email = ?",
-    [email],
+    "SELECT * FROM users WHERE username = ?",
+    [username],
     (error, results) => {
       if (error) {
-        console.error("Database error during email check:", error);
+        console.error("Database error during username check:", error);
         return res.status(500).json({ error: "Database error" });
       }
       
       if (results.length > 0) {
-        return res.status(409).json({ error: "Email already exists" });
+        return res.status(409).json({ error: "اسم المستخدم مستخدم بالفعل، الرجاء اختيار اسم مستخدم آخر" });
       }
       
-      // Insert new user
-      const userData = { 
-        username, 
-        email, 
-        password, 
-        phone, 
-        user_role, // Now contains the value from user-role field
-        gender, 
-        date_of_birth 
-      };
-      
-      console.log("Inserting user data:", userData);
-      
+      // Then check if email already exists
       pool.query(
-        "INSERT INTO users SET ?",
-        userData,
-        (error, result) => {
+        "SELECT * FROM users WHERE email = ?",
+        [email],
+        (error, results) => {
           if (error) {
-            console.error("Database error during user creation:", error);
-            return res.status(500).json({ error: `Failed to create user: ${error.message}` });
+            console.error("Database error during email check:", error);
+            return res.status(500).json({ error: "Database error" });
           }
           
-          res.status(201).json({ 
-            success: true, 
-            message: "User created successfully",
-            userId: result.insertId
-          });
+          if (results.length > 0) {
+            return res.status(409).json({ error: "البريد الإلكتروني مستخدم بالفعل" });
+          }
+          
+          // Insert new user
+          const userData = { 
+            username, 
+            email, 
+            password, 
+            phone, 
+            user_role,
+            gender, 
+            date_of_birth 
+          };
+          
+          console.log("Inserting user data:", userData);
+          
+          pool.query(
+            "INSERT INTO users SET ?",
+            userData,
+            (error, result) => {
+              if (error) {
+                console.error("Database error during user creation:", error);
+                return res.status(500).json({ error: `Failed to create user: ${error.message}` });
+              }
+              
+              res.status(201).json({ 
+                success: true, 
+                message: "User created successfully",
+                userId: result.insertId
+              });
+            }
+          );
         }
       );
     }
   );
-});
-
-// Get all users (admin feature)
-app.get("/users", (req, res) => {
-  pool.query("SELECT id, username, email, phone, user_role, gender, date_of_birth FROM users", (error, results) => {
-    if (error) {
-      return res.status(500).json({ error: "Database error" });
-    }
-    res.json(results);
-  });
 });
 
 // Activating server

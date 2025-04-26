@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Form validation and submission for signup
-    const signupForm = document.querySelector('form[action="#"]');
+    const signupForm = document.querySelector('form[action="/signup"]');
     if (signupForm && window.location.href.includes('sign-up.html')) {
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -27,16 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // Get form data
             const formData = new FormData(signupForm);
             
-            // Format date of birth to ensure it's in YYYY-MM-DD format
-            let dobValue = formData.get('dob');
-            console.log('Original DOB from form:', dobValue);
+            // Get date of birth from the form
+            let dobValue = formData.get('date_of_birth');
+            console.log('Original date_of_birth from form:', dobValue);
             
-            // Simple approach: Just directly convert the dob value to a MySQL acceptable format
-            // This is more reliable than trying to construct a date object
             if (dobValue) {
                 try {
-                    // Extract the date components directly from the string
-                    // The input date format is typically YYYY-MM-DD from the HTML date input
+                    // Make sure the date is in the format expected by the server
                     dobValue = dobValue.toString().trim();
                     
                     const userData = {
@@ -87,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Handle login form
-    const loginForm = document.querySelector('form[action="#"]');
+    const loginForm = document.querySelector('form[action="/login"]');
     if (loginForm && window.location.href.includes('login.html')) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -95,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Get form data
             const formData = new FormData(loginForm);
             const loginData = {
-                email: formData.get('email'),
+                username: formData.get('username'),
                 password: formData.get('password')
             };
             
