@@ -51,7 +51,7 @@ app.get("/signup", (req, res) => {
 // Form validation rules
 // Login validation
 const loginValidation = [
-  body("email").isEmail().withMessage("Please enter a valid email"),
+  body("username").isLength({ min: 3 }).withMessage("Username must be at least 3 characters"),
   body("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters")
 ];
 
@@ -75,19 +75,19 @@ app.post("/login", loginValidation, (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   
-  const { email, password } = req.body;
+  const { username, password } = req.body;
   
   // Check if user exists in database
   pool.query(
-    "SELECT * FROM users WHERE email = ?",
-    [email],
+    "SELECT * FROM users WHERE username = ?",
+    [username],
     (error, results) => {
       if (error) {
         return res.status(500).json({ error: "Database error" });
       }
       
       if (results.length === 0) {
-        return res.status(401).json({ error: "Email not found" });
+        return res.status(401).json({ error: "Username not found" });
       }
       
       const user = results[0];
