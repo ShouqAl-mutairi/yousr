@@ -228,6 +228,138 @@ footer p {
   margin: 0;
 }
 
+/* Notification System */
+.notification-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    width: 320px;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.notification {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    transform: translateX(-120%);
+    transition: transform 0.3s ease-out;
+    opacity: 0.95;
+    border-right: 5px solid #ccc;
+}
+
+.notification.visible {
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-right-color: #28a745;
+}
+
+.notification.error {
+    border-right-color: #dc3545;
+}
+
+.notification.warning {
+    border-right-color: #ffc107;
+}
+
+.notification.info {
+    border-right-color: #17a2b8;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.notification-title {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.notification.success .notification-title {
+    color: #28a745;
+}
+
+.notification.error .notification-title {
+    color: #dc3545;
+}
+
+.notification.warning .notification-title {
+    color: #ffc107;
+}
+
+.notification.info .notification-title {
+    color: #17a2b8;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    line-height: 20px;
+    cursor: pointer;
+    color: #777;
+}
+
+.notification-close:hover {
+    color: #333;
+}
+
+.notification-body {
+    padding: 15px;
+}
+
+.notification-body p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* For RTL support */
+html[dir="rtl"] .notification-container {
+    right: 20px;
+    left: auto;
+}
+
+html[dir="rtl"] .notification {
+    transform: translateX(120%);
+    border-right: none;
+    border-left: 5px solid #ccc;
+}
+
+html[dir="rtl"] .notification.success {
+    border-left-color: #28a745;
+}
+
+html[dir="rtl"] .notification.error {
+    border-left-color: #dc3545;
+}
+
+html[dir="rtl"] .notification.warning {
+    border-left-color: #ffc107;
+}
+
+html[dir="rtl"] .notification.info {
+    border-left-color: #17a2b8;
+}
+
+html[dir="rtl"] .notification.visible {
+    transform: translateX(0);
+}
+
+/* Loading state for buttons */
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
 
 @media (max-width: 576px) {
   .hamburger {

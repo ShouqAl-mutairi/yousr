@@ -158,7 +158,12 @@ app.post("/signup", signupValidation, (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log("Validation errors:", errors.array());
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ 
+      success: false,
+      message: "فشل في إنشاء الحساب",
+      details: "الرجاء التحقق من المعلومات المدخلة",
+      errors: errors.array() 
+    });
   }
   
   console.log("Signup request body:", req.body);
@@ -178,6 +183,9 @@ app.post("/signup", signupValidation, (req, res) => {
     } catch (error) {
       console.error("Error processing date:", error);
       return res.status(400).json({ 
+        success: false,
+        message: "خطأ في تاريخ الميلاد",
+        details: "يجب أن يكون تاريخ الميلاد صالحًا",
         errors: [{ msg: "Date of birth must be a valid date" }] 
       });
     }
@@ -190,11 +198,21 @@ app.post("/signup", signupValidation, (req, res) => {
     (error, results) => {
       if (error) {
         console.error("Database error during username check:", error);
-        return res.status(500).json({ error: "Database error" });
+        return res.status(500).json({ 
+          success: false,
+          message: "خطأ في قاعدة البيانات",
+          details: "حدث خطأ أثناء التحقق من اسم المستخدم",
+          error: "Database error" 
+        });
       }
       
       if (results.length > 0) {
-        return res.status(409).json({ error: "اسم المستخدم مستخدم بالفعل، الرجاء اختيار اسم مستخدم آخر" });
+        return res.status(409).json({ 
+          success: false,
+          message: "اسم المستخدم غير متاح",
+          details: "اسم المستخدم مستخدم بالفعل، الرجاء اختيار اسم مستخدم آخر",
+          error: "اسم المستخدم مستخدم بالفعل" 
+        });
       }
       
       // Then check if email already exists
@@ -204,11 +222,21 @@ app.post("/signup", signupValidation, (req, res) => {
         (error, results) => {
           if (error) {
             console.error("Database error during email check:", error);
-            return res.status(500).json({ error: "Database error" });
+            return res.status(500).json({ 
+              success: false,
+              message: "خطأ في قاعدة البيانات",
+              details: "حدث خطأ أثناء التحقق من البريد الإلكتروني",
+              error: "Database error" 
+            });
           }
           
           if (results.length > 0) {
-            return res.status(409).json({ error: "البريد الإلكتروني مستخدم بالفعل" });
+            return res.status(409).json({ 
+              success: false,
+              message: "البريد الإلكتروني غير متاح",
+              details: "البريد الإلكتروني مستخدم بالفعل",
+              error: "البريد الإلكتروني مستخدم بالفعل" 
+            });
           }
           
           // Insert new user
@@ -230,12 +258,18 @@ app.post("/signup", signupValidation, (req, res) => {
             (error, result) => {
               if (error) {
                 console.error("Database error during user creation:", error);
-                return res.status(500).json({ error: `Failed to create user: ${error.message}` });
+                return res.status(500).json({ 
+                  success: false,
+                  message: "فشل في إنشاء الحساب",
+                  details: `حدث خطأ أثناء إنشاء الحساب: ${error.message}`,
+                  error: `Failed to create user: ${error.message}` 
+                });
               }
               
               res.status(201).json({ 
                 success: true, 
-                message: "User created successfully",
+                message: "تم إنشاء الحساب بنجاح",
+                details: "يمكنك الآن تسجيل الدخول باستخدام بيانات حسابك",
                 userId: result.insertId
               });
             }
