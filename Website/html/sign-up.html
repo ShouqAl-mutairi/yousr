@@ -15,7 +15,7 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/auth.css" rel="stylesheet">
     <link href="../assets/images/logo-without-text.png" rel="icon" type="image/png">
-    <script src="../js/app.js" defer></script>
+    <script src="../js/script.js" defer></script>
   </head>
 
   <body>
@@ -28,32 +28,32 @@
         </div>
         <ul class="nav-menu">
           <li class="nav-item">
-            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="/" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a>
           </li>
           <li class="nav-item">
-            <a href="freelancers.html" class="nav-link"><i class="fas fa-cogs"></i> خدماتنا</a>
+            <a href="/freelancers" class="nav-link"><i class="fas fa-cogs"></i> خدماتنا</a>
           </li>
           <li class="nav-item">
-            <a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> من نحن</a>
+            <a href="/about" class="nav-link"><i class="fas fa-info-circle"></i> من نحن</a>
           </li>
           <li class="nav-item">
-            <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> تواصل معنا</a>
+            <a href="/contact" class="nav-link"><i class="fas fa-envelope"></i> تواصل معنا</a>
           </li>
           <li>
             <div class="auth-buttons">
-             <a href="sign-up.html" class="btn primary"><i class="fas fa-user"></i> سجل</a>
-             <a href="login.html" class="btn secondary"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a>
+             <a href="/signup" class="btn primary"><i class="fas fa-user"></i> سجل</a>
+             <a href="/login" class="btn secondary"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a>
             </div>
           </li>
         </ul>
-        <a href="#" class="logo">
+        <a href="/" class="logo">
           <img src="../assets/images/logo-white.png" alt="yousr logo">
         </a>
       </nav>
     </header>
 
     <main class="form-container">
-      <form action="#" method="post">
+      <form action="/signup" method="post">
         <div class="title">
           <img
             class="logo-title"
@@ -157,7 +157,7 @@
             <input
               type="date"
               id="dob"
-              name="dob"
+              name="date_of_birth"
               class="form-input date"
               required>
           </div>
@@ -169,7 +169,7 @@
           </label>
         </div>
         <button type="submit">إنشاء حساب</button>
-        <p>لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a></p>
+        <p>لديك حساب بالفعل؟ <a href="/login">تسجيل الدخول</a></p>
       </form>
     </main>
 
