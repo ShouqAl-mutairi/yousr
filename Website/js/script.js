@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Function to show notifications
-    const showNotification = (type, title, message, duration = 5000) => {
+    const showNotification = (type, title, message, duration = 10000) => {
         const notificationContainer = document.querySelector('.notification-container');
         
         const notification = document.createElement('div');

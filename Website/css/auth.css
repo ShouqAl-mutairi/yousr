@@ -79,7 +79,7 @@ input[type="checkbox"]:checked {
   color: #9a9a9a;
 }
 
-button {
+button.auth-button {
   margin-top: 10px;
   background-color: #7e70fa;
   color: white;
@@ -94,8 +94,15 @@ button {
   font-family: "Almarai", sans-serif;
 }
 
-button:hover {
+button.auth-button:hover {
   background-color: #3d377b;
+}
+
+/* General button without hover effect */
+button {
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
 }
 
 .date {
