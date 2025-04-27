@@ -249,18 +249,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitButton.textContent = originalButtonText;
             }
         });
-
     }
     
+    // Contact form handler
     const contactForm = document.querySelector('form[action="/contact"]');
     if (contactForm && window.location.pathname.includes('/contact')) {
       contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-
+        
         const formData = new FormData(contactForm);
-
+        
         const contactData = {
-          firstName: formData.get('firstName'), // Correct field name
+          firstName: formData.get('firstName'),
           'last-name': formData.get('last-name'),
           gender: formData.get('gender'),
           phone: formData.get('phone'),
@@ -269,12 +269,14 @@ document.addEventListener('DOMContentLoaded', () => {
           language: formData.get('language'),
           message: formData.get('message')
         };
-
+        
+        console.log('Contact form data:', contactData);
+        
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalButtonText = submitButton.textContent;
         submitButton.disabled = true;
         submitButton.textContent = 'جاري إرسال الرسالة...';
-
+        
         try {
           const response = await fetch('/contact', {
             method: 'POST',
@@ -283,25 +285,40 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify(contactData),
           });
-
+          
           const result = await response.json();
-
+          console.log('Server response to contact:', result);
+          
           if (response.ok) {
             showNotification(
               'success',
               'تم إرسال الرسالة بنجاح!',
-              result.details || 'شكراً لتواصلك معنا');
-
+              'شكراً لتواصلك معنا. سيتم الرد عليك في أقرب وقت ممكن.'
+            );
+            
+            // Redirect to home page after delay
             setTimeout(() => {
               window.location.href = '/';
-            }, 1500);
-
+            }, 2000);
+            
             contactForm.reset();
           } else {
-            showNotification(
-              'error',
-              'فشل في إرسال الرسالة',
-              result.error || (result.errors && result.errors[0].msg) || result.details || 'حدث خطأ أثناء إرسال الرسالة');
+            // More detailed error handling
+            if (result.errors && result.errors.length > 0) {
+              const errorMessages = result.errors.map(err => err.msg).join('<br>');
+              showNotification(
+                'error',
+                'فشل في إرسال الرسالة',
+                `<strong>${result.message || 'الرجاء التحقق من المعلومات المدخلة'}</strong><br>${errorMessages}`
+              );
+            } else {
+              showNotification(
+                'error',
+                'فشل في إرسال الرسالة',
+                result.message || result.error || 'حدث خطأ أثناء إرسال الرسالة'
+              );
+            }
+            
             // Reset submit button
             submitButton.disabled = false;
             submitButton.textContent = originalButtonText;
@@ -311,8 +328,9 @@ document.addEventListener('DOMContentLoaded', () => {
           showNotification(
             'error',
             'خطأ في النظام',
-            'حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.');
-
+            'حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.'
+          );
+          
           submitButton.disabled = false;
           submitButton.textContent = originalButtonText;
         }
