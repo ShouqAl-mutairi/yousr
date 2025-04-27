@@ -2,6 +2,142 @@ document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     const authButtons = document.querySelector('.auth-buttons');
+    
+    // Check if user is logged in
+    const checkAuthStatus = () => {
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            // User is logged in
+            return JSON.parse(userData);
+        }
+        return null;
+    };
+    
+    // Update nav menu based on auth status
+    const updateNavMenu = () => {
+        const user = checkAuthStatus();
+        const authButtonsContainer = document.querySelector('.auth-buttons');
+        
+        if (user && authButtonsContainer) {
+            // Replace auth buttons with profile picture
+            authButtonsContainer.innerHTML = `
+                <div class="user-profile">
+                    <img src="${user.avatar}" alt="${user.username}" class="profile-picture">
+                    <div class="profile-dropdown">
+                        <a href="/profile" class="profile-dropdown-item">
+                            <i class="fas fa-user"></i> الملف الشخصي
+                        </a>
+                        <div class="profile-dropdown-divider"></div>
+                        <a href="#" class="profile-dropdown-item logout-link">
+                            <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            // Add click event for profile picture dropdown
+            const profilePicture = document.querySelector('.profile-picture');
+            const profileDropdown = document.querySelector('.profile-dropdown');
+            
+            if (profilePicture && profileDropdown) {
+                profilePicture.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    profileDropdown.classList.toggle('active');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', () => {
+                    profileDropdown.classList.remove('active');
+                });
+                
+                // Prevent dropdown from closing when clicking inside it
+                profileDropdown.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+                
+                // Handle logout
+                const logoutLink = document.querySelector('.logout-link');
+                if (logoutLink) {
+                    logoutLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        localStorage.removeItem('userData');
+                        showNotification(
+                            'info',
+                            'تم تسجيل الخروج',
+                            'تم تسجيل خروجك بنجاح'
+                        );
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 1500);
+                    });
+                }
+            }
+        }
+    };
+    
+    // Update profile page if user is on profile page
+    const updateProfilePage = () => {
+        const user = checkAuthStatus();
+        
+        if (window.location.pathname.includes('/profile')) {
+            // Redirect to login if not authenticated
+            if (!user) {
+                window.location.href = '/login';
+                return;
+            }
+            
+            // Update profile page elements with user data
+            document.getElementById('profile-avatar-img').src = user.avatar;
+            document.getElementById('profile-name').textContent = user.username;
+            document.getElementById('profile-role').innerHTML = `نوع الحساب: <span>${user.user_role === 'freelancer' ? 'فريلانسر' : 'عميل'}</span>`;
+            document.getElementById('profile-email').innerHTML = `البريد الإلكتروني: <span>${user.email}</span>`;
+            document.getElementById('profile-phone').innerHTML = `رقم الهاتف: <span>${user.phone}</span>`;
+            
+            // Personal info tab
+            document.getElementById('info-name').textContent = user.username;
+            document.getElementById('info-email').textContent = user.email;
+            document.getElementById('info-phone').textContent = user.phone;
+            document.getElementById('info-dob').textContent = new Date(user.date_of_birth).toLocaleDateString('ar-SA');
+            document.getElementById('info-gender').textContent = user.gender === 'male' ? 'ذكر' : 'أنثى';
+            
+            // Settings tab
+            document.getElementById('avatar-preview-img').src = user.avatar;
+            
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabName = button.dataset.tab;
+                    
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to current button and content
+                    button.classList.add('active');
+                    document.getElementById(`${tabName}-tab`).classList.add('active');
+                });
+            });
+            
+            // Logout button in settings
+            const logoutBtn = document.querySelector('.logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('userData');
+                    showNotification(
+                        'info',
+                        'تم تسجيل الخروج',
+                        'تم تسجيل خروجك بنجاح'
+                    );
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                });
+            }
+        }
+    };
 
     // Add notification container to body if it doesn't exist
     if (!document.querySelector('.notification-container')) {
@@ -20,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const notificationContent = `
             <div class="notification-header">
                 <span class="notification-title">${title}</span>
-                <button class="notification-close">&times;</button>
+                <button class="notification-close" style="color: #777 !important; background: none !important; border: none; font-size: 14px; padding: 3px; margin-left: 8px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%;">&times;</button>
             </div>
             <div class="notification-body">
                 <p>${message}</p>
@@ -213,6 +349,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
                 
                 if (response.ok) {
+                    // Store user data in localStorage
+                    if (result.user) {
+                        localStorage.setItem('userData', JSON.stringify(result.user));
+                    }
+                    
                     // Success notification
                     showNotification(
                         'success', 
@@ -336,4 +477,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }
+    
+    // Call the authentication check and UI update
+    updateNavMenu();
+    updateProfilePage();
 });

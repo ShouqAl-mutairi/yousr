@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة يُســر | الملف الشخصي</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap"
+      rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/profile.css" rel="stylesheet">
+    <link href="../assets/images/logo-without-text.png" rel="icon" type="image/png">
+    <script src="../js/script.js" defer></script>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+          </li>
+          <li class="nav-item">
+            <a href="/freelancers" class="nav-link"><i class="fas fa-cogs"></i> خدماتنا</a>
+          </li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link"><i class="fas fa-info-circle"></i> من نحن</a>
+          </li>
+          <li class="nav-item">
+            <a href="/contact" class="nav-link"><i class="fas fa-envelope"></i> تواصل معنا</a>
+          </li>
+          <li>
+            <div class="auth-buttons">
+              <a href="/signup" class="btn primary"><i class="fas fa-user"></i> سجل</a>
+              <a href="/login" class="btn secondary"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a>
+            </div>
+          </li>
+        </ul>
+        <a href="/" class="logo">
+          <img src="../assets/images/logo-white.png" alt="yousr logo">
+        </a>
+      </nav>
+    </header>
+
+    <main class="profile-container">
+      <div class="profile-header">
+        <div class="profile-cover"></div>
+        <div class="profile-info">
+          <div class="profile-avatar">
+            <img id="profile-avatar-img" src="../assets/images/avatar/avatar-man.jpg" alt="صورة الملف الشخصي">
+          </div>
+          <div class="profile-details">
+            <h2 id="profile-name">اسم المستخدم</h2>
+            <p id="profile-role">نوع الحساب: <span>فريلانسر</span></p>
+            <p id="profile-email">البريد الإلكتروني: <span>example@email.com</span></p>
+            <p id="profile-phone">رقم الهاتف: <span>+123456789</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-tabs">
+        <button class="tab-button active" data-tab="info">المعلومات الشخصية</button>
+        <button class="tab-button" data-tab="projects">المشاريع</button>
+        <button class="tab-button" data-tab="settings">إعدادات الحساب</button>
+      </div>
+
+      <div class="profile-content">
+        <!-- Personal Info Tab -->
+        <div class="tab-content active" id="info-tab">
+          <div class="info-card">
+            <h3>المعلومات الشخصية</h3>
+            <div class="info-item">
+              <span class="info-label">الاسم:</span>
+              <span id="info-name" class="info-value">اسم المستخدم</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">البريد الإلكتروني:</span>
+              <span id="info-email" class="info-value">example@email.com</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">رقم الهاتف:</span>
+              <span id="info-phone" class="info-value">+123456789</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">تاريخ الميلاد:</span>
+              <span id="info-dob" class="info-value">01/01/1990</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">الجنس:</span>
+              <span id="info-gender" class="info-value">ذكر</span>
+            </div>
+            <div class="info-actions">
+              <button class="edit-info-btn">تعديل المعلومات</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects Tab -->
+        <div class="tab-content" id="projects-tab">
+          <div class="projects-empty">
+            <i class="fas fa-project-diagram"></i>
+            <h3>لا توجد مشاريع حالياً</h3>
+            <p>ستظهر مشاريعك هنا عند إنشاءها أو المشاركة فيها</p>
+            <button class="create-project-btn">إنشاء مشروع جديد</button>
+          </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div class="tab-content" id="settings-tab">
+          <div class="settings-card">
+            <h3>إعدادات الحساب</h3>
+            <div class="settings-item">
+              <h4>تغيير كلمة المرور</h4>
+              <form id="password-form" class="settings-form">
+                <div class="form-group">
+                  <label for="current-password">كلمة المرور الحالية</label>
+                  <input type="password" id="current-password" required>
+                </div>
+                <div class="form-group">
+                  <label for="new-password">كلمة المرور الجديدة</label>
+                  <input type="password" id="new-password" required>
+                </div>
+                <div class="form-group">
+                  <label for="confirm-password">تأكيد كلمة المرور</label>
+                  <input type="password" id="confirm-password" required>
+                </div>
+                <button type="submit" class="update-password-btn">تحديث كلمة المرور</button>
+              </form>
+            </div>
+            <div class="settings-item">
+              <h4>تغيير صورة الملف الشخصي</h4>
+              <div class="avatar-upload">
+                <div class="avatar-preview">
+                  <img id="avatar-preview-img" src="../assets/images/avatar/avatar-man.jpg" alt="معاينة الصورة">
+                </div>
+                <div class="avatar-edit">
+                  <input type="file" id="avatar-upload" accept="image/*">
+                  <label for="avatar-upload">اختر صورة</label>
+                </div>
+              </div>
+              <button class="update-avatar-btn">تحديث الصورة</button>
+            </div>
+            <div class="settings-item danger-zone">
+              <h4>منطقة الخطر</h4>
+              <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+              <button class="delete-account-btn"><i class="fas fa-trash-alt"></i> حذف الحساب</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-top">
+        <div class="footer-right">
+          <img
+            src="../assets/images/logo-without-text.png"
+            alt="yousr logo"
+            class="footer-logo">
+          <div class="contact-info">
+            <p>
+              <i class="fas fa-envelope"></i> البريد الإلكتروني :
+              <a href="mailto:info@yousr.com">info@yousr.com</a>
+            </p>
+            <p>
+              <i class="fas fa-phone"></i> الهاتف :
+              <a href="tel:+123456789">+966 549655977</a>
+            </p>
+          </div>
+        </div>
+        <div class="footer-left">
+          <div class="quick-links">
+            <a href="#">الشروط والأحكام</a>
+            <a href="#">سياسة الخصوصية</a>
+            <a href="#">الأسئلة الشائعة</a>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-bottom">
+        <p class="copyright">
+          <i class="fas fa-copyright"></i> 2025 يُســر. جميع الحقوق محفوظة.
+        </p>
+        <div class="social-media">
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+          <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -80,6 +80,9 @@ app.get("/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "Website", "html", "sign-up.html"));
 });
 
+app.get("/profile", (req, res) => {
+  res.sendFile(path.join(__dirname, "Website", "html", "profile.html"));
+});
 
 // Login validation
 const loginValidation = [
@@ -339,8 +342,26 @@ app.post("/login", loginValidation, (req, res) => {
         return res.status(401).json({ error: "Invalid password" });
       }
       
-      // Success
-      res.json({ success: true, message: "Login successful", user: { id: user.id, username: user.username } });
+      // Determine avatar path based on gender
+      let avatarPath = user.gender === 'female' 
+        ? '../assets/images/avatar/avatar-woman.jpg' 
+        : '../assets/images/avatar/avatar-man.jpg';
+      
+      // Success - return user data with avatar
+      res.json({ 
+        success: true, 
+        message: "Login successful", 
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          phone: user.phone,
+          user_role: user.user_role,
+          gender: user.gender,
+          date_of_birth: user.date_of_birth,
+          avatar: avatarPath
+        }
+      });
     }
   );
 });
