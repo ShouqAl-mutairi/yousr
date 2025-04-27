@@ -1,9 +1,28 @@
 const express = require("express");
 const { body, validationResult } = require("express-validator");
-//const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");
 const path = require("path");
 const app = express();
 const port = 3000;
+
+require('dotenv').config(); // Load environment variables
+
+console.log("EMAIL_USER:", process.env.EMAIL_USER); // Debugging
+console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Loaded" : "Not Loaded"); // Debugging
+
+// Initialize nodemailer transporter
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',  // Gmail SMTP server
+  port: 587,               // Port for TLS
+  secure: false,           // false for TLS - STARTTLS
+  auth: {
+    user: process.env.EMAIL_USER, // Your email address
+    pass: process.env.EMAIL_PASS  // Your app-specific password
+  },
+  tls: {
+    ciphers: 'SSLv3'        // TLS version
+  }
+});
 
 // Setting up database connection
 const mysql = require("mysql2");
@@ -18,7 +37,7 @@ const pool = mysql.createPool({
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); // Parses form data
 
 // Serving static website
 app.use(express.static(path.join(__dirname, "Website")));
@@ -120,10 +139,10 @@ const signupValidation = [
 
 // Contact page validation
 const contactValidation = [
-  body("first-name")
+  body("firstName") // Ensure the field name matches the request body
     .notEmpty().withMessage("الاسم الأول مطلوب")
     .isLength({ min: 3, max: 50 }).withMessage("الاسم الأول يجب أن يكون بين 3 و 50 حرفًا")
-    .matches(/^[\p{L} ]+$/u).withMessage("الاسم الأول يجب أن يحتوي على أحرف ومسافات فقط")
+    .matches(/^[\p{L}\s]+$/u).withMessage("الاسم الأول يجب أن يحتوي على أحرف ومسافات فقط")
     .trim()
     .escape(),
 
@@ -183,9 +202,31 @@ const contactValidation = [
     .trim()
     .escape(),
 
-  
+
 ];
-app.post("/contact", contactValidation, (req, res) => {
+
+// Debugging middleware
+const debugContactForm = (req, res, next) => {
+  console.log("Content-Type:", req.headers['content-type']);
+  console.log("Raw Body:", req.body);
+  console.log("firstName value:", req.body.firstName);
+  next();
+};
+
+app.post("/contact", debugContactForm, contactValidation, (req, res) => {
+  console.log("Incoming request headers:", req.headers);
+  console.log("Incoming request body:", req.body);
+
+  // Check if firstName is null or empty
+  if (!req.body.firstName || req.body.firstName.trim() === "") {
+    console.error("First name is missing or empty:", req.body.firstName);
+    return res.status(400).json({
+      success: false,
+      message: "الاسم الأول مطلوب ولكنه غير موجود في الطلب",
+      errors: [{ msg: "الاسم الأول مطلوب ولكنه غير موجود في الطلب" }]
+    });
+  }
+
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -195,20 +236,49 @@ app.post("/contact", contactValidation, (req, res) => {
     });
   }
 
-  const { 'first-name': firstName, 'last-name': lastName, email, phone, message } = req.body;
+  const { firstName, 'last-name': lastName, email, phone, message } = req.body;
 
   console.log('Data received:', { firstName, lastName, email, phone, message });
 
-  res.status(200).json({
-    success: true,
-    message: 'تم إرسال رسالتك بنجاح. سنقوم بالتواصل معك قريبًا.',
-    data: {
-      firstName,
-      lastName,
-      email,
-      phone,
-      message
+  //Set up email
+  const mailOptions = {
+    from: email,
+    to: 'shooglifa@icloud.com',
+    subject: `رسالة جديدة من ${firstName} ${lastName}`,
+    text: `
+      الاسم الأول: ${firstName}
+      الاسم الأخير: ${lastName}
+      البريد الإلكتروني: ${email}
+      رقم الجوال: ${phone}
+      الرسالة:
+      ${message}
+    `
+  };
+  // إرسال البريد الإلكتروني
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      return res.status(500).json({
+        success: false,
+        message: 'حدث خطأ أثناء إرسال الرسالة',
+        error: error.message, // Include the error message
+        details: error.toString() // Include more details about the error
+      });
     }
+    console.log('Email sent: ' + info.response);
+
+
+    res.status(200).json({
+      success: true,
+      message: 'تم إرسال رسالتك بنجاح. سنقوم بالتواصل معك قريبًا.',
+      data: {
+        firstName,
+        lastName,
+        email,
+        phone,
+        message
+      }
+    });
   });
 });
 
