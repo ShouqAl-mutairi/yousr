@@ -53,7 +53,7 @@
     </header>
 
     <main class="form-container">
-      <form action="/signup" method="post">
+      <form action="/signup" method="post" id="signupForm" novalidate>
         <div class="title">
           <img
             class="logo-title"
@@ -76,6 +76,7 @@
               <input type="radio" name="user-role" value="client" required> عميل
             </label>
           </div>
+          <div id="user-role-error" class="error-message"></div> <!--  الرسالة -->
         </div>
         <div class="form-group">
           <label for="username">اسم المستخدم:</label>
@@ -88,9 +89,9 @@
               class="form-input"
               minlength="3"
               maxlength="20"
-              pattern="[a-zA-Z][a-zA-Z0-9._-]{2,19}"
               required>
           </div>
+          <div id="username-error" class="error-message"></div> <!--  الرسالة -->
         </div>
         <div class="form-group">
           <label for="email">البريد الإلكتروني:</label>
@@ -102,10 +103,10 @@
               name="email"
               class="form-input"
               minlength="5"
-              maxlength="80"
-              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+              maxlength="80" 
               required>
           </div>
+          <div id="email-error" class="error-message"></div> <!-- الرسالة -->
         </div>
         <div class="form-group">
           <label for="password">كلمة المرور:</label>
@@ -117,10 +118,10 @@
               name="password"
               class="form-input"
               minlength="8"
-              maxlength="35"
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%*?&])[A-Za-z\d@$!%*?&]{8,35}" 
+              maxlength="35" 
               required>
           </div>
+          <div id="password-error" class="error-message"></div> <!-- الرسالة -->
         </div>
         <div class="form-group">
           <label for="phone">رقم الهاتف:</label>
@@ -133,9 +134,9 @@
               class="form-input"
               minlength="10"
               maxlength="15"
-              pattern="[0-9]{10,}"
               required>
           </div>
+          <div id="phone-error" class="error-message"></div> <!--الرسالة -->
         </div>
         <div class="form-group">
           <p class="label-header">الجنس:</p>
@@ -149,6 +150,7 @@
               ذكر
             </label>
           </div>
+          <div id="gender-error" class="error-message"></div> <!-- الرسالة -->
         </div>
         <div class="form-group">
           <label for="dob">تاريخ الميلاد:</label>
@@ -161,12 +163,14 @@
               class="form-input date"
               required>
           </div>
+          <div id="dob-error" class="error-message"></div> <!--الرسالة  -->
         </div>
         <div class="form-group">
           <label>
-            <input type="checkbox" name="terms" required>
+            <input type="checkbox" id="terms" required>
             أوافق على الشروط والأحكام
           </label>
+          <div id="terms-error" class="error-message"></div> <!-- الرسالة -->
         </div>
         <button type="submit" class="auth-button">إنشاء حساب</button>
         <p>لديك حساب بالفعل؟ <a href="/login">تسجيل الدخول</a></p>
