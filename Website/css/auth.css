@@ -198,24 +198,6 @@ p a:hover {
   text-align: start;
 }
 
-/* Style for the notification text */
-.notification-body p {
-  color: #333; 
-  font-size: 1rem; 
-}
-
-.notification-close {
-  color: #333333fd;
-  font-size: 20px;
-  background-color: #7e70fa; 
-  cursor: pointer;
-  transition: all 0.3s ease; 
-}
-
-.notification-close:hover {
-  color: #000000; 
-  opacity: 1; 
-}
 
 /* Media Queries */
 @media (max-width: 576px) {
