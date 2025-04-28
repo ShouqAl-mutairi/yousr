@@ -285,7 +285,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Update profile elements safely
             updateImageSrc('profile-avatar-img', user.avatar);
-            updateElement('profile-name', user.username);
+            updateElement('profile-first-name', user.first_name || '');
+            updateElement('profile-last-name', user.last_name || '');
             updateElementHTML('profile-role', `نوع الحساب: <span>${user.user_role === 'freelancer' ? 'فريلانسر' : 'عميل'}</span>`);
             updateElementHTML('profile-email', `البريد الإلكتروني: <span>${user.email}</span>`);
             updateElementHTML('profile-phone', `رقم الهاتف: <span>${user.phone}</span>`);
@@ -496,7 +497,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (avatarPreviewImg) avatarPreviewImg.src = userData.avatar;
         }
         
-        updateElement('profile-name', userData.username);
+        // Update with first and last name if available, otherwise fallback to username
+        const firstName = userData.first_name || '';
+        const lastName = userData.last_name || '';
+        updateElement('profile-first-name', firstName);
+        updateElement('profile-last-name', lastName);
+        
         updateElementInnerHTML('profile-role', `نوع الحساب: <span>${userData.user_role === 'freelancer' ? 'فريلانسر' : 'عميل'}</span>`);
         updateElementInnerHTML('profile-email', `البريد الإلكتروني: <span>${userData.email}</span>`);
         updateElementInnerHTML('profile-phone', `رقم الهاتف: <span>${userData.phone}</span>`);
@@ -537,33 +543,30 @@ document.addEventListener('DOMContentLoaded', () => {
             if (freelancerInfoSection) freelancerInfoSection.style.display = 'block';
             if (freelancerFieldsSection) freelancerFieldsSection.style.display = 'block';
             
-            // Update specialty with localized name
-            if (userData.specialty) {
-                const specialtyNames = {
-                    'web-development': 'تطوير الويب',
-                    'graphic-design': 'التصميم الجرافيكي',
-                    'digital-marketing': 'التسويق الرقمي',
-                    'content-writing': 'كتابة المحتوى',
-                    'other': 'أخرى'
-                };
-                updateElement('info-specialty', specialtyNames[userData.specialty] || userData.specialty);
-                
-                // Set the specialty dropdown in edit mode
-                updateInputValue('edit-specialty', userData.specialty);
-            }
+            // Update specialty
+            updateElement('info-specialty', userData.specialty || '-');
+            updateInputValue('edit-specialty', userData.specialty || '');
             
             // Update bio
-            updateElement('info-bio', userData.profile_bio);
-            updateInputValue('edit-bio', userData.profile_bio);
+            updateElement('info-bio', userData.profile_bio || '-');
+            updateInputValue('edit-bio', userData.profile_bio || '');
             
             // Update price range display and inputs
-            if (userData.min_price && userData.max_price) {
-                updateElement('info-price-range', `${userData.min_price} - ${userData.max_price}`);
-                updateInputValue('edit-min-price', userData.min_price);
-                updateInputValue('edit-max-price', userData.max_price);
+            const minPrice = userData.min_price || '';
+            const maxPrice = userData.max_price || '';
+            
+            console.log('Price range data:', { minPrice, maxPrice });
+            
+            if (minPrice && maxPrice) {
+                updateElement('info-price-range', `${minPrice} - ${maxPrice}`);
             } else {
                 updateElement('info-price-range', '-');
             }
+            
+            // Always update the input fields, even if empty
+            updateInputValue('edit-min-price', minPrice);
+            updateInputValue('edit-max-price', maxPrice);
+            
         } else {
             // Hide freelancer sections for clients
             const freelancerInfoSection = document.querySelector('.freelancer-info');
@@ -576,10 +579,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updateElement('info-availability', userData.is_available ? 'نعم' : 'لا');
 
         // Info tab - edit mode
-        updateInputValue('edit-first-name', userData.first_name);
-        updateInputValue('edit-last-name', userData.last_name);
-        updateInputValue('edit-email', userData.email);
-        updateInputValue('edit-phone', userData.phone);
+        updateInputValue('edit-first-name', userData.first_name || '');
+        updateInputValue('edit-last-name', userData.last_name || '');
+        updateInputValue('edit-email', userData.email || '');
+        updateInputValue('edit-phone', userData.phone || '');
         
         // Format date for input value
         if (userData.date_of_birth) {
@@ -714,22 +717,37 @@ document.addEventListener('DOMContentLoaded', () => {
             userInfoForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const formData = new FormData(userInfoForm);
-                const userData = {
-                    first_name: formData.get('first_name'),
-                    last_name: formData.get('last_name'),
-                    email: formData.get('email'),
-                    phone: formData.get('phone'),
-                    date_of_birth: formData.get('date_of_birth'),
-                    profile_bio: formData.get('profile_bio'),
-                    is_available: formData.get('is_available') === 'on',
-                    
-                    // Freelancer specific fields
-                    specialty: formData.get('specialty') || null,
-                    min_price: formData.get('min_price') || null,
-                    max_price: formData.get('max_price') || null
-                };
-                
                 try {
+                    // Convert price values to numbers if they're not empty
+                    let minPrice = formData.get('min_price');
+                    let maxPrice = formData.get('max_price');
+                    
+                    // Log values for debugging
+                    console.log("Min price before conversion:", minPrice);
+                    console.log("Max price before conversion:", maxPrice);
+                    
+                    // Only convert to numbers if they're not empty
+                    if (minPrice) minPrice = Number(minPrice);
+                    if (maxPrice) maxPrice = Number(maxPrice);
+                    
+                    const userData = {
+                        first_name: formData.get('first_name'),
+                        last_name: formData.get('last_name'),
+                        email: formData.get('email'),
+                        phone: formData.get('phone'),
+                        date_of_birth: formData.get('date_of_birth'),
+                        profile_bio: formData.get('profile_bio'),
+                        is_available: formData.get('is_available') === 'on',
+                        
+                        // Freelancer specific fields
+                        specialty: formData.get('specialty') || null,
+                        min_price: minPrice || null,
+                        max_price: maxPrice || null
+                    };
+                    
+                    // Log the data being sent to the server
+                    console.log("Sending profile update with data:", userData);
+                    
                     const response = await fetch(`/api/user/${userId}`, {
                         method: 'PUT',
                         headers: {
@@ -1618,35 +1636,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Create a freelancer card element
     function createFreelancerCard(freelancer) {
-      // Get category image based on user's specialty
-      const categoryImages = {
-        'web-development': '../assets/images/header/webDev.jpg',
-        'graphic-design': '../assets/images/header/graphic.jpg',
-        'digital-marketing': '../assets/images/header/DigitalMarketing.avif',
-        'content-writing': '../assets/images/header/ContentWriting.avif',
-        'other': '../assets/images/header/UI.avif'
-      };
-      
-      // Use the specialty from user's profile
-      const categoryImage = categoryImages[freelancer.specialty || 'other'];
+      // Use a single default image for all freelancers
+      const categoryImage = '../assets/images/header/webDev.jpg';
       
       // Display name depending on whether first/last name are available
       const displayName = (freelancer.first_name && freelancer.last_name) 
         ? `${freelancer.first_name} ${freelancer.last_name}` 
         : freelancer.username;
       
-      // Determine role/specialty text based on the user's specialty
-      let roleText = 'فريلانسر';
-      if (freelancer.specialty) {
-        const specialtyNames = {
-          'web-development': 'مطور ويب',
-          'graphic-design': 'مصمم جرافيك',
-          'digital-marketing': 'متخصص تسويق رقمي',
-          'content-writing': 'كاتب محتوى',
-          'other': 'فريلانسر'
-        };
-        roleText = specialtyNames[freelancer.specialty] || 'فريلانسر';
-      }
+      // Use the user's exact specialty input text
+      const roleText = freelancer.specialty || 'فريلانسر';
       
       // Format price range
       const priceRange = (freelancer.min_price && freelancer.max_price) 

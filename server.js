@@ -503,7 +503,7 @@ app.get("/api/user/:id", (req, res) => {
   const userId = req.params.id;
   
   pool.query(
-    "SELECT id, username, first_name, last_name, email, phone, gender, date_of_birth, user_role, is_available, profile_bio FROM users WHERE id = ?",
+    "SELECT id, username, first_name, last_name, email, phone, gender, date_of_birth, user_role, is_available, profile_bio, specialty, min_price, max_price FROM users WHERE id = ?",
     [userId],
     (error, results) => {
       if (error) {
@@ -541,15 +541,21 @@ app.get("/api/user/:id", (req, res) => {
 // Update profile information
 app.put("/api/user/:id", (req, res) => {
   const userId = req.params.id;
-  const { first_name, last_name, email, phone, date_of_birth, profile_bio, is_available } = req.body;
+  const { first_name, last_name, email, phone, date_of_birth, profile_bio, is_available, specialty, min_price, max_price } = req.body;
+  
+  // Log the received data for debugging
+  console.log("Update profile request body:", req.body);
+  console.log("Extracted specialty:", specialty);
+  console.log("Extracted price range:", { min_price, max_price });
   
   // Validation could be added here
   
   pool.query(
-    "UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, date_of_birth = ?, profile_bio = ?, is_available = ? WHERE id = ?",
-    [first_name, last_name, email, phone, date_of_birth, profile_bio, is_available ? 1 : 0, userId],
+    "UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, date_of_birth = ?, profile_bio = ?, is_available = ?, specialty = ?, min_price = ?, max_price = ? WHERE id = ?",
+    [first_name, last_name, email, phone, date_of_birth, profile_bio, is_available ? 1 : 0, specialty, min_price, max_price, userId],
     (error, result) => {
       if (error) {
+        console.error("Database error during profile update:", error);
         return res.status(500).json({ 
           success: false, 
           message: "خطأ في تحديث البيانات",
@@ -575,7 +581,10 @@ app.put("/api/user/:id", (req, res) => {
           phone,
           date_of_birth,
           profile_bio,
-          is_available: is_available ? 1 : 0
+          is_available: is_available ? 1 : 0,
+          specialty,
+          min_price,
+          max_price
         }
       });
     }
@@ -786,7 +795,7 @@ app.delete("/api/projects/:id", (req, res) => {
 // Get available freelancers for the freelancers page
 app.get("/api/freelancers", (req, res) => {
   pool.query(
-    "SELECT id, username, first_name, last_name, email, phone, gender, user_role, profile_bio FROM users WHERE user_role = 'freelancer' AND is_available = 1",
+    "SELECT id, username, first_name, last_name, email, phone, gender, user_role, profile_bio, specialty, min_price, max_price FROM users WHERE user_role = 'freelancer' AND is_available = 1",
     (error, results) => {
       if (error) {
         return res.status(500).json({ 
