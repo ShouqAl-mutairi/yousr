@@ -344,8 +344,8 @@ app.post("/login", loginValidation, (req, res) => {
       
       // Determine avatar path based on gender
       let avatarPath = user.gender === 'female' 
-        ? '../assets/images/avatar/avatar-woman.jpg' 
-        : '../assets/images/avatar/avatar-man.jpg';
+        ? '../assets/images/avatar/freelancer-woman-one.png' 
+        : '../assets/images/avatar/freelancer-man-one.png';
       
       // Success - return user data with avatar
       res.json({ 
