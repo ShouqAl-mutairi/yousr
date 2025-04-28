@@ -97,39 +97,39 @@ document.addEventListener('DOMContentLoaded', () => {
         isValid &= validateField(
             "username",
             /^[a-zA-Z][a-zA-Z0-9._-]{2,19}$/,
-            "يجب إدخال اسم المستخدم",
-            "اسم المستخدم غير صحيح",
-            "مثال: user123 أو user.name"
+            "اسم المستخدم مطلوب",
+            "يجب أن يبدأ اسم المستخدم بحرف وأن يتكون من أحرف وأرقام وشرطات سفلية فقط (3-20 حرف)",
+            ""
         );
 
         isValid &= validateField(
             "email",
             /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/,
-            "يجب إدخال البريد الإلكتروني",
-            "البريد الإلكتروني غير صالح",
-            "مثال: example@email.com"
+            "البريد الإلكتروني مطلوب",
+            "يرجى إدخال بريد إلكتروني صحيح بتنسيق name@domain.com",
+            ""
         );
 
         isValid &= validateField(
             "password",
             /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%*?&]).{8,35}/,
-            "يجب إدخال كلمة المرور",
-            "كلمة المرور ضعيفة",
-            "يجب أن تحتوي على حرف كبير وصغير ورقم ورمز خاص مثل: Aa123@abc"
+            "كلمة المرور مطلوبة",
+            "كلمة المرور ضعيفة - يجب أن تحتوي على الأقل على ٨ أحرف تتضمن حرف كبير وحرف صغير ورقم ورمز خاص",
+            ""
         );
 
         isValid &= validateField(
             "phone",
             /^[0-9]{10,15}$/,
-            "يجب إدخال رقم الهاتف",
-            "رقم الهاتف غير صحيح",
-            "مثال: 0551234567"
+            "رقم الهاتف مطلوب",
+            "يرجى إدخال رقم هاتف صحيح مكون من 10-15 رقم بدون أحرف أو رموز",
+            ""
         );
 
         isValid &= validateDate(
             "dob",
-            "يجب إدخال تاريخ الميلاد",
-            "تاريخ الميلاد يجب أن يكون صحيح"
+            "تاريخ الميلاد مطلوب",
+            "يرجى إدخال تاريخ ميلاد صحيح (يجب أن يكون في الماضي)"
         );
 
         isValid &= validateRadio(
@@ -364,6 +364,92 @@ document.addEventListener('DOMContentLoaded', () => {
     // Form validation and submission for signup
     const signupForm = document.querySelector('form[action="/signup"]');
     if (signupForm && window.location.pathname.includes('/signup')) {
+        // Add real-time validation for each input field
+        const usernameInput = signupForm.querySelector('#username');
+        const emailInput = signupForm.querySelector('#email');
+        const passwordInput = signupForm.querySelector('#password');
+        const phoneInput = signupForm.querySelector('#phone');
+        const dobInput = signupForm.querySelector('#dob');
+        const termsCheckbox = signupForm.querySelector('#terms');
+        const userRoleRadios = signupForm.querySelectorAll('input[name="user-role"]');
+        const genderRadios = signupForm.querySelectorAll('input[name="gender"]');
+        
+        // Event listeners for text inputs
+        usernameInput.addEventListener('input', () => {
+            validateField(
+                "username",
+                /^[a-zA-Z][a-zA-Z0-9._-]{2,19}$/,
+                "اسم المستخدم مطلوب",
+                "يجب أن يبدأ اسم المستخدم بحرف وأن يتكون من أحرف وأرقام وشرطات سفلية فقط (3-20 حرف)",
+                ""
+            );
+        });
+        
+        emailInput.addEventListener('input', () => {
+            validateField(
+                "email",
+                /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/,
+                "البريد الإلكتروني مطلوب",
+                "يرجى إدخال بريد إلكتروني صحيح بتنسيق name@domain.com",
+                ""
+            );
+        });
+        
+        passwordInput.addEventListener('input', () => {
+            validateField(
+                "password",
+                /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%*?&]).{8,35}/,
+                "كلمة المرور مطلوبة",
+                "كلمة المرور ضعيفة - يجب أن تحتوي على الأقل على ٨ أحرف تتضمن حرف كبير وحرف صغير ورقم ورمز خاص",
+                ""
+            );
+        });
+        
+        phoneInput.addEventListener('input', () => {
+            validateField(
+                "phone",
+                /^[0-9]{10,15}$/,
+                "رقم الهاتف مطلوب",
+                "يرجى إدخال رقم هاتف صحيح مكون من 10-15 رقم بدون أحرف أو رموز",
+                ""
+            );
+        });
+        
+        dobInput.addEventListener('change', () => {
+            validateDate(
+                "dob",
+                "تاريخ الميلاد مطلوب",
+                "يرجى إدخال تاريخ ميلاد صحيح (يجب أن يكون في الماضي)"
+            );
+        });
+        
+        // Event listeners for radio buttons
+        userRoleRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                validateRadio(
+                    "user-role",
+                    "الرجاء تحديد نوع المستخدم"
+                );
+            });
+        });
+        
+        genderRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                validateRadio(
+                    "gender",
+                    "الرجاء تحديد الجنس"
+                );
+            });
+        });
+        
+        // Event listener for terms checkbox
+        termsCheckbox.addEventListener('change', () => {
+            validateCheckbox(
+                "terms",
+                "يجب الموافقة على الشروط والأحكام"
+            );
+        });
+
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -477,22 +563,112 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle login form
     const loginForm = document.querySelector('form[action="/login"]');
     if (loginForm && window.location.pathname.includes('/login')) {
+        // Frontend validation functions
+        const validateUsername = (username) => {
+            if (!username) {
+                return 'اسم المستخدم مطلوب';
+            }
+            if (username.length < 3 || username.length > 20) {
+                return 'اسم المستخدم يجب أن يكون بين 3 و 20 حرفًا';
+            }
+            // Username pattern: starts with a letter, then letters, numbers, dots, underscores, or hyphens
+            const usernamePattern = /^[a-zA-Z][a-zA-Z0-9._-]{2,19}$/;
+            if (!usernamePattern.test(username)) {
+                return 'اسم المستخدم يجب أن يبدأ بحرف ويحتوي على أحرف وأرقام فقط';
+            }
+            return '';
+        };
+
+        const validatePassword = (password) => {
+            if (!password) {
+                return 'كلمة المرور مطلوبة';
+            }
+            if (password.length < 8 || password.length > 35) {
+                return 'كلمة المرور يجب أن تكون بين 8 و 35 حرفًا';
+            }
+            // Password pattern: at least one digit, one lowercase, one uppercase, one special character
+            const passwordPattern = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%*?&])[A-Za-z\d@$!%*?&]{8,35}/;
+            if (!passwordPattern.test(password)) {
+                return 'كلمة المرور يجب أن تحتوي على حرف كبير، حرف صغير، رقم، ورمز خاص';
+            }
+            return '';
+        };
+
+        // Add event listeners for real-time validation
+        const usernameInput = loginForm.querySelector('#username');
+        const passwordInput = loginForm.querySelector('#password');
+        const usernameError = document.getElementById('username-error');
+        const passwordError = document.getElementById('password-error');
+
+        usernameInput.addEventListener('input', (e) => {
+            const error = validateUsername(e.target.value);
+            usernameError.textContent = error;
+            
+            if (error) {
+                e.target.classList.add('input-error');
+                e.target.classList.remove('input-success');
+            } else {
+                e.target.classList.add('input-success');
+                e.target.classList.remove('input-error');
+            }
+        });
+
+        passwordInput.addEventListener('input', (e) => {
+            const error = validatePassword(e.target.value);
+            passwordError.textContent = error;
+            
+            if (error) {
+                e.target.classList.add('input-error');
+                e.target.classList.remove('input-success');
+            } else {
+                e.target.classList.add('input-success');
+                e.target.classList.remove('input-error');
+            }
+        });
+
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-
+            
             // Get form data
             const formData = new FormData(loginForm);
+            const username = formData.get('username');
+            const password = formData.get('password');
+            
+            // Validate inputs
+            const usernameError = validateUsername(username);
+            const passwordError = validatePassword(password);
+            
+            // Display validation errors if any
+            document.getElementById('username-error').textContent = usernameError;
+            document.getElementById('password-error').textContent = passwordError;
+            
+            // Apply error styling
+            if (usernameError) {
+                usernameInput.classList.add('input-error');
+                usernameInput.classList.remove('input-success');
+            }
+            
+            if (passwordError) {
+                passwordInput.classList.add('input-error');
+                passwordInput.classList.remove('input-success');
+            }
+            
+            // If there are validation errors, stop form submission
+            if (usernameError || passwordError) {
+                return;
+            }
+            
             const loginData = {
-                username: formData.get('username'),
-                password: formData.get('password')
+                username,
+                password
             };
-
+            
             // Disable form submission while processing
             const submitButton = loginForm.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.textContent;
             submitButton.disabled = true;
             submitButton.textContent = 'جاري تسجيل الدخول...';
-
+            
             try {
                 // Send data to server
                 const response = await fetch('/login', {
@@ -502,9 +678,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     body: JSON.stringify(loginData),
                 });
-
+                
                 const result = await response.json();
-
+                
                 if (response.ok) {
                     // Store user data in localStorage
                     if (result.user) {
@@ -513,11 +689,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // Success notification
                     showNotification(
-                        'success',
+                        'success', 
                         'تم تسجيل الدخول بنجاح!',
                         'جاري تحويلك إلى الصفحة الرئيسية...'
                     );
-
+                    
                     // Redirect to home/dashboard after a delay
                     setTimeout(() => {
                         window.location.href = '/';
@@ -525,11 +701,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     // Error notification
                     showNotification(
-                        'error',
+                        'error', 
                         'فشل تسجيل الدخول',
                         result.error || (result.errors && result.errors[0].msg) || 'خطأ في اسم المستخدم أو كلمة المرور'
                     );
-
+                    
                     // Reset submit button
                     submitButton.disabled = false;
                     submitButton.textContent = originalButtonText;
@@ -537,18 +713,18 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 console.error('Error:', error);
                 showNotification(
-                    'error',
+                    'error', 
                     'خطأ في النظام',
                     'حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.'
                 );
-
+                
                 // Reset submit button
                 submitButton.disabled = false;
                 submitButton.textContent = originalButtonText;
             }
         });
     }
-    
+
     // Contact form handler
     const contactForm = document.querySelector('form[action="/contact"]');
     if (contactForm && window.location.pathname.includes('/contact')) {

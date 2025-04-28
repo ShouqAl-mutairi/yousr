@@ -195,7 +195,9 @@ p a:hover {
   color: red;
   font-size: 0.85em;
   margin: 5px 20px 0 0;
-  text-align: start;
+  text-align: right;
+  display: block;
+  width: 90%;
 }
 
 

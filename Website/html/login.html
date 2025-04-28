@@ -76,6 +76,7 @@
               pattern="[a-zA-Z][a-zA-Z0-9._-]{2,19}"
               required>
           </div>
+          <span class="error-message" id="username-error"></span>
         </div>
         <div class="form-group">
           <label for="password">كلمة المرور:</label>
@@ -91,6 +92,7 @@
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%*?&])[A-Za-z\d@$!%*?&]{8,35}" 
               required>
           </div>
+          <span class="error-message" id="password-error"></span>
         </div>
         <button type="submit" class="auth-button">تسجيل الدخول</button>
         <p>ليس لديك حساب؟ <a href="/signup">إنشاء حساب جديد</a></p>
