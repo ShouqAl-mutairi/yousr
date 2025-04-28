@@ -71,7 +71,6 @@
       <div class="profile-tabs">
         <button class="tab-button active" data-tab="info">المعلومات الشخصية</button>
         <button class="tab-button" data-tab="projects">المشاريع</button>
-        <button class="tab-button" data-tab="settings">إعدادات الحساب</button>
       </div>
 
       <div class="profile-content">
@@ -255,49 +254,6 @@
           </div>
         </div>
 
-        <!-- Settings Tab -->
-        <div class="tab-content" id="settings-tab">
-          <div class="settings-card">
-            <h3>إعدادات الحساب</h3>
-            <div class="settings-item">
-              <h4>تغيير كلمة المرور</h4>
-              <form id="password-form" class="settings-form">
-                <div class="form-group">
-                  <label for="current-password">كلمة المرور الحالية</label>
-                  <input type="password" id="current-password" required>
-                </div>
-                <div class="form-group">
-                  <label for="new-password">كلمة المرور الجديدة</label>
-                  <input type="password" id="new-password" required>
-                </div>
-                <div class="form-group">
-                  <label for="confirm-password">تأكيد كلمة المرور</label>
-                  <input type="password" id="confirm-password" required>
-                </div>
-                <button type="submit" class="update-password-btn">تحديث كلمة المرور</button>
-              </form>
-            </div>
-            <div class="settings-item">
-              <h4>تغيير صورة الملف الشخصي</h4>
-              <div class="avatar-upload">
-                <div class="avatar-preview">
-                  <img id="avatar-preview-img" src="../assets/images/avatar/avatar-man.jpg" alt="معاينة الصورة">
-                </div>
-                <div class="avatar-edit">
-                  <input type="file" id="avatar-upload" accept="image/*">
-                  <label for="avatar-upload">اختر صورة</label>
-                </div>
-              </div>
-              <button class="update-avatar-btn">تحديث الصورة</button>
-            </div>
-            <div class="settings-item danger-zone">
-              <h4>منطقة الخطر</h4>
-              <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
-              <button class="delete-account-btn"><i class="fas fa-trash-alt"></i> حذف الحساب</button>
-            </div>
-          </div>
-        </div>
-      </div>
     </main>
 
     <footer>

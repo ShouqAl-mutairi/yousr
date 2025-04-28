@@ -354,6 +354,8 @@ app.post("/login", loginValidation, (req, res) => {
         user: {
           id: user.id,
           username: user.username,
+          first_name: user.first_name,
+          last_name: user.last_name,
           email: user.email,
           phone: user.phone,
           user_role: user.user_role,
@@ -382,7 +384,7 @@ app.post("/signup", signupValidation, (req, res) => {
   
   console.log("Signup request body:", req.body);
   
-  const { username, email, password, phone, gender } = req.body;
+  const { username, email, password, phone, gender, first_name, last_name } = req.body;
   
   const user_role = req.body["user-role"];
   
@@ -461,7 +463,9 @@ app.post("/signup", signupValidation, (req, res) => {
             phone, 
             user_role,
             gender, 
-            date_of_birth 
+            date_of_birth,
+            first_name,
+            last_name
           };
           
           console.log("Inserting user data:", userData);

@@ -103,6 +103,22 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
         isValid &= validateField(
+            "first-name",
+            /^[a-zA-Zأ-ي\s]{2,30}$/,
+            "الاسم الأول مطلوب",
+            "يجب أن يتكون الاسم الأول من أحرف فقط (2-30 حرف)",
+            ""
+        );
+
+        isValid &= validateField(
+            "last-name",
+            /^[a-zA-Zأ-ي\s]{2,30}$/,
+            "الاسم الأخير مطلوب",
+            "يجب أن يتكون الاسم الأخير من أحرف فقط (2-30 حرف)",
+            ""
+        );
+
+        isValid &= validateField(
             "email",
             /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/,
             "البريد الإلكتروني مطلوب",
@@ -1100,6 +1116,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (signupForm && window.location.pathname.includes('/signup')) {
         // Add real-time validation for each input field
         const usernameInput = signupForm.querySelector('#username');
+        const firstNameInput = signupForm.querySelector('#first-name');
+        const lastNameInput = signupForm.querySelector('#last-name');
         const emailInput = signupForm.querySelector('#email');
         const passwordInput = signupForm.querySelector('#password');
         const phoneInput = signupForm.querySelector('#phone');
@@ -1115,6 +1133,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 /^[a-zA-Z][a-zA-Z0-9._-]{2,19}$/,
                 "اسم المستخدم مطلوب",
                 "يجب أن يبدأ اسم المستخدم بحرف وأن يتكون من أحرف وأرقام وشرطات سفلية فقط (3-20 حرف)",
+                ""
+            );
+        });
+        
+        firstNameInput.addEventListener('input', () => {
+            validateField(
+                "first-name",
+                /^[a-zA-Zأ-ي\s]{2,30}$/,
+                "الاسم الأول مطلوب",
+                "يجب أن يتكون الاسم الأول من أحرف فقط (2-30 حرف)",
+                ""
+            );
+        });
+        
+        lastNameInput.addEventListener('input', () => {
+            validateField(
+                "last-name",
+                /^[a-zA-Zأ-ي\s]{2,30}$/,
+                "الاسم الأخير مطلوب",
+                "يجب أن يتكون الاسم الأخير من أحرف فقط (2-30 حرف)",
                 ""
             );
         });
@@ -1213,6 +1251,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const userData = {
                         username: formData.get('username'),
+                        first_name: formData.get('first_name'),
+                        last_name: formData.get('last_name'),
                         email: formData.get('email'),
                         password: formData.get('password'),
                         phone: formData.get('phone'),
