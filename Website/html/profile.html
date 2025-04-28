@@ -79,39 +79,179 @@
         <div class="tab-content active" id="info-tab">
           <div class="info-card">
             <h3>المعلومات الشخصية</h3>
-            <div class="info-item">
-              <span class="info-label">الاسم:</span>
-              <span id="info-name" class="info-value">اسم المستخدم</span>
+            <div class="edit-mode" id="info-edit-mode" style="display: none;">
+              <form id="user-info-form">
+                <div class="form-group">
+                  <label for="edit-first-name">الاسم الأول:</label>
+                  <input type="text" id="edit-first-name" name="first_name" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label for="edit-last-name">الاسم الأخير:</label>
+                  <input type="text" id="edit-last-name" name="last_name" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label for="edit-email">البريد الإلكتروني:</label>
+                  <input type="email" id="edit-email" name="email" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label for="edit-phone">رقم الهاتف:</label>
+                  <input type="tel" id="edit-phone" name="phone" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label for="edit-dob">تاريخ الميلاد:</label>
+                  <input type="date" id="edit-dob" name="date_of_birth" class="form-input">
+                </div>
+                
+                <!-- Freelancer specific fields (only shown for freelancer accounts) -->
+                <div class="freelancer-fields">
+                  <div class="form-group">
+                    <label for="edit-specialty">التخصص:</label>
+                    <select id="edit-specialty" name="specialty" class="form-input">
+                      <option value="">اختر تخصصك</option>
+                      <option value="web-development">تطوير الويب</option>
+                      <option value="graphic-design">التصميم الجرافيكي</option>
+                      <option value="digital-marketing">التسويق الرقمي</option>
+                      <option value="content-writing">كتابة المحتوى</option>
+                      <option value="other">أخرى</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="edit-bio">نبذة مهنية:</label>
+                    <textarea id="edit-bio" name="profile_bio" class="form-input" rows="4" placeholder="اكتب نبذة مختصرة عن خبراتك ومهاراتك والخدمات التي تقدمها للعملاء..."></textarea>
+                  </div>
+                  <div class="price-range-container">
+                    <h4>نطاق السعر (بالريال السعودي):</h4>
+                    <div class="form-group price-range">
+                      <div class="price-field">
+                        <label for="edit-min-price">الحد الأدنى:</label>
+                        <input type="number" id="edit-min-price" name="min_price" class="form-input" min="0" step="50">
+                      </div>
+                      <div class="price-field">
+                        <label for="edit-max-price">الحد الأقصى:</label>
+                        <input type="number" id="edit-max-price" name="max_price" class="form-input" min="0" step="50">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="availability-toggle">
+                  <label class="switch">
+                    <input type="checkbox" id="availability-toggle" name="is_available">
+                    <span class="slider round"></span>
+                  </label>
+                  <span class="availability-label">متاح للعمل</span>
+                </div>
+                <div class="button-group">
+                  <button type="submit" class="save-changes-btn">حفظ التغييرات</button>
+                  <button type="button" class="cancel-edit-btn">إلغاء</button>
+                </div>
+              </form>
             </div>
-            <div class="info-item">
-              <span class="info-label">البريد الإلكتروني:</span>
-              <span id="info-email" class="info-value">example@email.com</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">رقم الهاتف:</span>
-              <span id="info-phone" class="info-value">+123456789</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">تاريخ الميلاد:</span>
-              <span id="info-dob" class="info-value">01/01/1990</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">الجنس:</span>
-              <span id="info-gender" class="info-value">ذكر</span>
-            </div>
-            <div class="info-actions">
-              <button class="edit-info-btn">تعديل المعلومات</button>
+            <div class="view-mode" id="info-view-mode">
+              <div class="info-item">
+                <span class="info-label">اسم المستخدم:</span>
+                <span id="info-username" class="info-value">اسم المستخدم</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">الاسم الأول:</span>
+                <span id="info-first-name" class="info-value">-</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">الاسم الأخير:</span>
+                <span id="info-last-name" class="info-value">-</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">البريد الإلكتروني:</span>
+                <span id="info-email" class="info-value">example@email.com</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">رقم الهاتف:</span>
+                <span id="info-phone" class="info-value">+123456789</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">تاريخ الميلاد:</span>
+                <span id="info-dob" class="info-value">01/01/1990</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">الجنس:</span>
+                <span id="info-gender" class="info-value">ذكر</span>
+              </div>
+              
+              <!-- Freelancer specific information (only shown for freelancer accounts) -->
+              <div class="freelancer-info">
+                <div class="info-item">
+                  <span class="info-label">التخصص:</span>
+                  <span id="info-specialty" class="info-value">-</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">نبذة مهنية:</span>
+                  <span id="info-bio" class="info-value">-</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">نطاق السعر (بالريال السعودي):</span>
+                  <span id="info-price-range" class="info-value">-</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">متاح للعمل:</span>
+                  <span id="info-availability" class="info-value">لا</span>
+                </div>
+              </div>
+              
+              <div class="info-actions">
+                <button class="edit-info-btn">تعديل المعلومات</button>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Projects Tab -->
         <div class="tab-content" id="projects-tab">
-          <div class="projects-empty">
+          <div class="projects-header">
+            <h3>المشاريع</h3>
+            <button class="create-project-btn" id="add-project-btn"><i class="fas fa-plus"></i> إضافة مشروع جديد</button>
+          </div>
+
+          <!-- Add Project Form -->
+          <div class="project-form-container" id="project-form-container" style="display: none;">
+            <form id="add-project-form">
+              <div class="form-group">
+                <label for="project-title">عنوان المشروع</label>
+                <input type="text" id="project-title" name="title" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label for="project-category">الفئة</label>
+                <select id="project-category" name="category" class="form-input" required>
+                  <option value="">اختر الفئة</option>
+                  <option value="web-development">تطوير الويب</option>
+                  <option value="graphic-design">التصميم الجرافيكي</option>
+                  <option value="digital-marketing">التسويق الرقمي</option>
+                  <option value="content-writing">كتابة المحتوى</option>
+                  <option value="other">أخرى</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="project-description">وصف المشروع</label>
+                <textarea id="project-description" name="description" class="form-input" rows="4" required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="project-price">السعر (بالريال السعودي)</label>
+                <input type="number" id="project-price" name="price" class="form-input" min="0" step="0.01">
+              </div>
+              <div class="button-group">
+                <button type="submit" class="save-project-btn">حفظ المشروع</button>
+                <button type="button" class="cancel-project-btn">إلغاء</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Projects List -->
+          <div class="projects-list" id="projects-list"></div>
+
+          <!-- Empty Projects State -->
+          <div class="projects-empty" id="projects-empty">
             <i class="fas fa-project-diagram"></i>
             <h3>لا توجد مشاريع حالياً</h3>
             <p>ستظهر مشاريعك هنا عند إنشاءها أو المشاركة فيها</p>
-            <button class="create-project-btn">إنشاء مشروع جديد</button>
           </div>
         </div>
 

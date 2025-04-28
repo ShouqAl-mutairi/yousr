@@ -237,22 +237,119 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            // Update profile page elements with user data
-            document.getElementById('profile-avatar-img').src = user.avatar;
-            document.getElementById('profile-name').textContent = user.username;
-            document.getElementById('profile-role').innerHTML = `نوع الحساب: <span>${user.user_role === 'freelancer' ? 'فريلانسر' : 'عميل'}</span>`;
-            document.getElementById('profile-email').innerHTML = `البريد الإلكتروني: <span>${user.email}</span>`;
-            document.getElementById('profile-phone').innerHTML = `رقم الهاتف: <span>${user.phone}</span>`;
+            // Safe function to update element text content
+            const updateElement = (id, value, defaultValue = '-') => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = value || defaultValue;
+                } else {
+                    console.warn(`Element with ID ${id} not found in the DOM`);
+                }
+            };
             
-            // Personal info tab
-            document.getElementById('info-name').textContent = user.username;
-            document.getElementById('info-email').textContent = user.email;
-            document.getElementById('info-phone').textContent = user.phone;
-            document.getElementById('info-dob').textContent = new Date(user.date_of_birth).toLocaleDateString('ar-SA');
-            document.getElementById('info-gender').textContent = user.gender === 'male' ? 'ذكر' : 'أنثى';
+            // Safe function to update element innerHTML
+            const updateElementHTML = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.innerHTML = value;
+                } else {
+                    console.warn(`Element with ID ${id} not found in the DOM`);
+                }
+            };
+            
+            // Safe function to update image src
+            const updateImageSrc = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.src = value;
+                } else {
+                    console.warn(`Image element with ID ${id} not found in the DOM`);
+                }
+            };
+            
+            // Update profile elements safely
+            updateImageSrc('profile-avatar-img', user.avatar);
+            updateElement('profile-name', user.username);
+            updateElementHTML('profile-role', `نوع الحساب: <span>${user.user_role === 'freelancer' ? 'فريلانسر' : 'عميل'}</span>`);
+            updateElementHTML('profile-email', `البريد الإلكتروني: <span>${user.email}</span>`);
+            updateElementHTML('profile-phone', `رقم الهاتف: <span>${user.phone}</span>`);
+            
+            // Personal info tab - check IDs carefully
+            updateElement('info-username', user.username); // Changed from 'info-name' to 'info-username'
+            updateElement('info-email', user.email);
+            updateElement('info-phone', user.phone);
+            
+            // Safely format and display date of birth
+            if (user.date_of_birth) {
+                try {
+                    const date = new Date(user.date_of_birth);
+                    if (!isNaN(date.getTime())) {
+                        updateElement('info-dob', date.toLocaleDateString('ar-SA'));
+                    } else {
+                        updateElement('info-dob', '-');
+                    }
+                } catch (error) {
+                    console.error('Error formatting date:', error);
+                    updateElement('info-dob', '-');
+                }
+            } else {
+                updateElement('info-dob', '-');
+            }
+            
+            updateElement('info-gender', user.gender === 'male' ? 'ذكر' : 'أنثى');
+            
+            // Freelancer specific information
+            if (user.user_role === 'freelancer') {
+                // Show the freelancer fields sections
+                const freelancerInfoSection = document.querySelector('.freelancer-info');
+                const freelancerFieldsSection = document.querySelector('.freelancer-fields');
+                
+                if (freelancerInfoSection) freelancerInfoSection.style.display = 'block';
+                if (freelancerFieldsSection) freelancerFieldsSection.style.display = 'block';
+                
+                // Update specialty with localized name
+                if (user.specialty) {
+                    const specialtyNames = {
+                        'web-development': 'تطوير الويب',
+                        'graphic-design': 'التصميم الجرافيكي',
+                        'digital-marketing': 'التسويق الرقمي',
+                        'content-writing': 'كتابة المحتوى',
+                        'other': 'أخرى'
+                    };
+                    updateElement('info-specialty', specialtyNames[user.specialty] || user.specialty);
+                    
+                    // Update the specialty dropdown in edit mode
+                    const specialtyDropdown = document.getElementById('edit-specialty');
+                    if (specialtyDropdown) {
+                        specialtyDropdown.value = user.specialty;
+                    }
+                }
+                
+                // Update bio information
+                updateElement('info-bio', user.profile_bio);
+                
+                // Update price range
+                if (user.min_price && user.max_price) {
+                    updateElement('info-price-range', `${user.min_price} - ${user.max_price}`);
+                    
+                    // Update price inputs in edit mode
+                    const minPriceInput = document.getElementById('edit-min-price');
+                    const maxPriceInput = document.getElementById('edit-max-price');
+                    
+                    if (minPriceInput) minPriceInput.value = user.min_price;
+                    if (maxPriceInput) maxPriceInput.value = user.max_price;
+                }
+            } else {
+                // Hide freelancer sections for clients
+                const freelancerInfoSection = document.querySelector('.freelancer-info');
+                const freelancerFieldsSection = document.querySelector('.freelancer-fields');
+                
+                if (freelancerInfoSection) freelancerInfoSection.style.display = 'none';
+                if (freelancerFieldsSection) freelancerFieldsSection.style.display = 'none';
+            }
             
             // Settings tab
-            document.getElementById('avatar-preview-img').src = user.avatar;
+            updateImageSrc('avatar-preview-img', user.avatar);
             
             // Tab functionality
             const tabButtons = document.querySelectorAll('.tab-button');
@@ -268,7 +365,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // Add active class to current button and content
                     button.classList.add('active');
-                    document.getElementById(`${tabName}-tab`).classList.add('active');
+                    const tabContent = document.getElementById(`${tabName}-tab`);
+                    if (tabContent) {
+                        tabContent.classList.add('active');
+                    }
                 });
             });
             
@@ -289,6 +389,640 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     };
+
+    // Enhanced Profile Page Functionality
+    function enhanceProfilePage() {
+        const user = checkAuthStatus();
+        
+        if (window.location.pathname.includes('/profile')) {
+            // Redirect to login if not authenticated
+            if (!user) {
+                window.location.href = '/login';
+                return;
+            }
+            
+            // Fetch latest user data from server
+            fetchUserData(user.id);
+            
+            // Fetch user projects
+            fetchUserProjects(user.id);
+            
+            // Set up event listeners for profile interactions
+            setupProfileInteractions(user.id);
+        }
+    }
+
+    // Fetch user data from server
+    async function fetchUserData(userId) {
+        try {
+            console.log('Fetching user data for ID:', userId);
+            const response = await fetch(`/api/user/${userId}`);
+            const result = await response.json();
+            
+            console.log('Server response for user data:', result);
+            
+            if (result.success) {
+                // Update localStorage with latest data
+                const currentUser = JSON.parse(localStorage.getItem('userData'));
+                const updatedUser = { ...currentUser, ...result.user };
+                localStorage.setItem('userData', JSON.stringify(updatedUser));
+                
+                // Update UI with the latest data
+                updateProfileUI(result.user);
+            } else {
+                console.error('Error in fetchUserData response:', result);
+                showNotification('error', 'خطأ في جلب البيانات', result.message || 'حدث خطأ أثناء محاولة جلب بيانات المستخدم');
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+            showNotification('error', 'خطأ في الاتصال', 'تعذر الاتصال بالخادم، يرجى التحقق من اتصالك بالإنترنت');
+        }
+    }
+
+    // Update the profile UI with user data
+    function updateProfileUI(userData) {
+        console.log('Updating profile UI with data:', userData);
+        
+        // Check if elements exist before trying to update them
+        const updateElement = (id, value, defaultValue = '-') => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.textContent = value || defaultValue;
+            } else {
+                console.warn(`Element with ID ${id} not found in the DOM`);
+            }
+        };
+        
+        const updateElementInnerHTML = (id, value) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.innerHTML = value;
+            } else {
+                console.warn(`Element with ID ${id} not found in the DOM`);
+            }
+        };
+        
+        const updateInputValue = (id, value, defaultValue = '') => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.value = value || defaultValue;
+            } else {
+                console.warn(`Input element with ID ${id} not found in the DOM`);
+            }
+        };
+        
+        // Profile header
+        if (userData.avatar) {
+            const avatarImg = document.getElementById('profile-avatar-img');
+            const avatarPreviewImg = document.getElementById('avatar-preview-img');
+            
+            if (avatarImg) avatarImg.src = userData.avatar;
+            if (avatarPreviewImg) avatarPreviewImg.src = userData.avatar;
+        }
+        
+        updateElement('profile-name', userData.username);
+        updateElementInnerHTML('profile-role', `نوع الحساب: <span>${userData.user_role === 'freelancer' ? 'فريلانسر' : 'عميل'}</span>`);
+        updateElementInnerHTML('profile-email', `البريد الإلكتروني: <span>${userData.email}</span>`);
+        updateElementInnerHTML('profile-phone', `رقم الهاتف: <span>${userData.phone}</span>`);
+
+        // Info tab - view mode
+        updateElement('info-username', userData.username);
+        updateElement('info-first-name', userData.first_name);
+        updateElement('info-last-name', userData.last_name);
+        updateElement('info-email', userData.email);
+        updateElement('info-phone', userData.phone);
+        
+        // Format date if it exists
+        if (userData.date_of_birth) {
+            try {
+                const date = new Date(userData.date_of_birth);
+                if (!isNaN(date.getTime())) {
+                    updateElement('info-dob', date.toLocaleDateString('ar-SA'));
+                } else {
+                    console.warn('Invalid date format:', userData.date_of_birth);
+                    updateElement('info-dob', userData.date_of_birth, '-');
+                }
+            } catch (error) {
+                console.error('Error formatting date:', error);
+                updateElement('info-dob', userData.date_of_birth, '-');
+            }
+        } else {
+            updateElement('info-dob', null, '-');
+        }
+        
+        updateElement('info-gender', userData.gender === 'male' ? 'ذكر' : 'أنثى');
+        
+        // Freelancer specific fields
+        if (userData.user_role === 'freelancer') {
+            // Show freelancer sections
+            const freelancerInfoSection = document.querySelector('.freelancer-info');
+            const freelancerFieldsSection = document.querySelector('.freelancer-fields');
+            
+            if (freelancerInfoSection) freelancerInfoSection.style.display = 'block';
+            if (freelancerFieldsSection) freelancerFieldsSection.style.display = 'block';
+            
+            // Update specialty with localized name
+            if (userData.specialty) {
+                const specialtyNames = {
+                    'web-development': 'تطوير الويب',
+                    'graphic-design': 'التصميم الجرافيكي',
+                    'digital-marketing': 'التسويق الرقمي',
+                    'content-writing': 'كتابة المحتوى',
+                    'other': 'أخرى'
+                };
+                updateElement('info-specialty', specialtyNames[userData.specialty] || userData.specialty);
+                
+                // Set the specialty dropdown in edit mode
+                updateInputValue('edit-specialty', userData.specialty);
+            }
+            
+            // Update bio
+            updateElement('info-bio', userData.profile_bio);
+            updateInputValue('edit-bio', userData.profile_bio);
+            
+            // Update price range display and inputs
+            if (userData.min_price && userData.max_price) {
+                updateElement('info-price-range', `${userData.min_price} - ${userData.max_price}`);
+                updateInputValue('edit-min-price', userData.min_price);
+                updateInputValue('edit-max-price', userData.max_price);
+            } else {
+                updateElement('info-price-range', '-');
+            }
+        } else {
+            // Hide freelancer sections for clients
+            const freelancerInfoSection = document.querySelector('.freelancer-info');
+            const freelancerFieldsSection = document.querySelector('.freelancer-fields');
+            
+            if (freelancerInfoSection) freelancerInfoSection.style.display = 'none';
+            if (freelancerFieldsSection) freelancerFieldsSection.style.display = 'none';
+        }
+        
+        updateElement('info-availability', userData.is_available ? 'نعم' : 'لا');
+
+        // Info tab - edit mode
+        updateInputValue('edit-first-name', userData.first_name);
+        updateInputValue('edit-last-name', userData.last_name);
+        updateInputValue('edit-email', userData.email);
+        updateInputValue('edit-phone', userData.phone);
+        
+        // Format date for input value
+        if (userData.date_of_birth) {
+            try {
+                const date = new Date(userData.date_of_birth);
+                if (!isNaN(date.getTime())) {
+                    const formattedDate = date.toISOString().split('T')[0];
+                    updateInputValue('edit-dob', formattedDate);
+                }
+            } catch (error) {
+                console.error('Error formatting date for input:', error);
+            }
+        }
+        
+        // Set availability toggle
+        const availabilityToggle = document.getElementById('availability-toggle');
+        if (availabilityToggle) {
+            availabilityToggle.checked = Boolean(userData.is_available);
+        }
+    }
+
+    // Fetch user projects
+    async function fetchUserProjects(userId) {
+        try {
+            const response = await fetch(`/api/user/${userId}/projects`);
+            const result = await response.json();
+            
+            if (result.success) {
+                // Update UI with projects
+                updateProjectsUI(result.projects);
+            } else {
+                showNotification('error', 'خطأ في جلب المشاريع', result.message || 'حدث خطأ أثناء محاولة جلب مشاريع المستخدم');
+            }
+        } catch (error) {
+            console.error('Error fetching user projects:', error);
+            showNotification('error', 'خطأ في الاتصال', 'تعذر الاتصال بالخادم، يرجى التحقق من اتصالك بالإنترنت');
+        }
+    }
+
+    // Update the projects UI
+    function updateProjectsUI(projects) {
+        const projectsList = document.getElementById('projects-list');
+        const projectsEmpty = document.getElementById('projects-empty');
+        const projectsTab = document.getElementById('projects-tab');
+        
+        // Clear current projects
+        projectsList.innerHTML = '';
+        
+        if (projects && projects.length > 0) {
+            projectsTab.classList.add('has-projects');
+            
+            // Create project cards
+            projects.forEach(project => {
+                const projectCard = createProjectCard(project);
+                projectsList.appendChild(projectCard);
+            });
+        } else {
+            projectsTab.classList.remove('has-projects');
+        }
+    }
+
+    // Create a project card element
+    function createProjectCard(project) {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.dataset.id = project.id;
+        
+        // Get category display name
+        const categoryNames = {
+            'web-development': 'تطوير الويب',
+            'graphic-design': 'التصميم الجرافيكي',
+            'digital-marketing': 'التسويق الرقمي',
+            'content-writing': 'كتابة المحتوى',
+            'other': 'أخرى'
+        };
+        
+        const categoryDisplayName = categoryNames[project.category] || project.category;
+        
+        card.innerHTML = `
+            <h4>${project.title}</h4>
+            <div class="project-category">${categoryDisplayName}</div>
+            <p class="project-description">${project.description}</p>
+            <div class="project-actions">
+                <button class="edit-project-btn" data-id="${project.id}"><i class="fas fa-edit"></i></button>
+                <button class="delete-project-btn" data-id="${project.id}"><i class="fas fa-trash"></i></button>
+            </div>
+        `;
+        
+        // Add event listeners for project card actions
+        card.querySelector('.edit-project-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const projectId = e.currentTarget.dataset.id;
+            openProjectEditForm(projectId);
+        });
+        
+        card.querySelector('.delete-project-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const projectId = e.currentTarget.dataset.id;
+            confirmDeleteProject(projectId);
+        });
+        
+        return card;
+    }
+
+    // Setup all profile page interactions
+    function setupProfileInteractions(userId) {
+        // Info tab edit button
+        const editInfoBtn = document.querySelector('.edit-info-btn');
+        const infoViewMode = document.getElementById('info-view-mode');
+        const infoEditMode = document.getElementById('info-edit-mode');
+        const cancelEditBtn = document.querySelector('.cancel-edit-btn');
+        const userInfoForm = document.getElementById('user-info-form');
+        
+        // Edit info button
+        if (editInfoBtn) {
+            editInfoBtn.addEventListener('click', () => {
+                infoViewMode.style.display = 'none';
+                infoEditMode.style.display = 'block';
+            });
+        }
+        
+        // Cancel edit button
+        if (cancelEditBtn) {
+            cancelEditBtn.addEventListener('click', () => {
+                infoViewMode.style.display = 'block';
+                infoEditMode.style.display = 'none';
+            });
+        }
+        
+        // Save info changes
+        if (userInfoForm) {
+            userInfoForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(userInfoForm);
+                const userData = {
+                    first_name: formData.get('first_name'),
+                    last_name: formData.get('last_name'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    date_of_birth: formData.get('date_of_birth'),
+                    profile_bio: formData.get('profile_bio'),
+                    is_available: formData.get('is_available') === 'on',
+                    
+                    // Freelancer specific fields
+                    specialty: formData.get('specialty') || null,
+                    min_price: formData.get('min_price') || null,
+                    max_price: formData.get('max_price') || null
+                };
+                
+                try {
+                    const response = await fetch(`/api/user/${userId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(userData),
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        showNotification('success', 'تم التحديث بنجاح', 'تم تحديث المعلومات الشخصية بنجاح');
+                        
+                        // Update localStorage with new data
+                        const currentUser = JSON.parse(localStorage.getItem('userData'));
+                        const updatedUser = { ...currentUser, ...userData };
+                        localStorage.setItem('userData', JSON.stringify(updatedUser));
+                        
+                        // If user is a freelancer and has set availability to true, show special notification
+                        if (currentUser.user_role === 'freelancer' && userData.is_available) {
+                            showNotification('info', 'إشعار التوفر', 'تم تحديث حالة توفرك للعمل. سيظهر ملفك الشخصي الآن في صفحة الفريلانسرز المتاحين.');
+                        }
+                        
+                        fetchUserData(userId); // Refresh user data
+                        infoViewMode.style.display = 'block';
+                        infoEditMode.style.display = 'none';
+                    } else {
+                        showNotification('error', 'فشل التحديث', result.message || 'حدث خطأ أثناء تحديث المعلومات');
+                    }
+                } catch (error) {
+                    console.error('Error updating user info:', error);
+                    showNotification('error', 'خطأ في الاتصال', 'حدث خطأ أثناء الاتصال بالخادم');
+                }
+            });
+        }
+        
+        // Projects tab
+        const addProjectBtn = document.getElementById('add-project-btn');
+        const projectFormContainer = document.getElementById('project-form-container');
+        const addProjectForm = document.getElementById('add-project-form');
+        const cancelProjectBtn = document.querySelector('.cancel-project-btn');
+        
+        // Show add project form
+        if (addProjectBtn && projectFormContainer) {
+            addProjectBtn.addEventListener('click', () => {
+                // Reset the form
+                addProjectForm.reset();
+                // Show the form
+                projectFormContainer.style.display = 'block';
+                // Change button text and action if editing
+                addProjectForm.dataset.mode = 'add';
+                addProjectForm.querySelector('.save-project-btn').textContent = 'حفظ المشروع';
+                
+                // Hide price field if it exists (since we're using projects as portfolio only)
+                const priceField = document.getElementById('project-price');
+                if (priceField) {
+                    const priceContainer = priceField.closest('.form-group');
+                    if (priceContainer) {
+                        priceContainer.style.display = 'none';
+                    }
+                }
+            });
+        }
+        
+        // Cancel add/edit project
+        if (cancelProjectBtn) {
+            cancelProjectBtn.addEventListener('click', () => {
+                projectFormContainer.style.display = 'none';
+                addProjectForm.reset();
+            });
+        }
+        
+        // Add/edit project form submission
+        if (addProjectForm) {
+            addProjectForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = new FormData(addProjectForm);
+                const projectData = {
+                    user_id: userId,
+                    title: formData.get('title'),
+                    category: formData.get('category'),
+                    description: formData.get('description')
+                    // Removed price field since we're using projects as portfolio only
+                };
+                
+                const mode = addProjectForm.dataset.mode || 'add';
+                const projectId = addProjectForm.dataset.projectId;
+                
+                try {
+                    let url = '/api/projects';
+                    let method = 'POST';
+                    
+                    if (mode === 'edit' && projectId) {
+                        url = `/api/projects/${projectId}`;
+                        method = 'PUT';
+                    }
+                    
+                    const response = await fetch(url, {
+                        method,
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(projectData),
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        showNotification(
+                            'success',
+                            mode === 'add' ? 'تمت الإضافة بنجاح' : 'تم التحديث بنجاح',
+                            mode === 'add' ? 'تم إضافة المشروع بنجاح' : 'تم تحديث المشروع بنجاح'
+                        );
+                        
+                        // Hide form and reset
+                        projectFormContainer.style.display = 'none';
+                        addProjectForm.reset();
+                        
+                        // Refresh projects list
+                        fetchUserProjects(userId);
+                    } else {
+                        showNotification('error', 'فشل العملية', result.message || 'حدث خطأ أثناء معالجة المشروع');
+                    }
+                } catch (error) {
+                    console.error('Error with project operation:', error);
+                    showNotification('error', 'خطأ في الاتصال', 'حدث خطأ أثناء الاتصال بالخادم');
+                }
+            });
+        }
+        
+        // Password change
+        const passwordForm = document.getElementById('password-form');
+        if (passwordForm) {
+            passwordForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const currentPassword = document.getElementById('current-password').value;
+                const newPassword = document.getElementById('new-password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                
+                // Validate passwords
+                if (newPassword !== confirmPassword) {
+                    showNotification('error', 'خطأ في كلمة المرور', 'كلمات المرور الجديدة غير متطابقة');
+                    return;
+                }
+                
+                // Validate new password format
+                const passwordPattern = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%*?&])[A-Za-z\d@$!%*?&]{8,35}/;
+                if (!passwordPattern.test(newPassword)) {
+                    showNotification('error', 'كلمة المرور ضعيفة', 'كلمة المرور الجديدة يجب أن تحتوي على حرف كبير، حرف صغير، رقم، ورمز خاص');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`/api/user/${userId}/password`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ currentPassword, newPassword }),
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        showNotification('success', 'تم تغيير كلمة المرور', 'تم تغيير كلمة المرور بنجاح');
+                        passwordForm.reset();
+                    } else {
+                        showNotification('error', 'فشل تغيير كلمة المرور', result.message || 'حدث خطأ أثناء تغيير كلمة المرور');
+                    }
+                } catch (error) {
+                    console.error('Error changing password:', error);
+                    showNotification('error', 'خطأ في الاتصال', 'حدث خطأ أثناء الاتصال بالخادم');
+                }
+            });
+        }
+        
+        // Delete account
+        const deleteAccountBtn = document.querySelector('.delete-account-btn');
+        if (deleteAccountBtn) {
+            deleteAccountBtn.addEventListener('click', () => {
+                if (confirm('هل أنت متأكد من رغبتك في حذف حسابك؟ هذا الإجراء لا يمكن التراجع عنه.')) {
+                    deleteUserAccount(userId);
+                }
+            });
+        }
+    }
+
+    // Open project edit form with project data
+    function openProjectEditForm(projectId) {
+        const projectsList = document.getElementById('projects-list');
+        const projectCard = projectsList.querySelector(`[data-id="${projectId}"]`);
+        
+        if (!projectCard) return;
+        
+        const title = projectCard.querySelector('h4').textContent;
+        const category = projectCard.querySelector('.project-category').textContent;
+        const description = projectCard.querySelector('.project-description').textContent;
+        
+        // Get category value from display name
+        const categoryMap = {
+            'تطوير الويب': 'web-development',
+            'التصميم الجرافيكي': 'graphic-design',
+            'التسويق الرقمي': 'digital-marketing',
+            'كتابة المحتوى': 'content-writing',
+            'أخرى': 'other'
+        };
+        
+        const categoryValue = categoryMap[category] || 'other';
+        
+        // Fill the form with project data
+        const addProjectForm = document.getElementById('add-project-form');
+        const projectFormContainer = document.getElementById('project-form-container');
+        
+        document.getElementById('project-title').value = title;
+        document.getElementById('project-category').value = categoryValue;
+        document.getElementById('project-description').value = description;
+        
+        // Hide price field or set default value if it exists
+        const priceField = document.getElementById('project-price');
+        if (priceField) {
+            priceField.value = '';
+            // If you want to hide the price field in the form:
+            const priceContainer = priceField.closest('.form-group');
+            if (priceContainer) {
+                priceContainer.style.display = 'none';
+            }
+        }
+        
+        // Set form mode to edit
+        addProjectForm.dataset.mode = 'edit';
+        addProjectForm.dataset.projectId = projectId;
+        
+        // Change button text
+        addProjectForm.querySelector('.save-project-btn').textContent = 'تحديث المشروع';
+        
+        // Show form
+        projectFormContainer.style.display = 'block';
+    }
+
+    // Confirm and delete project
+    function confirmDeleteProject(projectId) {
+        if (confirm('هل أنت متأكد من حذف هذا المشروع؟ هذا الإجراء لا يمكن التراجع عنه.')) {
+            deleteProject(projectId);
+        }
+    }
+
+    // Delete project API call
+    async function deleteProject(projectId) {
+        try {
+            const response = await fetch(`/api/projects/${projectId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+                showNotification('success', 'تم الحذف بنجاح', 'تم حذف المشروع بنجاح');
+                
+                // Get user ID from localStorage
+                const user = JSON.parse(localStorage.getItem('userData'));
+                
+                // Refresh projects list
+                if (user) {
+                    fetchUserProjects(user.id);
+                }
+            } else {
+                showNotification('error', 'فشل الحذف', result.message || 'حدث خطأ أثناء حذف المشروع');
+            }
+        } catch (error) {
+            console.error('Error deleting project:', error);
+            showNotification('error', 'خطأ في الاتصال', 'حدث خطأ أثناء الاتصال بالخادم');
+        }
+    }
+
+    // Delete user account
+    async function deleteUserAccount(userId) {
+        try {
+            const response = await fetch(`/api/user/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+                showNotification('success', 'تم حذف الحساب', 'تم حذف الحساب بنجاح');
+                
+                // Clear user data and redirect to home
+                localStorage.removeItem('userData');
+                
+                // Redirect after short delay to show notification
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+            } else {
+                showNotification('error', 'فشل حذف الحساب', result.message || 'حدث خطأ أثناء حذف الحساب');
+            }
+        } catch (error) {
+            console.error('Error deleting account:', error);
+            showNotification('error', 'خطأ في الاتصال', 'حدث خطأ أثناء الاتصال بالخادم');
+        }
+    }
 
     // Add notification container to body if it doesn't exist
     if (!document.querySelector('.notification-container')) {
@@ -811,7 +1545,266 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
     
+    // Fetch and display available freelancers
+    async function fetchAvailableFreelancers() {
+      if (!window.location.pathname.includes('/freelancers')) {
+        return;
+      }
+      
+      try {
+        const response = await fetch('/api/freelancers');
+        const result = await response.json();
+        
+        if (result.success && result.freelancers && result.freelancers.length > 0) {
+          // Remove static examples if we have real data
+          const staticExamples = document.querySelectorAll('.static-example');
+          staticExamples.forEach(example => {
+            example.style.display = 'none';
+          });
+          
+          const freelancersGrid = document.getElementById('freelancers-grid');
+          
+          // Display real freelancers from database
+          result.freelancers.forEach(freelancer => {
+            const card = createFreelancerCard(freelancer);
+            freelancersGrid.appendChild(card);
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching freelancers:', error);
+        // Keep static examples visible in case of error
+      }
+    }
+
+    // Create a freelancer card element
+    function createFreelancerCard(freelancer) {
+      // Get category image based on user's specialty
+      const categoryImages = {
+        'web-development': '../assets/images/header/webDev.jpg',
+        'graphic-design': '../assets/images/header/graphic.jpg',
+        'digital-marketing': '../assets/images/header/DigitalMarketing.avif',
+        'content-writing': '../assets/images/header/ContentWriting.avif',
+        'other': '../assets/images/header/UI.avif'
+      };
+      
+      // Use the specialty from user's profile
+      const categoryImage = categoryImages[freelancer.specialty || 'other'];
+      
+      // Display name depending on whether first/last name are available
+      const displayName = (freelancer.first_name && freelancer.last_name) 
+        ? `${freelancer.first_name} ${freelancer.last_name}` 
+        : freelancer.username;
+      
+      // Determine role/specialty text based on the user's specialty
+      let roleText = 'فريلانسر';
+      if (freelancer.specialty) {
+        const specialtyNames = {
+          'web-development': 'مطور ويب',
+          'graphic-design': 'مصمم جرافيك',
+          'digital-marketing': 'متخصص تسويق رقمي',
+          'content-writing': 'كاتب محتوى',
+          'other': 'فريلانسر'
+        };
+        roleText = specialtyNames[freelancer.specialty] || 'فريلانسر';
+      }
+      
+      // Format price range
+      const priceRange = (freelancer.min_price && freelancer.max_price) 
+        ? `${freelancer.min_price} - ${freelancer.max_price}` 
+        : '٢٠٠ - ٥٠٠';
+      
+      // Create card using the service-card style
+      const card = document.createElement('div');
+      card.className = 'service-card';
+      card.dataset.id = freelancer.id;
+      
+      card.innerHTML = `
+        <div class="avatar-container">
+          <img src="${freelancer.avatar}" alt="${displayName}" class="avatar">
+        </div>
+        <img src="${categoryImage}" alt="${roleText}" class="service-image">
+        <h3>${displayName}</h3>
+        <p class="role"><strong>${roleText}</strong></p>
+        <p>${freelancer.profile_bio || 'فريلانسر متاح للعمل على مشاريع جديدة'}</p>
+        <p>
+          <strong>السعر: ${priceRange}
+            <span class="sar-container">
+              <img src="../assets/images/SAR.png" alt="ريال سعودي" class="sar-icon">
+            </span>
+          </strong>
+        </p>
+        <div class="actions">
+          <button class="primary-btn">
+            تواصل <i class="fas fa-comment"></i>
+          </button>
+          <button class="secondary-btn">
+            المزيد <i class="fas fa-arrow-left"></i>
+          </button>
+        </div>
+      `;
+      
+      // Add event listeners for card buttons
+      const contactBtn = card.querySelector('.primary-btn');
+      if (contactBtn) {
+        contactBtn.addEventListener('click', () => {
+          window.location.href = '/contact?freelancer=' + freelancer.id;
+        });
+      }
+      
+      const moreBtn = card.querySelector('.secondary-btn');
+      if (moreBtn) {
+        moreBtn.addEventListener('click', () => {
+          // Could redirect to freelancer profile or show more info in a modal
+          showFreelancerDetails(freelancer);
+        });
+      }
+      
+      return card;
+    }
+
+    // Show freelancer details in a modal
+    function showFreelancerDetails(freelancer) {
+      // Create a modal to display more information about the freelancer
+      const modal = document.createElement('div');
+      modal.className = 'freelancer-modal';
+      
+      // Convert specialty code to readable text
+      let specialtyText = 'فريلانسر';
+      if (freelancer.specialty) {
+        const specialtyNames = {
+          'web-development': 'مطور ويب',
+          'graphic-design': 'مصمم جرافيك',
+          'digital-marketing': 'متخصص تسويق رقمي',
+          'content-writing': 'كاتب محتوى',
+          'other': 'فريلانسر'
+        };
+        specialtyText = specialtyNames[freelancer.specialty] || 'فريلانسر';
+      }
+      
+      // Format price range
+      const priceRange = (freelancer.min_price && freelancer.max_price) 
+        ? `${freelancer.min_price} - ${freelancer.max_price}` 
+        : '٢٠٠ - ٥٠٠';
+        
+      // Create display name
+      const displayName = (freelancer.first_name && freelancer.last_name) 
+        ? `${freelancer.first_name} ${freelancer.last_name}` 
+        : freelancer.username;
+      
+      modal.innerHTML = `
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <div class="freelancer-profile-header">
+            <img src="${freelancer.avatar}" alt="${displayName}" class="freelancer-avatar">
+            <div class="freelancer-basic-info">
+              <h2>${displayName}</h2>
+              <p class="specialty-badge">${specialtyText}</p>
+              <p class="price-badge">
+                <strong>السعر: ${priceRange}
+                  <span class="sar-container">
+                    <img src="../assets/images/SAR.png" alt="ريال سعودي" class="sar-icon">
+                  </span>
+                </strong>
+              </p>
+            </div>
+          </div>
+          <div class="freelancer-bio">
+            <h3>نبذة مهنية</h3>
+            <p>${freelancer.profile_bio || 'فريلانسر متاح للعمل على مشاريع جديدة'}</p>
+          </div>
+          <div class="freelancer-projects">
+            <h3>أمثلة من الأعمال</h3>
+            <div class="projects-grid" id="freelancer-projects-${freelancer.id}">
+              <p class="loading-projects">جاري تحميل الأعمال...</p>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button class="contact-freelancer-btn primary-btn">
+              تواصل الآن <i class="fas fa-comment"></i>
+            </button>
+          </div>
+        </div>
+      `;
+      
+      // Add modal to the body
+      document.body.appendChild(modal);
+      
+      // Show the modal with animation
+      setTimeout(() => {
+        modal.style.opacity = '1';
+      }, 10);
+      
+      // Close button functionality
+      const closeButton = modal.querySelector('.close-modal');
+      closeButton.addEventListener('click', () => {
+        modal.style.opacity = '0';
+        setTimeout(() => {
+          modal.remove();
+        }, 300);
+      });
+      
+      // Close when clicking outside the modal
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          modal.style.opacity = '0';
+          setTimeout(() => {
+            modal.remove();
+          }, 300);
+        }
+      });
+      
+      // Contact button functionality
+      const contactBtn = modal.querySelector('.contact-freelancer-btn');
+      contactBtn.addEventListener('click', () => {
+        window.location.href = '/contact?freelancer=' + freelancer.id;
+      });
+      
+      // Fetch and display freelancer projects
+      fetchFreelancerProjects(freelancer.id, `freelancer-projects-${freelancer.id}`);
+    }
+    
+    // Fetch a freelancer's projects
+    async function fetchFreelancerProjects(freelancerId, containerId) {
+      try {
+        const response = await fetch(`/api/freelancers/${freelancerId}/projects`);
+        const result = await response.json();
+        
+        const projectsContainer = document.getElementById(containerId);
+        
+        if (!projectsContainer) return;
+        
+        // Clear loading message
+        projectsContainer.innerHTML = '';
+        
+        if (result.success && result.projects && result.projects.length > 0) {
+          // Display projects
+          result.projects.forEach(project => {
+            const projectCard = document.createElement('div');
+            projectCard.className = 'project-item';
+            projectCard.innerHTML = `
+              <h4>${project.title}</h4>
+              <p>${project.description}</p>
+            `;
+            projectsContainer.appendChild(projectCard);
+          });
+        } else {
+          // No projects found
+          projectsContainer.innerHTML = '<p class="no-projects">لا توجد أعمال لعرضها حالياً</p>';
+        }
+      } catch (error) {
+        console.error('Error fetching freelancer projects:', error);
+        const projectsContainer = document.getElementById(containerId);
+        if (projectsContainer) {
+          projectsContainer.innerHTML = '<p class="error-loading">حدث خطأ أثناء تحميل المشاريع</p>';
+        }
+      }
+    }
+
+    // Call this function when page loads
+    fetchAvailableFreelancers();
+    
     // Call the authentication check and UI update
     updateNavMenu();
     updateProfilePage();
+    enhanceProfilePage();
 });

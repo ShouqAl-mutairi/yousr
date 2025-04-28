@@ -379,6 +379,325 @@
   color: #fff;
 }
 
+/* Edit Mode Styles */
+.edit-mode {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+.edit-mode .form-group {
+  margin-bottom: 15px;
+}
+
+.edit-mode label {
+  display: block;
+  margin-bottom: 5px;
+  color: #f5f5f5;
+  font-weight: bold;
+}
+
+.edit-mode .form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f5f5f5;
+  font-family: "Almarai", sans-serif;
+}
+
+.edit-mode textarea.form-input {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save-changes-btn, 
+.save-project-btn {
+  background-color: #7e70fa;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Almarai", sans-serif;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.save-changes-btn:hover,
+.save-project-btn:hover {
+  background-color: #6055d8;
+}
+
+.cancel-edit-btn,
+.cancel-project-btn {
+  background-color: transparent;
+  border: 1px solid #f5f5f5;
+  color: #f5f5f5;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Almarai", sans-serif;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.cancel-edit-btn:hover,
+.cancel-project-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Toggle Switch for Availability */
+.availability-toggle {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-left: 10px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #7e70fa;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #7e70fa;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.availability-label {
+  color: #f5f5f5;
+  font-weight: bold;
+}
+
+/* Projects Styles */
+.projects-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.projects-header h3 {
+  color: #7e70fa;
+  margin: 0;
+}
+
+#add-project-btn {
+  background-color: #7e70fa;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Almarai", sans-serif;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#add-project-btn:hover {
+  background-color: #6055d8;
+}
+
+.project-form-container {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.projects-list {
+  margin-top: 20px;
+}
+
+.project-card {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.project-card h4 {
+  color: #f5f5f5;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.project-category {
+  display: inline-block;
+  background-color: rgba(126, 112, 250, 0.2);
+  color: #7e70fa;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.project-description {
+  color: #b9b9b9;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.project-price {
+  color: #f5f5f5;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.project-price img {
+  width: 16px;
+  height: 16px;
+  margin-left: 5px;
+}
+
+.project-actions {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.edit-project-btn,
+.delete-project-btn {
+  background: none;
+  border: none;
+  color: #b9b9b9;
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.3s;
+  padding: 0;
+}
+
+.edit-project-btn:hover {
+  color: #7e70fa;
+}
+
+.delete-project-btn:hover {
+  color: #dc3545;
+}
+
+/* Make empty state hidden when there are projects */
+.has-projects #projects-empty {
+  display: none;
+}
+
+/* Freelancer-specific styles */
+.freelancer-fields {
+  background-color: rgba(126, 112, 250, 0.05);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+  border-right: 3px solid #7e70fa;
+}
+
+.freelancer-fields h4 {
+  color: #7e70fa;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.price-range-container {
+  margin-top: 15px;
+}
+
+.price-range {
+  display: flex;
+  gap: 15px;
+}
+
+.price-field {
+  flex: 1;
+}
+
+.freelancer-info {
+  background-color: rgba(126, 112, 250, 0.05);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+  border-right: 3px solid #7e70fa;
+}
+
+/* Specialty badge styling */
+.specialty-badge {
+  display: inline-block;
+  background-color: rgba(126, 112, 250, 0.2);
+  color: #7e70fa;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Bio styling with better formatting */
+#info-bio {
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .profile-info {

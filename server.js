@@ -494,6 +494,324 @@ app.post("/signup", signupValidation, (req, res) => {
   );
 });
 
+// Profile endpoint to get user data
+app.get("/api/user/:id", (req, res) => {
+  const userId = req.params.id;
+  
+  pool.query(
+    "SELECT id, username, first_name, last_name, email, phone, gender, date_of_birth, user_role, is_available, profile_bio FROM users WHERE id = ?",
+    [userId],
+    (error, results) => {
+      if (error) {
+        return res.status(500).json({ 
+          success: false, 
+          message: "خطأ في قاعدة البيانات",
+          error: error.message 
+        });
+      }
+      
+      if (results.length === 0) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "المستخدم غير موجود" 
+        });
+      }
+      
+      // Determine avatar path based on gender
+      const user = results[0];
+      let avatarPath = user.gender === 'female' 
+        ? '../assets/images/avatar/freelancer-woman-one.png' 
+        : '../assets/images/avatar/freelancer-man-one.png';
+      
+      res.json({
+        success: true,
+        user: {
+          ...user,
+          avatar: avatarPath
+        }
+      });
+    }
+  );
+});
+
+// Update profile information
+app.put("/api/user/:id", (req, res) => {
+  const userId = req.params.id;
+  const { first_name, last_name, email, phone, date_of_birth, profile_bio, is_available } = req.body;
+  
+  // Validation could be added here
+  
+  pool.query(
+    "UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, date_of_birth = ?, profile_bio = ?, is_available = ? WHERE id = ?",
+    [first_name, last_name, email, phone, date_of_birth, profile_bio, is_available ? 1 : 0, userId],
+    (error, result) => {
+      if (error) {
+        return res.status(500).json({ 
+          success: false, 
+          message: "خطأ في تحديث البيانات",
+          error: error.message 
+        });
+      }
+      
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "المستخدم غير موجود" 
+        });
+      }
+      
+      res.json({
+        success: true,
+        message: "تم تحديث البيانات بنجاح",
+        user: {
+          id: userId,
+          first_name,
+          last_name,
+          email,
+          phone,
+          date_of_birth,
+          profile_bio,
+          is_available: is_available ? 1 : 0
+        }
+      });
+    }
+  );
+});
+
+// Change password endpoint
+app.put("/api/user/:id/password", (req, res) => {
+  const userId = req.params.id;
+  const { currentPassword, newPassword } = req.body;
+  
+  // First, verify the current password
+  pool.query(
+    "SELECT password FROM users WHERE id = ?",
+    [userId],
+    (error, results) => {
+      if (error) {
+        return res.status(500).json({ 
+          success: false, 
+          message: "خطأ في قاعدة البيانات",
+          error: error.message 
+        });
+      }
+      
+      if (results.length === 0) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "المستخدم غير موجود" 
+        });
+      }
+      
+      const user = results[0];
+      
+      if (currentPassword !== user.password) {
+        return res.status(401).json({ 
+          success: false, 
+          message: "كلمة المرور الحالية غير صحيحة" 
+        });
+      }
+      
+      // Update the password
+      pool.query(
+        "UPDATE users SET password = ? WHERE id = ?",
+        [newPassword, userId],
+        (error, result) => {
+          if (error) {
+            return res.status(500).json({ 
+              success: false, 
+              message: "خطأ في تحديث كلمة المرور",
+              error: error.message 
+            });
+          }
+          
+          res.json({
+            success: true,
+            message: "تم تحديث كلمة المرور بنجاح"
+          });
+        }
+      );
+    }
+  );
+});
+
+// Delete account endpoint
+app.delete("/api/user/:id", (req, res) => {
+  const userId = req.params.id;
+  
+  pool.query(
+    "DELETE FROM users WHERE id = ?",
+    [userId],
+    (error, result) => {
+      if (error) {
+        return res.status(500).json({ 
+          success: false, 
+          message: "خطأ في حذف الحساب",
+          error: error.message 
+        });
+      }
+      
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "المستخدم غير موجود" 
+        });
+      }
+      
+      res.json({
+        success: true,
+        message: "تم حذف الحساب بنجاح"
+      });
+    }
+  );
+});
+
+// Project endpoints
+// Get user projects
+app.get("/api/user/:id/projects", (req, res) => {
+  const userId = req.params.id;
+  
+  pool.query(
+    "SELECT * FROM projects WHERE user_id = ? ORDER BY created_at DESC",
+    [userId],
+    (error, results) => {
+      if (error) {
+        return res.status(500).json({ 
+          success: false, 
+          message: "خطأ في قاعدة البيانات",
+          error: error.message 
+        });
+      }
+      
+      res.json({
+        success: true,
+        projects: results
+      });
+    }
+  );
+});
+
+// Add new project
+app.post("/api/projects", (req, res) => {
+  const { user_id, title, description, category, price } = req.body;
+  
+  pool.query(
+    "INSERT INTO projects (user_id, title, description, category, price) VALUES (?, ?, ?, ?, ?)",
+    [user_id, title, description, category, price],
+    (error, result) => {
+      if (error) {
+        return res.status(500).json({ 
+          success: false, 
+          message: "خطأ في إضافة المشروع",
+          error: error.message 
+        });
+      }
+      
+      res.status(201).json({
+        success: true,
+        message: "تم إضافة المشروع بنجاح",
+        project_id: result.insertId
+      });
+    }
+  );
+});
+
+// Update project
+app.put("/api/projects/:id", (req, res) => {
+  const projectId = req.params.id;
+  const { title, description, category, price } = req.body;
+  
+  pool.query(
+    "UPDATE projects SET title = ?, description = ?, category = ?, price = ? WHERE id = ?",
+    [title, description, category, price, projectId],
+    (error, result) => {
+      if (error) {
+        return res.status(500).json({ 
+          success: false, 
+          message: "خطأ في تحديث المشروع",
+          error: error.message 
+        });
+      }
+      
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "المشروع غير موجود" 
+        });
+      }
+      
+      res.json({
+        success: true,
+        message: "تم تحديث المشروع بنجاح"
+      });
+    }
+  );
+});
+
+// Delete project
+app.delete("/api/projects/:id", (req, res) => {
+  const projectId = req.params.id;
+  
+  pool.query(
+    "DELETE FROM projects WHERE id = ?",
+    [projectId],
+    (error, result) => {
+      if (error) {
+        return res.status(500).json({ 
+          success: false, 
+          message: "خطأ في حذف المشروع",
+          error: error.message 
+        });
+      }
+      
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "المشروع غير موجود" 
+        });
+      }
+      
+      res.json({
+        success: true,
+        message: "تم حذف المشروع بنجاح"
+      });
+    }
+  );
+});
+
+// Get available freelancers for the freelancers page
+app.get("/api/freelancers", (req, res) => {
+  pool.query(
+    "SELECT id, username, first_name, last_name, email, phone, gender, user_role, profile_bio FROM users WHERE user_role = 'freelancer' AND is_available = 1",
+    (error, results) => {
+      if (error) {
+        return res.status(500).json({ 
+          success: false, 
+          message: "خطأ في قاعدة البيانات",
+          error: error.message 
+        });
+      }
+      
+      // Add avatar paths to each freelancer
+      const freelancers = results.map(freelancer => {
+        const avatarPath = freelancer.gender === 'female' 
+          ? '../assets/images/avatar/freelancer-woman-one.png' 
+          : '../assets/images/avatar/freelancer-man-one.png';
+          
+        return {
+          ...freelancer,
+          avatar: avatarPath
+        };
+      });
+      
+      res.json({
+        success: true,
+        freelancers
+      });
+    }
+  );
+});
+
 // Activating server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
