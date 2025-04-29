@@ -1,0 +1,241 @@
+/* style for login.html and sign-up.html */
+
+.title {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-title {
+  width: 35px;
+  height: 30px;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 80px auto;
+  background: rgb(206, 206, 206);
+  color: black;
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #000000;
+  text-align: start;
+  margin: 4px 20px;
+}
+
+.form-input {
+  width: 86%;
+  padding: 10px;
+  padding-right: 35px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  font-size: 1em;
+  background: rgba(255, 255, 255, 0.2);
+  text-align: right;
+}
+
+.form-input:focus {
+  border-color: #7e70fa;
+  outline: none;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+input[type="radio"]:checked,
+input[type="checkbox"]:checked {
+  outline: none;
+  accent-color: #7e70fa;
+}
+
+.radio-group label {
+    margin: 0 6px;
+}
+
+.input-wrapper {
+  position: relative;
+  margin-bottom: 15px; 
+}
+
+.input-wrapper i {
+  position: absolute;
+  right: 35px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9a9a9a;
+}
+
+button.auth-button {
+  margin-top: 10px;
+  background-color: #7e70fa;
+  color: white;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+  width: 94%;
+  font-weight: bold;
+  font-family: "Almarai", sans-serif;
+}
+
+button.auth-button:hover {
+  background-color: #3d377b;
+}
+
+/* General button without hover effect */
+button {
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.date {
+  text-align: end;
+}
+
+.radio-group {
+  display: flex;
+}
+
+.label-header {
+  text-align: start;
+  margin-right: 20px;
+}
+
+p a {
+  color: #7e70fa;
+}
+
+p a:hover {
+  text-decoration: none;
+  color: #aca3f8;
+}
+
+.social-login {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.divider {
+    width: 270px; 
+    height: 1px; 
+    background-color: #939393;
+    margin: 10px auto;
+}
+
+.social-login h3 {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.btn-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.2s;
+  margin: 0 5px;
+}
+
+.btn-social.google {
+  background-color: #db4437;
+}
+
+.btn-social.apple {
+  background-color: #000;
+}
+
+.btn-social.facebook {
+  background-color: #4267b2;
+}
+
+.btn-social i {
+  font-size: 20px;
+}
+
+.btn-social:hover {
+  transform: scale(1.1);
+}
+
+/* Validation Styles */
+
+/* If there is an error */
+.input-error {
+  border: 1px solid red !important;
+}
+
+/* If the input is valid */
+.input-success {
+  border: 1px solid green !important;
+}
+
+/* Style for error messages */
+.error-message {
+  color: red;
+  font-size: 0.85em;
+  margin: 5px 20px 0 0;
+  text-align: right;
+  display: block;
+  width: 90%;
+}
+
+
+/* Media Queries */
+@media (max-width: 576px) {
+  .input-wrapper{
+    padding-right: 12px;
+
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-form {
+    max-width: 100px;
+    padding: 30px;
+  }
+
+  .form-container {
+    max-width: 100%;
+    margin: 80px 90px;
+    padding: 30px;
+  }
+
+  .form-input {
+    width: 82%;
+  }
+
+  button {
+    width: 90%;
+  }
+}
+
+@media (max-width: 992px) {
+  .auth-form {
+    max-width: 450px;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+  }
+}

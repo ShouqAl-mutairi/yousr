@@ -1,0 +1,266 @@
+/* Main Container */
+.contact-container {
+    max-width: 600px;
+    margin: 80px auto;
+    background: rgb(206, 206, 206);
+    color: black;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+.text {
+    display: flex;
+    justify-content: center;
+}
+
+.logo-title {
+    width: 35px;
+    height: 30px;
+    margin-top: 20px;
+    margin-left: 5px;
+}
+
+
+.contact-form {
+    text-align: center;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #000000;
+    text-align: start;
+    margin: 4px 20px;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    width: 86%;
+    padding: 10px;
+    padding-right: 35px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 1em;
+    background: rgba(255, 255, 255, 0.2);
+    text-align: right;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    border-color: #7e70fa;
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(55, 86, 119, 0.5);
+}
+
+.input-wrapper {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-wrapper i {
+    position: absolute;
+    right: 35px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9a9a9a;
+}
+
+button {
+    margin-top: 10px;
+    background-color: #7e70fa;
+    color: white;
+    padding: 13px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+    width: 94%;
+    font-weight: bold;
+    font-family: "Almarai", sans-serif;
+}
+
+button:hover {
+    background-color: #3d377b;
+}
+
+.label-header {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #000000;
+    text-align: start;
+    margin: 4px 20px;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: right;
+    gap: 15px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #000;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+.radio-group input[type="radio"] {
+    accent-color: #7e70fa;
+    cursor: pointer;
+    outline: none;
+    width: 18px;
+    height: 18px;
+}
+
+.radio-group input[type="radio"]:hover,
+.radio-group input[type="radio"]:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.contact-form select {
+    width: 94%;
+}
+
+.contact-form textarea {
+    resize: none;
+}
+
+.text-center {
+    margin-top: 20px;
+}
+
+.names-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 94%;
+    margin: 0 auto;
+}
+
+.names-group .input-wrapper {
+    flex: 1;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.names-group .form-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.names-group .input-wrapper i {
+    right: 18px;
+    top: 70%;
+
+}
+
+
+/* Media Queries for Responsiveness */
+@media (max-width: 576px) {
+    .contact-container {
+        max-width: 52%;
+    }
+
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .text-center {
+        margin-top: 10px;
+    }
+
+    button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .input-wrapper i {
+        right: 15px;
+    }
+
+    .names-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .names-group .input-wrapper {
+        width: 100%;
+    }
+
+    .names-group .form-input {
+        width: 100%;
+    }
+
+    .names-group .input-wrapper i {
+        right: 15px;
+    }
+
+}
+
+
+@media (min-width: 577px) and (max-width: 768px) {
+    .contact-container {
+        max-width: 63%;
+
+    }
+
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .input-wrapper i {
+        right: 12px;
+    }
+
+    .names-group .input-wrapper i {
+        right: 20px;
+    }
+}
+
+
+@media (min-width: 769px) and (max-width: 992px) {
+    .contact-container {
+        max-width: 600px;
+    }
+
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .input-wrapper i {
+        right: 12px;
+    }
+
+    .names-group .input-wrapper i {
+        right: 25px;
+    }
+}

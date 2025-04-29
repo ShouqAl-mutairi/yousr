@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة يُســر | تواصـل معنا</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="../css/style.css" rel="stylesheet">
+  <link href="../css/contact.css" rel="stylesheet">
+  <link href="../assets/images/logo-without-text.png" rel="icon" type="image/png">
+  <script src="../js/script.js" defer></script>
+  <!-- <script type="text/javascript">
+    (function(){
+      emailjs.init("KeQko1qCDl1mRWqNE"); // Your EmailJS public key
+    })();
+  </script> -->
+</head>
+
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="/" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+        </li>
+        <li class="nav-item">
+          <a href="/freelancers" class="nav-link"><i class="fas fa-cogs"></i> خدماتنا</a>
+        </li>
+        <li class="nav-item">
+          <a href="/about" class="nav-link"><i class="fas fa-info-circle"></i> من نحن</a>
+        </li>
+        <li class="nav-item">
+          <a href="/contact" class="nav-link"><i class="fas fa-envelope"></i> تواصل معنا</a>
+        </li>
+        <li>
+          <div class="auth-buttons">
+            <a href="/signup" class="btn primary"><i class="fas fa-user"></i> سجل</a>
+            <a href="/login" class="btn secondary"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a>
+          </div>
+        </li>
+      </ul>
+      <a href="/" class="logo">
+        <img src="../assets/images/logo-white.png" alt="yousr logo">
+      </a>
+    </nav>
+  </header>
+
+  <main class="contact-container">
+    <div class="contact-box">
+      <div class="text">
+        <img class="logo-title" src="../assets/images/logo-without-text.png" alt="yousr logo">
+
+        <h2 class="contact-header">تواصل معنا</h2>
+      </div>
+      
+      <div class="contact-content">
+        <div class="contact-form">
+          <div id="form-message" style="display:none;"></div>
+
+          <form action="/contact" method="POST" class="contact-form">
+            <div class="form-group names-group">
+              <div class="input-wrapper">
+                <label for="first-name">الاسم الأول:</label>
+                <i class="fas fa-user"></i>
+                <input type="text" id="first-name" name="firstName" class="form-input" minlength="3" maxlength="20" required>
+              </div>
+
+              <div class="input-wrapper">
+                <label for="last-name">الاسم الأخير:</label>
+                <i class="fas fa-user"></i>
+                <input type="text" id="last-name" name="last-name" class="form-input" minlength="3" maxlength="20" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <p class="label-header">الجنس:</p>
+              <div class="radio-group">
+                <label>
+                  <input type="radio" name="gender" value="female" required>
+                  أنثى
+                </label>
+                <label>
+                  <input type="radio" name="gender" value="male" required>
+                  ذكر
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phone">رقم الهاتف:</label>
+              <div class="input-wrapper">
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="phone" name="phone" class="form-input" minlength="10" maxlength="15"
+                  pattern="[0-9]{10,}" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="dob">تاريخ الميلاد:</label>
+              <div class="input-wrapper">
+                <i class="fas fa-calendar-alt"></i>
+                <input type="date" id="dob" name="dob" class="form-input date" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">البريد الإلكتروني:</label>
+              <div class="input-wrapper">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" name="email" class="form-input" minlength="5" maxlength="80"
+                  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">اللغة</label>
+              <div class="input-wrapper">
+                <i class="fas fa-globe"></i>
+                <select name="language" required>
+                  <option value="" disabled selected>اختر لغتك</option>
+                  <option value="Arabic">العربية</option>
+                  <option value="English">English</option>
+                  <option value="Français">Français</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message" class="form-label">الرسالة:</label>
+              <textarea id="message" name="message" rows="4" class="form-input" required></textarea>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn-submit">إرسال</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-right">
+        <img src="../assets/images/logo-without-text.png" alt="yousr logo" class="footer-logo">
+        <div class="contact-info">
+          <p>
+            <i class="fas fa-envelope"></i> البريد الإلكتروني :
+            <a href="mailto:info@yousr.com">info@yousr.com</a>
+          </p>
+          <p>
+            <i class="fas fa-phone"></i> الهاتف :
+            <a href="tel:+123456789">+966 549655977</a>
+          </p>
+        </div>
+      </div>
+      <div class="footer-left">
+        <div class="quick-links">
+          <a href="#">الشروط والأحكام</a>
+          <a href="#">سياسة الخصوصية</a>
+          <a href="#">الأسئلة الشائعة</a>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <p class="copyright">
+        <i class="fas fa-copyright"></i> 2025 يُســر. جميع الحقوق محفوظة.
+      </p>
+      <div class="social-media">
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
