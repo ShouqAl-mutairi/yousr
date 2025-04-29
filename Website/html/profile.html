@@ -15,7 +15,7 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/profile.css" rel="stylesheet">
     <link href="../assets/images/logo-without-text.png" rel="icon" type="image/png">
-    <script src="../js/script.js" defer></script>
+    <script src="../js/main.js" type="module" defer></script>
   </head>
 
   <body>
@@ -82,34 +82,41 @@
               <form id="user-info-form">
                 <div class="form-group">
                   <label for="edit-first-name">الاسم الأول:</label>
-                  <input type="text" id="edit-first-name" name="first_name" class="form-input">
+                  <input type="text" id="edit-first-name" name="first_name" class="form-input" required minlength="2" maxlength="30" pattern="[a-zA-Zأ-ي\s]{2,30}">
+                  <div id="edit-first-name-error" class="error-message"></div>
                 </div>
                 <div class="form-group">
                   <label for="edit-last-name">الاسم الأخير:</label>
-                  <input type="text" id="edit-last-name" name="last_name" class="form-input">
+                  <input type="text" id="edit-last-name" name="last_name" class="form-input" required minlength="2" maxlength="30" pattern="[a-zA-Zأ-ي\s]{2,30}">
+                  <div id="edit-last-name-error" class="error-message"></div>
                 </div>
                 <div class="form-group">
                   <label for="edit-email">البريد الإلكتروني:</label>
-                  <input type="email" id="edit-email" name="email" class="form-input">
+                  <input type="email" id="edit-email" name="email" class="form-input" required>
+                  <div id="edit-email-error" class="error-message"></div>
                 </div>
                 <div class="form-group">
                   <label for="edit-phone">رقم الهاتف:</label>
-                  <input type="tel" id="edit-phone" name="phone" class="form-input">
+                  <input type="tel" id="edit-phone" name="phone" class="form-input" required pattern="[0-9]{10,15}">
+                  <div id="edit-phone-error" class="error-message"></div>
                 </div>
                 <div class="form-group">
                   <label for="edit-dob">تاريخ الميلاد:</label>
-                  <input type="date" id="edit-dob" name="date_of_birth" class="form-input">
+                  <input type="date" id="edit-dob" name="date_of_birth" class="form-input" max="2025-04-29">
+                  <div id="edit-dob-error" class="error-message"></div>
                 </div>
                 
                 <!-- Freelancer specific fields (only shown for freelancer accounts) -->
                 <div class="freelancer-fields">
                   <div class="form-group">
                     <label for="edit-specialty">التخصص:</label>
-                    <input type="text" id="edit-specialty" name="specialty" class="form-input" placeholder="مثال: تطوير الويب، تصميم جرافيكي، تسويق رقمي...">
+                    <input type="text" id="edit-specialty" name="specialty" class="form-input" placeholder="مثال: تطوير الويب، تصميم جرافيكي، تسويق رقمي..." minlength="2" maxlength="50">
+                    <div id="edit-specialty-error" class="error-message"></div>
                   </div>
                   <div class="form-group">
                     <label for="edit-bio">نبذة مهنية:</label>
-                    <textarea id="edit-bio" name="profile_bio" class="form-input" rows="4" placeholder="اكتب نبذة مختصرة عن خبراتك ومهاراتك والخدمات التي تقدمها للعملاء..."></textarea>
+                    <textarea id="edit-bio" name="profile_bio" class="form-input" rows="4" placeholder="اكتب نبذة مختصرة عن خبراتك ومهاراتك والخدمات التي تقدمها للعملاء..." minlength="10" maxlength="500"></textarea>
+                    <div id="edit-bio-error" class="error-message"></div>
                   </div>
                   <div class="price-range-container">
                     <h4>نطاق السعر (بالريال السعودي):</h4>
@@ -117,11 +124,14 @@
                       <div class="price-field">
                         <label for="edit-min-price">الحد الأدنى:</label>
                         <input type="number" id="edit-min-price" name="min_price" class="form-input" min="0" step="50">
+                        <div id="edit-min-price-error" class="error-message"></div>
                       </div>
                       <div class="price-field">
                         <label for="edit-max-price">الحد الأقصى:</label>
                         <input type="number" id="edit-max-price" name="max_price" class="form-input" min="0" step="50">
+                        <div id="edit-max-price-error" class="error-message"></div>
                       </div>
+                      <div id="edit-min-price-range-error" class="error-message"></div>
                     </div>
                   </div>
                 </div>
@@ -208,7 +218,8 @@
             <form id="add-project-form">
               <div class="form-group">
                 <label for="project-title">عنوان المشروع</label>
-                <input type="text" id="project-title" name="title" class="form-input" required>
+                <input type="text" id="project-title" name="title" class="form-input" required minlength="3" maxlength="100">
+                <div id="project-title-error" class="error-message"></div>
               </div>
               <div class="form-group">
                 <label for="project-category">الفئة</label>
@@ -220,14 +231,17 @@
                   <option value="content-writing">كتابة المحتوى</option>
                   <option value="other">أخرى</option>
                 </select>
+                <div id="project-category-error" class="error-message"></div>
               </div>
               <div class="form-group">
                 <label for="project-description">وصف المشروع</label>
-                <textarea id="project-description" name="description" class="form-input" rows="4" required></textarea>
+                <textarea id="project-description" name="description" class="form-input" rows="4" required minlength="20" maxlength="1000"></textarea>
+                <div id="project-description-error" class="error-message"></div>
               </div>
               <div class="form-group">
                 <label for="project-price">السعر (بالريال السعودي)</label>
-                <input type="number" id="project-price" name="price" class="form-input" min="0" step="0.01">
+                <input type="number" id="project-price" name="price" class="form-input" min="0" step="0.01" required>
+                <div id="project-price-error" class="error-message"></div>
               </div>
               <div class="button-group">
                 <button type="submit" class="save-project-btn">حفظ المشروع</button>
