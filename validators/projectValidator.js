@@ -1,28 +1,28 @@
 // Project validation middleware
-const { body, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 
 // Project validation rules
 const projectValidationRules = [
     // Project Information Validation
-    body('title')
+    check('title')
         .trim()
         .isLength({ min: 5, max: 100 })
         .withMessage('عنوان المشروع يجب أن يكون بين 5-100 حرف')
         .matches(/^[\u0600-\u06FFa-zA-Z0-9\s.,!?-]*$/)
         .withMessage('عنوان المشروع يحتوي على أحرف غير مسموح بها'),
         
-    body('category')
+    check('category')
         .notEmpty()
         .withMessage('يجب اختيار فئة المشروع'),
         
-    body('description')
+    check('description')
         .trim()
         .isLength({ min: 20, max: 1000 })
         .withMessage('وصف المشروع يجب أن يكون بين 20-1000 حرف')
         .matches(/^[\u0600-\u06FFa-zA-Z0-9\s.,!?()-]*$/)
         .withMessage('وصف المشروع يحتوي على أحرف غير مسموح بها'),
         
-    body('user_id')
+    check('user_id')
         .notEmpty()
         .withMessage('معرف المستخدم مطلوب')
         .isNumeric()
