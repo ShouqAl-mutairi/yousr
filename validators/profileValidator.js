@@ -1,35 +1,35 @@
 // Profile validation middleware
-const { check, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 
 // Profile validation rules
 const profileValidationRules = [
     // Personal Information Validation
-    check('firstName')
+    body('first_name')
         .trim()
         .isLength({ min: 2, max: 30 })
         .withMessage('الاسم الأول يجب أن يكون بين 2-30 حرف')
         .matches(/^[a-zA-Zأ-ي\s]*$/)
         .withMessage('الاسم الأول يجب أن يحتوي على أحرف فقط'),
         
-    check('lastName')
+    body('last_name')
         .trim()
         .isLength({ min: 2, max: 30 })
         .withMessage('الاسم الأخير يجب أن يكون بين 2-30 حرف')
         .matches(/^[a-zA-Zأ-ي\s]*$/)
         .withMessage('الاسم الأخير يجب أن يحتوي على أحرف فقط'),
-        
-    check('email')
+    
+    body('email')
         .trim()
         .isEmail()
         .withMessage('يرجى إدخال بريد إلكتروني صحيح')
         .normalizeEmail(),
         
-    check('phone')
+    body('phone')
         .trim()
         .matches(/^[0-9]{10,15}$/)
         .withMessage('رقم الهاتف يجب أن يتكون من 10-15 رقم فقط'),
         
-    check('dob')
+    body('date_of_birth')
         .optional({ checkFalsy: true })
         .isDate()
         .withMessage('تاريخ الميلاد يجب أن يكون بتنسيق صحيح')
@@ -43,7 +43,7 @@ const profileValidationRules = [
         }),
     
     // Freelancer-specific fields (optional)
-    check('specialty')
+    body('specialty')
         .optional({ checkFalsy: true })
         .trim()
         .isLength({ min: 2, max: 50 })
@@ -51,13 +51,13 @@ const profileValidationRules = [
         .matches(/^[a-zA-Zأ-ي0-9\s\-,.]*$/)
         .withMessage('التخصص يحتوي على أحرف أو أرقام غير مسموح بها'),
         
-    check('bio')
+    body('profile_bio')
         .optional({ checkFalsy: true })
         .trim()
         .isLength({ min: 10, max: 500 })
         .withMessage('النبذة المهنية يجب أن تكون بين 10-500 حرف'),
         
-    check('minPrice')
+    body('min_price')
         .optional({ checkFalsy: true })
         .isNumeric()
         .withMessage('الحد الأدنى للسعر يجب أن يكون رقماً')
@@ -69,13 +69,13 @@ const profileValidationRules = [
             return true;
         }),
         
-    check('maxPrice')
+    body('max_price')
         .optional({ checkFalsy: true })
         .isNumeric()
         .withMessage('الحد الأقصى للسعر يجب أن يكون رقماً')
         .custom((value, { req }) => {
             const maxPrice = parseFloat(value);
-            const minPrice = parseFloat(req.body.minPrice || 0);
+            const minPrice = parseFloat(req.body.min_price || 0);
             
             if (maxPrice < 0) {
                 throw new Error('الحد الأقصى للسعر يجب أن يكون رقماً موجباً');
@@ -93,8 +93,11 @@ const profileValidationRules = [
 const validateProfile = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+        console.log("Profile validation errors:", errors.array());
         return res.status(400).json({ 
             success: false, 
+            message: "خطأ في تحديث البيانات",
+            details: "يرجى التحقق من صحة البيانات المدخلة",
             errors: errors.array() 
         });
     }

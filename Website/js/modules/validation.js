@@ -488,13 +488,6 @@ function validateProjectForm() {
         ""
     );
 
-    isValid &= validateOptionalNumber(
-        "project-price",
-        0,
-        null,
-        "يجب أن يكون السعر رقماً موجباً"
-    );
-
     return Boolean(isValid);
 }
 

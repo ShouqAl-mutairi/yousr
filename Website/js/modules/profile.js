@@ -127,8 +127,11 @@ function updateProfilePage() {
             if (freelancerFieldsSection) freelancerFieldsSection.style.display = 'none';
         }
         
-        // Settings tab
-        updateImageSrc('avatar-preview-img', user.avatar);
+        // Only try to update avatar-preview-img if it exists in the page
+        const avatarPreviewImg = document.getElementById('avatar-preview-img');
+        if (avatarPreviewImg && user.avatar) {
+            avatarPreviewImg.src = user.avatar;
+        }
         
         // Tab functionality
         const tabButtons = document.querySelectorAll('.tab-button');
@@ -457,6 +460,17 @@ function createProjectCard(project) {
 
 // Setup all profile page interactions
 function setupProfileInteractions(userId) {
+    // Clear any existing event listeners by cloning and replacing elements
+    function resetEventListeners(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            const newElement = element.cloneNode(true);
+            element.parentNode.replaceChild(newElement, element);
+            return newElement;
+        }
+        return null;
+    }
+
     // Info tab edit button
     const editInfoBtn = document.querySelector('.edit-info-btn');
     const infoViewMode = document.getElementById('info-view-mode');
@@ -551,7 +565,32 @@ function setupProfileInteractions(userId) {
                     infoViewMode.style.display = 'block';
                     infoEditMode.style.display = 'none';
                 } else {
-                    showNotification('error', 'فشل التحديث', result.message || 'حدث خطأ أثناء تحديث المعلومات');
+                    console.error('Error response:', result);
+                    
+                    // Check if there are validation errors and display them
+                    if (result.errors && result.errors.length > 0) {
+                        console.log('Validation errors:', result.errors);
+                        
+                        // Create a formatted error message
+                        const errorMessages = result.errors.map(err => {
+                            return `${err.param}: ${err.msg}`;
+                        }).join('<br>');
+                        
+                        showNotification('error', 'فشل التحديث', `${result.details || 'حدث خطأ أثناء تحديث المعلومات'}<br>${errorMessages}`);
+                        
+                        // Highlight fields with errors
+                        result.errors.forEach(err => {
+                            const inputField = document.getElementById(`edit-${err.param}`);
+                            const errorDiv = document.getElementById(`edit-${err.param}-error`);
+                            
+                            if (inputField) {
+                                inputField.classList.add('input-error');
+                                if (errorDiv) errorDiv.textContent = err.msg;
+                            }
+                        });
+                    } else {
+                        showNotification('error', 'فشل التحديث', result.message || 'حدث خطأ أثناء تحديث المعلومات');
+                    }
                 }
             } catch (error) {
                 console.error('Error updating user info:', error);
@@ -563,8 +602,10 @@ function setupProfileInteractions(userId) {
     // Projects tab
     const addProjectBtn = document.getElementById('add-project-btn');
     const projectFormContainer = document.getElementById('project-form-container');
-    const addProjectForm = document.getElementById('add-project-form');
-    const cancelProjectBtn = document.querySelector('.cancel-project-btn');
+    
+    // Reset and get a clean version of the form to prevent duplicate event listeners
+    const addProjectForm = resetEventListeners('add-project-form');
+    const cancelProjectBtn = addProjectForm ? addProjectForm.querySelector('.cancel-project-btn') : null;
     
     // Show add project form
     if (addProjectBtn && projectFormContainer) {
@@ -576,15 +617,6 @@ function setupProfileInteractions(userId) {
             // Change button text and action if editing
             addProjectForm.dataset.mode = 'add';
             addProjectForm.querySelector('.save-project-btn').textContent = 'حفظ المشروع';
-            
-            // Hide price field if it exists (since we're using projects as portfolio only)
-            const priceField = document.getElementById('project-price');
-            if (priceField) {
-                const priceContainer = priceField.closest('.form-group');
-                if (priceContainer) {
-                    priceContainer.style.display = 'none';
-                }
-            }
         });
     }
     
@@ -596,15 +628,20 @@ function setupProfileInteractions(userId) {
         });
     }
     
-    // Add/edit project form submission
+    // Add/edit project form submission - using the reset form to prevent duplicate submissions
     if (addProjectForm) {
         addProjectForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            // Disable the submit button to prevent double submission
+            const submitButton = addProjectForm.querySelector('.save-project-btn');
+            if (submitButton) submitButton.disabled = true;
             
             // Validate the project form before submission
             const isValid = validateProjectForm();
             if (!isValid) {
                 showNotification('error', 'خطأ في النموذج', 'يرجى التحقق من المعلومات المدخلة وتصحيح الأخطاء');
+                if (submitButton) submitButton.disabled = false;
                 return;
             }
             
@@ -628,6 +665,8 @@ function setupProfileInteractions(userId) {
                     url = `/api/projects/${projectId}`;
                     method = 'PUT';
                 }
+                
+                console.log(`Submitting project (${method}) to ${url} with data:`, projectData);
                 
                 const response = await fetch(url, {
                     method,
@@ -658,6 +697,9 @@ function setupProfileInteractions(userId) {
             } catch (error) {
                 console.error('Error with project operation:', error);
                 showNotification('error', 'خطأ في الاتصال', 'حدث خطأ أثناء الاتصال بالخادم');
+            } finally {
+                // Re-enable the submit button
+                if (submitButton) submitButton.disabled = false;
             }
         });
     }
@@ -702,17 +744,6 @@ function openProjectEditForm(projectId) {
     document.getElementById('project-title').value = title;
     document.getElementById('project-category').value = categoryValue;
     document.getElementById('project-description').value = description;
-    
-    // Hide price field or set default value if it exists
-    const priceField = document.getElementById('project-price');
-    if (priceField) {
-        priceField.value = '';
-        // If you want to hide the price field in the form:
-        const priceContainer = priceField.closest('.form-group');
-        if (priceContainer) {
-            priceContainer.style.display = 'none';
-        }
-    }
     
     // Set form mode to edit
     addProjectForm.dataset.mode = 'edit';
@@ -794,6 +825,44 @@ async function deleteUserAccount(userId) {
     }
 }
 
+// Toggle required attribute for freelancer fields based on availability
+function toggleFreelancerFieldsRequired() {
+    const availabilityToggle = document.getElementById('availability-toggle');
+    const specialtyInput = document.getElementById('edit-specialty');
+    const bioTextarea = document.getElementById('edit-bio');
+    const minPriceInput = document.getElementById('edit-min-price');
+    const maxPriceInput = document.getElementById('edit-max-price');
+    
+    if (availabilityToggle && specialtyInput && bioTextarea && minPriceInput && maxPriceInput) {
+        const isRequired = availabilityToggle.checked;
+        
+        // Set required attribute based on toggle state
+        specialtyInput.required = isRequired;
+        bioTextarea.required = isRequired;
+        minPriceInput.required = isRequired;
+        maxPriceInput.required = isRequired;
+        
+        // Add visual indication for required fields
+        const freelancerFields = document.querySelector('.freelancer-fields');
+        if (freelancerFields) {
+            if (isRequired) {
+                freelancerFields.classList.add('required-section');
+            } else {
+                freelancerFields.classList.remove('required-section');
+            }
+        }
+        
+        // Show notification about required fields
+        if (isRequired) {
+            showNotification(
+                'info',
+                'يرجى إكمال البيانات المهنية',
+                'لتفعيل وضع "متاح للعمل"، يجب إكمال معلومات التخصص والنبذة المهنية ونطاق السعر'
+            );
+        }
+    }
+}
+
 // Profile page functionality
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -801,7 +870,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const profileTabs = document.querySelectorAll('.profile-tab');
     const tabContents = document.querySelectorAll('.tab-content');
     const editProfileForm = document.getElementById('edit-profile-form');
-    const addProjectForm = document.getElementById('add-project-form');
+    
+    // Initialize availability toggle function on page load
+    const availabilityToggle = document.getElementById('availability-toggle');
+    if (availabilityToggle) {
+        // Set initial state of required fields
+        toggleFreelancerFieldsRequired();
+        
+        // Add event listener for future changes
+        availabilityToggle.addEventListener('change', toggleFreelancerFieldsRequired);
+    }
     
     // Tab switching functionality
     profileTabs.forEach(tab => {
@@ -830,27 +908,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Simulate successful form submission
                 showMessage('success', 'تم تحديث البيانات الشخصية بنجاح');
-            } else {
-                // Form is invalid, show error message
-                showMessage('error', 'يرجى تصحيح الأخطاء في النموذج قبل الإرسال');
-            }
-        });
-    }
-    
-    // Add project form submission
-    if (addProjectForm) {
-        addProjectForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validate form before submission
-            if (validateProjectForm()) {
-                // Form is valid, proceed with submission
-                console.log('Project form is valid, submitting...');
-                // You can add AJAX request here to submit form data
-                
-                // Simulate successful form submission
-                showMessage('success', 'تم إضافة المشروع بنجاح');
-                this.reset();
             } else {
                 // Form is invalid, show error message
                 showMessage('error', 'يرجى تصحيح الأخطاء في النموذج قبل الإرسال');
@@ -887,6 +944,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
     
+    // Call enhanced profile page functionality for proper setup
+    enhanceProfilePage();
 });
 
 export {
