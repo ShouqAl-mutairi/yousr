@@ -12,14 +12,7 @@
   <link href="../css/style.css" rel="stylesheet">
   <link href="../css/contact.css" rel="stylesheet">
   <link href="../assets/images/logo-without-text.png" rel="icon" type="image/png">
-  <script src="../js/main.js" type="module" defer></script>
-  <!-- <script type="text/javascript">
-    (function(){
-      emailjs.init("KeQko1qCDl1mRWqNE"); // Your EmailJS public key
-    })();
-  </script> -->
 </head>
-
 
 <body>
   <header>
@@ -59,15 +52,14 @@
     <div class="contact-box">
       <div class="text">
         <img class="logo-title" src="../assets/images/logo-without-text.png" alt="yousr logo">
-
         <h2 class="contact-header">تواصل معنا</h2>
       </div>
       
       <div class="contact-content">
         <div class="contact-form">
-          <div id="form-message" style="display:none;"></div>
+          <div id="form-message" class="hidden-message"></div>
 
-          <form action="/contact" method="POST" class="contact-form">
+          <form action="/contact" method="POST" class="contact-form" >
             <div class="form-group names-group">
               <div class="input-wrapper">
                 <label for="first-name">الاسم الأول:</label>
@@ -83,6 +75,7 @@
                 <div id="last-name-error" class="error-message"></div>
               </div>
             </div>
+
             <div class="form-group">
               <p class="label-header">الجنس:</p>
               <div class="radio-group">
@@ -97,6 +90,7 @@
               </div>
               <div id="gender-error" class="error-message"></div>
             </div>
+
             <div class="form-group">
               <label for="phone">رقم الهاتف:</label>
               <div class="input-wrapper">
@@ -106,6 +100,7 @@
                 <div id="phone-error" class="error-message"></div>
               </div>
             </div>
+
             <div class="form-group">
               <label for="dob">تاريخ الميلاد:</label>
               <div class="input-wrapper">
@@ -114,6 +109,7 @@
                 <div id="dob-error" class="error-message"></div>
               </div>
             </div>
+
             <div class="form-group">
               <label for="email">البريد الإلكتروني:</label>
               <div class="input-wrapper">
@@ -123,6 +119,7 @@
                 <div id="email-error" class="error-message"></div>
               </div>
             </div>
+
             <div class="form-group">
               <label class="form-label">اللغة</label>
               <div class="input-wrapper">
@@ -136,11 +133,13 @@
                 <div id="language-error" class="error-message"></div>
               </div>
             </div>
+
             <div class="form-group">
               <label for="message" class="form-label">الرسالة:</label>
               <textarea id="message" name="message" rows="4" class="form-input" required></textarea>
               <div id="message-error" class="error-message"></div>
             </div>
+            
             <div class="text-center">
               <button type="submit" class="btn-submit">إرسال</button>
             </div>
@@ -186,6 +185,7 @@
       </div>
     </div>
   </footer>
+  <script src="../js/main.js" type="module"></script>
 </body>
 
 </html>

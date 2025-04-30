@@ -1,5 +1,4 @@
 // Auth Module - Handles user authentication, login, and signup
-
 import { showNotification } from './ui.js';
 import { validateField, validateDate, validateRadio, validateCheckbox, validateSignupForm } from './validation.js';
 
@@ -7,7 +6,6 @@ import { validateField, validateDate, validateRadio, validateCheckbox, validateS
 function checkAuthStatus() {
     const userData = localStorage.getItem('userData');
     if (userData) {
-        // User is logged in
         return JSON.parse(userData);
     }
     return null;
@@ -19,7 +17,6 @@ function updateNavMenu() {
     const authButtonsContainer = document.querySelector('.auth-buttons');
     
     if (user && authButtonsContainer) {
-        // Replace auth buttons with profile picture
         authButtonsContainer.innerHTML = `
             <div class="user-profile">
                 <img src="${user.avatar}" alt="${user.username}" class="profile-picture">
@@ -50,7 +47,6 @@ function updateNavMenu() {
                 profileDropdown.classList.remove('active');
             });
             
-            // Prevent dropdown from closing when clicking inside it
             profileDropdown.addEventListener('click', (e) => {
                 e.stopPropagation();
             });
@@ -265,7 +261,7 @@ function setupSignupForm() {
                 /^[a-zA-Z][a-zA-Z0-9._-]{2,19}$/,
                 "اسم المستخدم مطلوب",
                 "يجب أن يبدأ اسم المستخدم بحرف وأن يتكون من أحرف وأرقام وشرطات سفلية فقط (3-20 حرف)",
-                ""
+                "مثال: user_123"
             );
         });
         
@@ -275,7 +271,7 @@ function setupSignupForm() {
                 /^[a-zA-Zأ-ي\s]{2,30}$/,
                 "الاسم الأول مطلوب",
                 "يجب أن يتكون الاسم الأول من أحرف فقط (2-30 حرف)",
-                ""
+                "مثال: محمد"
             );
         });
         
@@ -285,7 +281,7 @@ function setupSignupForm() {
                 /^[a-zA-Zأ-ي\s]{2,30}$/,
                 "الاسم الأخير مطلوب",
                 "يجب أن يتكون الاسم الأخير من أحرف فقط (2-30 حرف)",
-                ""
+                "مثال: العبدالله"
             );
         });
         
@@ -295,7 +291,7 @@ function setupSignupForm() {
                 /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/,
                 "البريد الإلكتروني مطلوب",
                 "يرجى إدخال بريد إلكتروني صحيح بتنسيق name@domain.com",
-                ""
+                "مثال: example@email.com"
             );
         });
         
@@ -305,7 +301,7 @@ function setupSignupForm() {
                 /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%*?&]).{8,35}/,
                 "كلمة المرور مطلوبة",
                 "كلمة المرور ضعيفة - يجب أن تحتوي على الأقل على ٨ أحرف تتضمن حرف كبير وحرف صغير ورقم ورمز خاص",
-                ""
+                "مثال: Passw0rd@123"
             );
         });
         
@@ -315,7 +311,7 @@ function setupSignupForm() {
                 /^[0-9]{10,15}$/,
                 "رقم الهاتف مطلوب",
                 "يرجى إدخال رقم هاتف صحيح مكون من 10-15 رقم بدون أحرف أو رموز",
-                ""
+                "مثال: 0501234567"
             );
         });
         
@@ -354,11 +350,24 @@ function setupSignupForm() {
             );
         });
 
+        // Force initial validation on all fields
+        window.addEventListener('load', () => {
+            // First clear all error messages to ensure none are showing by default
+            clearAllErrorMessages();
+            
+            // Optional: If you want immediate validation feedback as soon as the page loads,
+            // uncomment the line below. Otherwise, errors will only show after user interaction.
+            // validateSignupForm();
+        });
+
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             // Validate form before submitting
-            if (!validateSignupForm()) {
+            const isValid = validateSignupForm();
+            console.log("Form validation result:", isValid);
+            
+            if (!isValid) {
                 showNotification('warning', 'بيانات غير مكتملة', 'يرجى تصحيح الأخطاء قبل إرسال النموذج');
                 return;
             }
@@ -372,91 +381,96 @@ function setupSignupForm() {
             submitButton.disabled = true;
             submitButton.textContent = 'جاري إنشاء الحساب...';
 
-            // Get date of birth from the form
-            let dobValue = formData.get('date_of_birth');
-            console.log('Original date_of_birth from form:', dobValue);
+            try {
+                // Properly format the data to match what the server expects
+                const userData = {
+                    username: formData.get('username'),
+                    first_name: formData.get('first_name'),
+                    last_name: formData.get('last_name'),
+                    email: formData.get('email'),
+                    password: formData.get('password'),
+                    phone: formData.get('phone'),
+                    "user-role": formData.get('user-role'),
+                    gender: formData.get('gender'),
+                    date_of_birth: formData.get('date_of_birth')
+                };
 
-            if (dobValue) {
-                try {
-                    // Make sure the date is in the format expected by the server
-                    dobValue = dobValue.toString().trim();
+                console.log('Form data being sent:', userData);
 
-                    const userData = {
-                        username: formData.get('username'),
-                        first_name: formData.get('first_name'),
-                        last_name: formData.get('last_name'),
-                        email: formData.get('email'),
-                        password: formData.get('password'),
-                        phone: formData.get('phone'),
-                        "user-role": formData.get('user-role'),
-                        gender: formData.get('gender'),
-                        date_of_birth: dobValue
-                    };
+                // Send data to server
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData),
+                });
 
-                    console.log('Form data being sent:', userData);
+                const result = await response.json();
+                console.log('Server response:', result);
 
-                    // Send data to server
-                    const response = await fetch('/signup', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(userData),
-                    });
-
-                    const result = await response.json();
-                    console.log('Server response:', result);
-
-                    if (response.ok) {
-                        // Success notification
-                        showNotification(
-                            'success',
-                            result.message || 'تم إنشاء الحساب بنجاح!',
-                            result.details || 'يمكنك الآن تسجيل الدخول باستخدام بيانات حسابك'
-                        );
-
-                        // Redirect to login after a delay
-                        setTimeout(() => {
-                            window.location.href = '/login';
-                        }, 2000);
-                    } else {
-                        // Error notification
-                        if (result.errors && result.errors.length > 0) {
-                            const errorMessages = result.errors.map(err => err.msg).join('<br>');
-                            showNotification(
-                                'error',
-                                result.message || 'فشل في إنشاء الحساب',
-                                `<strong>${result.details || 'الرجاء التحقق من المعلومات المدخلة'}</strong><br>${errorMessages}`
-                            );
-                        } else {
-                            showNotification(
-                                'error',
-                                result.message || 'فشل في إنشاء الحساب',
-                                result.details || result.error || 'حدث خطأ غير معروف'
-                            );
-                        }
-
-                        // Reset submit button
-                        submitButton.disabled = false;
-                        submitButton.textContent = originalButtonText;
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
+                if (response.ok) {
+                    // Success notification
                     showNotification(
-                        'error',
-                        'خطأ في النظام',
-                        'حدث خطأ أثناء إنشاء الحساب. يرجى المحاولة مرة أخرى.'
+                        'success',
+                        result.message || 'تم إنشاء الحساب بنجاح!',
+                        result.details || 'يمكنك الآن تسجيل الدخول باستخدام بيانات حسابك'
                     );
+
+                    // Redirect to login after a delay
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 2000);
+                } else {
+                    // Show all validation errors from server in a clear notification
+                    if (result.errors && result.errors.length > 0) {
+                        // Format errors in a readable way
+                        const uniqueErrors = [...new Set(result.errors.map(err => err.msg))];
+                        const errorMessages = uniqueErrors.map(msg => `• ${msg}`).join('<br>');
+                        
+                        showNotification(
+                            'error',
+                            result.message || 'فشل في إنشاء الحساب',
+                            `<strong>${result.details || 'الرجاء التحقق من المعلومات المدخلة'}</strong><br>${errorMessages}`,
+                            20000 // Longer duration for detailed errors
+                        );
+                        
+                        // Also highlight the fields with errors in the form
+                        result.errors.forEach(err => {
+                            const fieldId = err.path === 'date_of_birth' ? 'dob' : 
+                                          (err.path === 'first_name' ? 'first-name' : 
+                                          (err.path === 'last_name' ? 'last-name' : err.path));
+                            
+                            const field = document.getElementById(fieldId);
+                            if (field) {
+                                field.classList.add('input-error');
+                                field.classList.remove('input-success');
+                                
+                                // Update error message for this field
+                                const errorDiv = document.getElementById(`${fieldId}-error`);
+                                if (errorDiv) {
+                                    errorDiv.textContent = err.msg;
+                                }
+                            }
+                        });
+                    } else {
+                        showNotification(
+                            'error',
+                            result.message || 'فشل في إنشاء الحساب',
+                            result.details || result.error || 'حدث خطأ غير معروف'
+                        );
+                    }
 
                     // Reset submit button
                     submitButton.disabled = false;
                     submitButton.textContent = originalButtonText;
                 }
-            } else {
+            } catch (error) {
+                console.error('Error:', error);
                 showNotification(
-                    'warning',
-                    'بيانات ناقصة',
-                    'الرجاء إدخال تاريخ الميلاد'
+                    'error',
+                    'خطأ في النظام',
+                    'حدث خطأ أثناء إنشاء الحساب. يرجى المحاولة مرة أخرى.'
                 );
 
                 // Reset submit button

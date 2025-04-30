@@ -9,6 +9,20 @@ const signupValidation = [
     .isString().withMessage("اسم المستخدم يجب أن يكون نصًا")
     .trim()
     .escape(),
+  body("first_name")
+    .notEmpty().withMessage("الاسم الأول مطلوب")
+    .isLength({ min: 2, max: 30 }).withMessage("الاسم الأول يجب أن يكون بين 2 و 30 حرفًا")
+    .matches(/^[a-zA-Zأ-ي\s]{2,30}$/).withMessage("الاسم الأول يجب أن يتكون من أحرف فقط")
+    .isString().withMessage("الاسم الأول يجب أن يكون نصًا")
+    .trim()
+    .escape(),
+  body("last_name")
+    .notEmpty().withMessage("الاسم الأخير مطلوب")
+    .isLength({ min: 2, max: 30 }).withMessage("الاسم الأخير يجب أن يكون بين 2 و 30 حرفًا")
+    .matches(/^[a-zA-Zأ-ي\s]{2,30}$/).withMessage("الاسم الأخير يجب أن يتكون من أحرف فقط")
+    .isString().withMessage("الاسم الأخير يجب أن يكون نصًا")
+    .trim()
+    .escape(),
   body("email")
     .notEmpty().withMessage("البريد الإلكتروني مطلوب")
     .isEmail().withMessage("الرجاء إدخال بريد إلكتروني صحيح")

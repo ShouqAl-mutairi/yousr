@@ -250,7 +250,6 @@ footer p {
     transition: transform 0.3s ease-out;
     opacity: 0.95;
     border-right: 5px solid #ccc;
-
 }
 
 .notification.visible {
@@ -328,7 +327,7 @@ footer p {
 .notification-body p {
     margin: 0;
     line-height: 1.5;
-    color: #333; /* Adding dark text color for better readability */
+    color: #333; 
 }
 
 /* For RTL support */
@@ -363,13 +362,11 @@ html[dir="rtl"] .notification.visible {
     transform: translateX(0);
 }
 
-/* Loading state for buttons */
 button:disabled {
     opacity: 0.7;
     cursor: not-allowed;
 }
 
-/* User profile styles */
 .user-profile {
   position: relative;
   display: inline-block;
@@ -438,7 +435,6 @@ button:disabled {
   to { opacity: 1; transform: translateY(0) translateX(-50%); }
 }
 
-/* RTL Support */
 html[dir="rtl"] .profile-dropdown {
   right: 50%;
   left: auto;
@@ -619,4 +615,30 @@ html[dir="rtl"] .profile-dropdown.active {
     width: 90px;
     height: 45px;
   }
+}
+
+/* Input States */
+.input-error {
+    border: 1px solid #ef5350 !important;
+    background-color: rgba(239, 83, 80, 0.05) !important;
+}
+
+.input-success {
+    border: 1px solid #4caf50 !important;
+    background-color: rgba(76, 175, 80, 0.05) !important;
+}
+
+/* Show error messages only when they have content */
+.error-message:empty {
+    display: none !important;
+}
+
+.error-message:not(:empty) {
+    display: block !important;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: rgba(239, 83, 80, 0.1);
+    color: #ef5350;
 }

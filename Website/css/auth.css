@@ -98,7 +98,6 @@ button.auth-button:hover {
   background-color: #3d377b;
 }
 
-/* General button without hover effect */
 button {
   margin-top: 10px;
   border: none;
@@ -179,18 +178,14 @@ p a:hover {
 }
 
 /* Validation Styles */
-
-/* If there is an error */
 .input-error {
   border: 1px solid red !important;
 }
 
-/* If the input is valid */
 .input-success {
   border: 1px solid green !important;
 }
 
-/* Style for error messages */
 .error-message {
   color: red;
   font-size: 0.85em;

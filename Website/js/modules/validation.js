@@ -1,8 +1,33 @@
 // Form Validation Functions
+// Function to initialize all error messages to empty
+function clearAllErrorMessages() {
+    // Get all error message containers
+    const errorMessages = document.querySelectorAll('.error-message');
+    
+    // Clear all error messages
+    errorMessages.forEach(errorDiv => {
+        errorDiv.textContent = '';
+        errorDiv.innerHTML = '';
+    });
+    
+    // Clear error highlighting on inputs
+    const formInputs = document.querySelectorAll('.form-input');
+    formInputs.forEach(input => {
+        input.classList.remove('input-error');
+        input.classList.remove('input-success');
+    });
+}
+
 // Validate text input fields
 function validateField(id, regex, requiredMessage, invalidMessage, exampleMessage) {
     const input = document.getElementById(id);
     const errorDiv = document.getElementById(`${id}-error`);
+    
+    if (!errorDiv) {
+        console.error(`Error div with ID ${id}-error not found`);
+        return false;
+    }
+    
     const value = input.value.trim();
 
     // Check for native HTML5 validation state
@@ -306,7 +331,7 @@ function validateSignupForm() {
         /^[a-zA-Z][a-zA-Z0-9._-]{2,19}$/,
         "اسم المستخدم مطلوب",
         "يجب أن يبدأ اسم المستخدم بحرف وأن يتكون من أحرف وأرقام وشرطات سفلية فقط (3-20 حرف)",
-        ""
+        "مثال: user_123"
     );
 
     isValid &= validateField(
@@ -314,7 +339,7 @@ function validateSignupForm() {
         /^[a-zA-Zأ-ي\s]{2,30}$/,
         "الاسم الأول مطلوب",
         "يجب أن يتكون الاسم الأول من أحرف فقط (2-30 حرف)",
-        ""
+        "مثال: محمد"
     );
 
     isValid &= validateField(
@@ -322,7 +347,7 @@ function validateSignupForm() {
         /^[a-zA-Zأ-ي\s]{2,30}$/,
         "الاسم الأخير مطلوب",
         "يجب أن يتكون الاسم الأخير من أحرف فقط (2-30 حرف)",
-        ""
+        "مثال: العبدالله"
     );
 
     isValid &= validateField(
@@ -330,15 +355,15 @@ function validateSignupForm() {
         /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/,
         "البريد الإلكتروني مطلوب",
         "يرجى إدخال بريد إلكتروني صحيح بتنسيق name@domain.com",
-        ""
+        "مثال: example@email.com"
     );
 
     isValid &= validateField(
         "password",
-        /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%*?&]).{8,35}/,
+        /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%*?&])[A-Za-z\d@$!%*?&]{8,35}/,
         "كلمة المرور مطلوبة",
         "كلمة المرور ضعيفة - يجب أن تحتوي على الأقل على ٨ أحرف تتضمن حرف كبير وحرف صغير ورقم ورمز خاص",
-        ""
+        "مثال: Passw0rd@123"
     );
 
     isValid &= validateField(
@@ -346,7 +371,7 @@ function validateSignupForm() {
         /^[0-9]{10,15}$/,
         "رقم الهاتف مطلوب",
         "يرجى إدخال رقم هاتف صحيح مكون من 10-15 رقم بدون أحرف أو رموز",
-        ""
+        "مثال: 0501234567"
     );
 
     isValid &= validateDate(
@@ -357,12 +382,12 @@ function validateSignupForm() {
 
     isValid &= validateRadio(
         "user-role",
-        "الرجاء تحديد نوع المستخدم "
+        "الرجاء تحديد نوع المستخدم"
     );
 
     isValid &= validateRadio(
         "gender",
-        "الرجاء تحديد الجنس "
+        "الرجاء تحديد الجنس"
     );
 
     isValid &= validateCheckbox(
@@ -505,5 +530,6 @@ export {
     validateCheckbox,
     validateSignupForm,
     validateProfileForm,
-    validateProjectForm
+    validateProjectForm,
+    clearAllErrorMessages
 };

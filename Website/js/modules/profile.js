@@ -153,22 +153,6 @@ function updateProfilePage() {
                 }
             });
         });
-        
-        // Logout button in settings
-        const logoutBtn = document.querySelector('.logout-btn');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', () => {
-                localStorage.removeItem('userData');
-                showNotification(
-                    'info',
-                    'تم تسجيل الخروج',
-                    'تم تسجيل خروجك بنجاح'
-                );
-                setTimeout(() => {
-                    window.location.href = '/';
-                }, 1500);
-            });
-        }
     }
 }
 
@@ -211,6 +195,9 @@ async function fetchUserData(userId) {
             
             // Update UI with the latest data
             updateProfileUI(result.user);
+            
+            // Completely disable auto-notifications from this function
+            // Let the calling function handle notifications
         } else {
             console.error('Error in fetchUserData response:', result);
             showNotification('error', 'خطأ في جلب البيانات', result.message || 'حدث خطأ أثناء محاولة جلب بيانات المستخدم');
@@ -460,6 +447,32 @@ function createProjectCard(project) {
 
 // Setup all profile page interactions
 function setupProfileInteractions(userId) {
+    // Get references to UI elements
+    const infoViewMode = document.getElementById('info-view-mode');
+    const infoEditMode = document.getElementById('info-edit-mode');
+    const projectFormContainer = document.getElementById('project-form-container');
+    
+    const editInfoBtn = document.querySelector('.edit-info-btn');
+    const cancelEditBtn = document.querySelector('.cancel-edit-btn');
+    const addProjectBtn = document.getElementById('add-project-btn');
+    const cancelProjectBtn = document.querySelector('.cancel-project-btn');
+
+    // Edit info button - Show edit form
+    if (editInfoBtn) {
+        editInfoBtn.addEventListener('click', () => {
+            if (infoViewMode) infoViewMode.style.display = 'none';
+            if (infoEditMode) infoEditMode.style.display = 'block';
+        });
+    }
+    
+    // Cancel edit button - Hide edit form
+    if (cancelEditBtn) {
+        cancelEditBtn.addEventListener('click', () => {
+            if (infoViewMode) infoViewMode.style.display = 'block';
+            if (infoEditMode) infoEditMode.style.display = 'none';
+        });
+    }
+    
     // Clear any existing event listeners by cloning and replacing elements
     function resetEventListeners(elementId) {
         const element = document.getElementById(elementId);
@@ -471,30 +484,8 @@ function setupProfileInteractions(userId) {
         return null;
     }
 
-    // Info tab edit button
-    const editInfoBtn = document.querySelector('.edit-info-btn');
-    const infoViewMode = document.getElementById('info-view-mode');
-    const infoEditMode = document.getElementById('info-edit-mode');
-    const cancelEditBtn = document.querySelector('.cancel-edit-btn');
-    const userInfoForm = document.getElementById('user-info-form');
-    
-    // Edit info button
-    if (editInfoBtn) {
-        editInfoBtn.addEventListener('click', () => {
-            infoViewMode.style.display = 'none';
-            infoEditMode.style.display = 'block';
-        });
-    }
-    
-    // Cancel edit button
-    if (cancelEditBtn) {
-        cancelEditBtn.addEventListener('click', () => {
-            infoViewMode.style.display = 'block';
-            infoEditMode.style.display = 'none';
-        });
-    }
-    
     // Save info changes
+    const userInfoForm = document.getElementById('user-info-form');
     if (userInfoForm) {
         userInfoForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -556,6 +547,9 @@ function setupProfileInteractions(userId) {
                     const updatedUser = { ...currentUser, ...userData };
                     localStorage.setItem('userData', JSON.stringify(updatedUser));
                     
+                    // Set a flag to prevent showing notifications again during fetchUserData
+                    window.skipNextProfileUpdateNotification = true;
+                    
                     // If user is a freelancer and has set availability to true, show special notification
                     if (currentUser.user_role === 'freelancer' && userData.is_available) {
                         showNotification('info', 'إشعار التوفر', 'تم تحديث حالة توفرك للعمل. سيظهر ملفك الشخصي الآن في صفحة الفريلانسرز المتاحين.');
@@ -600,35 +594,32 @@ function setupProfileInteractions(userId) {
     }
     
     // Projects tab
-    const addProjectBtn = document.getElementById('add-project-btn');
-    const projectFormContainer = document.getElementById('project-form-container');
-    
-    // Reset and get a clean version of the form to prevent duplicate event listeners
-    const addProjectForm = resetEventListeners('add-project-form');
-    const cancelProjectBtn = addProjectForm ? addProjectForm.querySelector('.cancel-project-btn') : null;
     
     // Show add project form
-    if (addProjectBtn && projectFormContainer) {
+    if (addProjectBtn) {
         addProjectBtn.addEventListener('click', () => {
-            // Reset the form
-            addProjectForm.reset();
-            // Show the form
-            projectFormContainer.style.display = 'block';
-            // Change button text and action if editing
-            addProjectForm.dataset.mode = 'add';
-            addProjectForm.querySelector('.save-project-btn').textContent = 'حفظ المشروع';
+            if (projectFormContainer) projectFormContainer.style.display = 'block';
+            
+            // Reset the form if it exists
+            const projectForm = document.getElementById('add-project-form');
+            if (projectForm) {
+                projectForm.reset();
+                projectForm.dataset.mode = 'add';
+                const saveBtn = projectForm.querySelector('.save-project-btn');
+                if (saveBtn) saveBtn.textContent = 'حفظ المشروع';
+            }
         });
     }
     
-    // Cancel add/edit project
+    // Cancel add/edit project - Hide project form
     if (cancelProjectBtn) {
         cancelProjectBtn.addEventListener('click', () => {
-            projectFormContainer.style.display = 'none';
-            addProjectForm.reset();
+            if (projectFormContainer) projectFormContainer.style.display = 'none';
         });
     }
     
     // Add/edit project form submission - using the reset form to prevent duplicate submissions
+    const addProjectForm = resetEventListeners('add-project-form');
     if (addProjectForm) {
         addProjectForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -869,7 +860,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get DOM elements
     const profileTabs = document.querySelectorAll('.profile-tab');
     const tabContents = document.querySelectorAll('.tab-content');
-    const editProfileForm = document.getElementById('edit-profile-form');
     
     // Initialize availability toggle function on page load
     const availabilityToggle = document.getElementById('availability-toggle');
@@ -895,26 +885,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Edit profile form submission
-    if (editProfileForm) {
-        editProfileForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validate form before submission
-            if (validateProfileForm()) {
-                // Form is valid, proceed with submission
-                console.log('Profile form is valid, submitting...');
-                // You can add AJAX request here to submit form data
-                
-                // Simulate successful form submission
-                showMessage('success', 'تم تحديث البيانات الشخصية بنجاح');
-            } else {
-                // Form is invalid, show error message
-                showMessage('error', 'يرجى تصحيح الأخطاء في النموذج قبل الإرسال');
-            }
-        });
-    }
-    
     // Toggle visibility of freelancer-specific fields based on user role
     const userRole = document.querySelector('input[name="user-role"]:checked');
     if (userRole) {
@@ -926,22 +896,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 freelancerFields.style.display = 'none';
             }
         }
-    }
-    
-    // Function to show success/error messages
-    function showMessage(type, message) {
-        const messageElement = document.createElement('div');
-        messageElement.className = `message ${type}-message`;
-        messageElement.textContent = message;
-        
-        // Add message to page
-        const container = document.querySelector('.profile-container');
-        container.insertBefore(messageElement, container.firstChild);
-        
-        // Remove message after 3 seconds
-        setTimeout(() => {
-            messageElement.remove();
-        }, 3000);
     }
     
     // Call enhanced profile page functionality for proper setup

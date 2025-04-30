@@ -15,7 +15,6 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/profile.css" rel="stylesheet">
     <link href="../assets/images/logo-without-text.png" rel="icon" type="image/png">
-    <script src="../js/main.js" type="module" defer></script>
   </head>
 
   <body>
@@ -60,7 +59,7 @@
             <img id="profile-avatar-img" src="../assets/images/avatar/avatar-man.jpg" alt="صورة الملف الشخصي">
           </div>
           <div class="profile-details">
-            <h2 id="profile-name-container"><span id="profile-first-name"></span> <span id="profile-last-name"></span></h2>
+            <h2 id="profile-name-container"><span id="profile-first-name">الاسم</span> <span id="profile-last-name">الكامل</span></h2>
             <p id="profile-role">نوع الحساب: <span>فريلانسر</span></p>
             <p id="profile-email">البريد الإلكتروني: <span>example@email.com</span></p>
             <p id="profile-phone">رقم الهاتف: <span>+123456789</span></p>
@@ -78,46 +77,53 @@
         <div class="tab-content active" id="info-tab">
           <div class="info-card">
             <h3>المعلومات الشخصية</h3>
-            <div class="edit-mode" id="info-edit-mode" style="display: none;">
+            <div class="edit-mode" id="info-edit-mode">
               <form id="user-info-form">
+
                 <div class="form-group">
                   <label for="edit-first-name">الاسم الأول:</label>
                   <input type="text" id="edit-first-name" name="first_name" class="form-input" required minlength="2" maxlength="30" pattern="[a-zA-Zأ-ي\s]{2,30}">
                   <div id="edit-first-name-error" class="error-message"></div>
                 </div>
+
                 <div class="form-group">
                   <label for="edit-last-name">الاسم الأخير:</label>
                   <input type="text" id="edit-last-name" name="last_name" class="form-input" required minlength="2" maxlength="30" pattern="[a-zA-Zأ-ي\s]{2,30}">
                   <div id="edit-last-name-error" class="error-message"></div>
                 </div>
+
                 <div class="form-group">
                   <label for="edit-email">البريد الإلكتروني:</label>
-                  <input type="email" id="edit-email" name="email" class="form-input" required>
+                  <input type="email" id="edit-email" name="email" class="form-input" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
                   <div id="edit-email-error" class="error-message"></div>
                 </div>
+                
                 <div class="form-group">
                   <label for="edit-phone">رقم الهاتف:</label>
                   <input type="tel" id="edit-phone" name="phone" class="form-input" required pattern="[0-9]{10,15}">
                   <div id="edit-phone-error" class="error-message"></div>
                 </div>
+
                 <div class="form-group">
                   <label for="edit-dob">تاريخ الميلاد:</label>
                   <input type="date" id="edit-dob" name="date_of_birth" class="form-input" max="2025-04-29">
                   <div id="edit-dob-error" class="error-message"></div>
                 </div>
                 
-                <!-- Freelancer specific fields (only shown for freelancer accounts) -->
+                <!-- Freelancer specific fields -->
                 <div class="freelancer-fields">
                   <div class="form-group">
                     <label for="edit-specialty">التخصص:</label>
                     <input type="text" id="edit-specialty" name="specialty" class="form-input" placeholder="مثال: تطوير الويب، تصميم جرافيكي، تسويق رقمي..." minlength="2" maxlength="50" required>
                     <div id="edit-specialty-error" class="error-message"></div>
                   </div>
+
                   <div class="form-group">
                     <label for="edit-bio">نبذة مهنية:</label>
                     <textarea id="edit-bio" name="profile_bio" class="form-input" rows="4" placeholder="اكتب نبذة مختصرة عن خبراتك ومهاراتك والخدمات التي تقدمها للعملاء..." minlength="10" maxlength="500" required></textarea>
                     <div id="edit-bio-error" class="error-message"></div>
                   </div>
+
                   <div class="price-range-container">
                     <h4>نطاق السعر (بالريال السعودي):</h4>
                     <div class="form-group price-range">
@@ -143,11 +149,13 @@
                   </label>
                   <span class="availability-label">متاح للعمل</span>
                 </div>
+
                 <div class="button-group">
                   <button type="submit" class="save-changes-btn">حفظ التغييرات</button>
                   <button type="button" class="cancel-edit-btn">إلغاء</button>
                 </div>
               </form>
+
             </div>
             <div class="view-mode" id="info-view-mode">
               <div class="info-item">
@@ -179,7 +187,7 @@
                 <span id="info-gender" class="info-value">ذكر</span>
               </div>
               
-              <!-- Freelancer specific information (only shown for freelancer accounts) -->
+              <!-- Freelancer specific information -->
               <div class="freelancer-info">
                 <div class="info-item">
                   <span class="info-label">التخصص:</span>
@@ -198,7 +206,6 @@
                   <span id="info-availability" class="info-value">لا</span>
                 </div>
               </div>
-              
               <div class="info-actions">
                 <button class="edit-info-btn">تعديل المعلومات</button>
               </div>
@@ -214,13 +221,14 @@
           </div>
 
           <!-- Add Project Form -->
-          <div class="project-form-container" id="project-form-container" style="display: none;">
+          <div class="project-form-container" id="project-form-container">
             <form id="add-project-form">
               <div class="form-group">
                 <label for="project-title">عنوان المشروع</label>
                 <input type="text" id="project-title" name="title" class="form-input" required minlength="3" maxlength="100">
                 <div id="project-title-error" class="error-message"></div>
               </div>
+
               <div class="form-group">
                 <label for="project-category">الفئة</label>
                 <select id="project-category" name="category" class="form-input" required>
@@ -233,12 +241,13 @@
                 </select>
                 <div id="project-category-error" class="error-message"></div>
               </div>
+
               <div class="form-group">
                 <label for="project-description">وصف المشروع</label>
                 <textarea id="project-description" name="description" class="form-input" rows="4" required minlength="20" maxlength="1000"></textarea>
                 <div id="project-description-error" class="error-message"></div>
               </div>
-              <!-- Price field removed -->
+
               <div class="button-group">
                 <button type="submit" class="save-project-btn">حفظ المشروع</button>
                 <button type="button" class="cancel-project-btn">إلغاء</button>
@@ -256,7 +265,7 @@
             <p>ستظهر مشاريعك هنا عند إنشاءها أو المشاركة فيها</p>
           </div>
         </div>
-
+      </div>
     </main>
 
     <footer>
@@ -298,5 +307,6 @@
         </div>
       </div>
     </footer>
+    <script src="../js/main.js" type="module"></script>
   </body>
 </html>

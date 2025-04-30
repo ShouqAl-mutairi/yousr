@@ -3,8 +3,19 @@
 import { showNotification } from './ui.js';
 import { validateField, validateDate, validateRadio } from './validation.js';
 
+// Function to hide all error messages initially
+function hideAllErrorMessages() {
+    const errorMessages = document.querySelectorAll('.error-message');
+    errorMessages.forEach(message => {
+        message.style.display = 'none';
+    });
+}
+
 // Setup contact form validation
 function setupContactFormValidation() {
+    // Hide all error messages when the page loads
+    hideAllErrorMessages();
+    
     const firstNameInput = document.getElementById('first-name');
     const lastNameInput = document.getElementById('last-name');
     const phoneInput = document.getElementById('phone');
@@ -45,7 +56,7 @@ function setupContactFormValidation() {
         phoneInput.addEventListener('input', () => {
             validateField(
                 'phone',
-                /^[0-9]{10,15}$/,
+                /^[0-9]{10,15}$/u,
                 'رقم الهاتف مطلوب',
                 'رقم الهاتف يجب أن يتكون من 10 إلى 15 رقمًا',
                 'مثال: 0501234567'
@@ -69,7 +80,7 @@ function setupContactFormValidation() {
         emailInput.addEventListener('input', () => {
             validateField(
                 'email',
-                /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/,
+                /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/u,
                 'البريد الإلكتروني مطلوب',
                 'البريد الإلكتروني يجب أن يكون بصيغة صحيحة',
                 'مثال: example@domain.com'
@@ -150,7 +161,7 @@ function validateContactForm() {
 
     isValid &= validateField(
         'phone',
-        /^[0-9]{10,15}$/,
+        /^[0-9]{10,15}$/u,
         'رقم الهاتف مطلوب',
         'رقم الهاتف يجب أن يتكون من 10 إلى 15 رقمًا',
         'مثال: 0501234567'
@@ -164,7 +175,7 @@ function validateContactForm() {
 
     isValid &= validateField(
         'email',
-        /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/,
+        /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/u,
         'البريد الإلكتروني مطلوب',
         'البريد الإلكتروني يجب أن يكون بصيغة صحيحة',
         'مثال: example@domain.com'

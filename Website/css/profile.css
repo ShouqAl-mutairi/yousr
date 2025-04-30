@@ -1,4 +1,4 @@
-/* Profile Page Styles */
+/* style for profile.html */
 body {
   text-align: right;
 }
@@ -9,7 +9,6 @@ body {
   padding: 0 20px;
 }
 
-/* Profile Header */
 .profile-header {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -67,7 +66,6 @@ body {
   font-weight: bold;
 }
 
-/* Profile Tabs */
 .profile-tabs {
   display: flex;
   background-color: rgba(0, 0, 0, 0.2);
@@ -101,7 +99,6 @@ body {
   border-bottom: 3px solid #7e70fa;
 }
 
-/* Tab Content */
 .tab-content {
   display: none;
 }
@@ -116,7 +113,6 @@ body {
   to { opacity: 1; }
 }
 
-/* Info Tab */
 .info-card {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -171,7 +167,6 @@ body {
   background-color: #6055d8;
 }
 
-/* Projects Tab */
 .projects-empty {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -212,182 +207,12 @@ body {
   background-color: #6055d8;
 }
 
-/* Settings Tab */
-.settings-card {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  padding: 30px;
-  margin-bottom: 30px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.settings-card h3 {
-  color: #7e70fa;
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 10px;
-}
-
-.settings-item {
-  margin-bottom: 30px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding-bottom: 20px;
-}
-
-.settings-item h4 {
-  color: #f5f5f5;
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
-.settings-form {
-  max-width: 400px;
-}
-
-.settings-form .form-group {
-  margin-bottom: 15px;
-}
-
-.settings-form label {
-  display: block;
-  margin-bottom: 5px;
-  color: #b9b9b9;
-}
-
-.settings-form input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #f5f5f5;
-  font-family: "Almarai", sans-serif;
-}
-
-.settings-form input:focus {
-  outline: none;
-  border-color: #7e70fa;
-}
-
-.update-password-btn {
-  background-color: #7e70fa;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: "Almarai", sans-serif;
-  font-size: 14px;
-  transition: background-color 0.3s;
-  margin-top: 10px;
-}
-
-.update-password-btn:hover {
-  background-color: #6055d8;
-}
-
-.avatar-upload {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.avatar-preview {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-left: 20px;
-  border: 2px solid #7e70fa;
-}
-
-.avatar-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.avatar-edit input {
-  display: none;
-}
-
-.avatar-edit label {
-  display: inline-block;
-  padding: 8px 15px;
-  background-color: #7e70fa;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.avatar-edit label:hover {
-  background-color: #6055d8;
-}
-
-.update-avatar-btn {
-  background-color: #7e70fa;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: "Almarai", sans-serif;
-  font-size: 14px;
-  transition: background-color 0.3s;
-}
-
-.update-avatar-btn:hover {
-  background-color: #6055d8;
-}
-
-.danger-zone {
-  border-bottom: none;
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-
-.danger-zone h4 {
-  color: #dc3545;
-}
-
-.logout-btn,
-.delete-account-btn {
-  background-color: transparent;
-  border: 1px solid #f5f5f5;
-  color: #f5f5f5;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: "Almarai", sans-serif;
-  font-size: 14px;
-  transition: all 0.3s;
-  margin-left: 10px;
-}
-
-.logout-btn:hover {
-  background-color: #f5f5f5;
-  color: #0b0a12;
-}
-
-.delete-account-btn {
-  border-color: #dc3545;
-  color: #dc3545;
-}
-
-.delete-account-btn:hover {
-  background-color: #dc3545;
-  color: #fff;
-}
-
-/* Edit Mode Styles */
 .edit-mode {
   background-color: rgba(0, 0, 0, 0.1);
   padding: 20px;
   border-radius: 8px;
   margin-top: 15px;
+  display: none;
 }
 
 .edit-mode .form-group {
@@ -462,7 +287,6 @@ body {
   background-color: rgba(126, 112, 250, 0.1);
 }
 
-/* Toggle Switch for Availability */
 .availability-toggle {
   display: flex;
   align-items: center;
@@ -530,7 +354,6 @@ input:checked + .slider:before {
   font-weight: bold;
 }
 
-/* Projects Styles */
 .projects-header {
   display: flex;
   justify-content: space-between;
@@ -569,6 +392,7 @@ input:checked + .slider:before {
   border-radius: 15px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   margin-bottom: 20px;
+  display: none;
 }
 
 .projects-list {
@@ -646,12 +470,10 @@ input:checked + .slider:before {
   color: #dc3545;
 }
 
-/* Make empty state hidden when there are projects */
 .has-projects #projects-empty {
   display: none;
 }
 
-/* Freelancer-specific styles */
 .freelancer-fields {
   background-color: rgba(126, 112, 250, 0.05);
   border-radius: 8px;
@@ -688,7 +510,6 @@ input:checked + .slider:before {
   border-right: 3px solid #7e70fa;
 }
 
-/* Specialty badge styling */
 .specialty-badge {
   display: inline-block;
   background-color: rgba(126, 112, 250, 0.2);
@@ -700,7 +521,6 @@ input:checked + .slider:before {
   font-weight: bold;
 }
 
-/* Bio styling with better formatting */
 #info-bio {
   white-space: pre-line;
   line-height: 1.5;
@@ -734,7 +554,6 @@ input:checked + .slider:before {
   }
 }
 
-/* Project Form Styling */
 #add-project-form .form-group {
   margin-bottom: 15px;
   position: relative;
@@ -774,10 +593,9 @@ input:checked + .slider:before {
 #add-project-form textarea.form-input {
   resize: none;
   min-height: 100px;
-  width: 100%; /* Ensure textarea has the same width as other inputs */
+  width: 100%;
 }
 
-/* Project Form Buttons */
 #add-project-form .button-group {
   display: flex;
   justify-content: center;
@@ -788,7 +606,6 @@ input:checked + .slider:before {
   margin-right: auto;
 }
 
-/* Responsive adjustments for project form */
 @media (max-width: 768px) {
   .project-image-upload {
     flex-direction: column;
@@ -812,7 +629,6 @@ input:checked + .slider:before {
   }
 }
 
-/* Freelancer Fields Styling */
 .freelancer-fields {
   margin-top: 1.5rem;
   padding: 1.5rem;
@@ -899,4 +715,8 @@ input:checked + .slider:before {
 .availability-label {
   color: #f5f5f5;
   font-weight: bold;
+}
+
+.hidden {
+  display: none !important;
 }

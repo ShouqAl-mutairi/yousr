@@ -55,10 +55,10 @@ function createFreelancerCard(freelancer) {
     const card = document.createElement('div');
     card.className = 'service-card';
     card.dataset.id = freelancer.id;
-    
+
     card.innerHTML = `
         <div class="avatar-container">
-            <img src="${freelancer.avatar}" alt="${displayName}" class="avatar">
+            <img src="${freelancer.avatar}" alt="Avatar" class="avatar">
         </div>
         <img src="${categoryImage}" alt="${roleText}" class="service-image">
         <h3>${displayName}</h3>
@@ -86,14 +86,6 @@ function createFreelancerCard(freelancer) {
     if (contactBtn) {
         contactBtn.addEventListener('click', () => {
             window.location.href = '/contact?freelancer=' + freelancer.id;
-        });
-    }
-    
-    const moreBtn = card.querySelector('.secondary-btn');
-    if (moreBtn) {
-        moreBtn.addEventListener('click', () => {
-            // Could redirect to freelancer profile or show more info in a modal
-            showFreelancerDetails(freelancer);
         });
     }
     
